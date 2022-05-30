@@ -1,5 +1,8 @@
 # PoE Intant Messenger
 
+# Download (Windows) 
+[The latest release can be downloaded here](https://github.com/cedricdsc/poe-instant-messenger/releases)
+
 ## Install
 
 Clone the repo and install dependencies:
