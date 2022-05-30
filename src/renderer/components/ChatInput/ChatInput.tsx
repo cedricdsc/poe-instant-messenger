@@ -4,7 +4,6 @@ import TextField from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
 import SendIcon from '@mui/icons-material/Send';
 import classNames from 'classnames';
-import classes from './ChatInput.module.scss';
 import {
   ChangeEvent,
   KeyboardEvent,
@@ -14,6 +13,7 @@ import {
 } from 'react';
 import MainProcess from 'renderer/background/mainProcess';
 import { useStore } from 'renderer/background/store';
+import classes from './ChatInput.module.scss';
 
 interface ChatInputProps {
   currentUserIndex: number;
@@ -26,17 +26,6 @@ export default function ChatInput({ currentUserIndex }: ChatInputProps) {
 
   const handleTextfieldInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setCurrentMessage(event.target.value);
-  };
-
-  const handleInputKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === 'Enter') {
-      sendMessage();
-    }
-  };
-
-  const handleSendButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    sendMessage();
   };
 
   const sendMessage = () => {
@@ -54,6 +43,17 @@ export default function ChatInput({ currentUserIndex }: ChatInputProps) {
     }
   };
 
+  const handleInputKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Enter') {
+      sendMessage();
+    }
+  };
+
+  const handleSendButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    sendMessage();
+  };
+
   return (
     <Paper className={classNames(classes.inputWrapper)}>
       <TextField
@@ -63,7 +63,7 @@ export default function ChatInput({ currentUserIndex }: ChatInputProps) {
         onChange={handleTextfieldInputChange}
         onKeyDown={handleInputKeyDown}
         inputRef={inputElement}
-      ></TextField>
+      />
       <Tooltip title="Send Message">
         <IconButton onClick={handleSendButtonClick} color="primary">
           <SendIcon />

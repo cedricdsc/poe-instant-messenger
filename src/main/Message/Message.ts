@@ -1,16 +1,7 @@
-import { Direction } from '../Message/Direction';
-import { IMessage } from '../Message/IMessage';
+import Direction from './Direction';
+import { IMessage } from './IMessage';
 
-export function instanceOfMessage(object: any): object is Message {
-  return (
-    'direction' in object &&
-    'timestamp' in object &&
-    'text' in object &&
-    'username' in object
-  );
-}
-
-export class Message implements IMessage {
+class Message implements IMessage {
   direction: Direction;
 
   timestamp: Date;
@@ -20,15 +11,15 @@ export class Message implements IMessage {
   username: string;
 
   constructor(data: string, username: string) {
-    const { direction, timestamp, text } = this.parseData(data);
+    const { direction, timestamp, text } = Message.parseData(data);
     this.direction = direction;
     this.timestamp = timestamp;
     this.text = text;
     this.username = username;
   }
 
-  parseData(data: string) {
-    let direction, timestamp, text;
+  static parseData(data: string) {
+    let direction;
 
     const startOfMessage = data.indexOf(': ');
     const closingClientInfoPosition = data.indexOf('] ');
@@ -41,14 +32,14 @@ export class Message implements IMessage {
       direction = Direction.Incoming;
     }
 
-    timestamp = this.parseTimestamp(data);
+    const timestamp = Message.parseTimestamp(data);
 
-    text = data.substring(startOfMessage + 2);
+    const text = data.substring(startOfMessage + 2);
 
     return { direction, timestamp, text };
   }
 
-  parseTimestamp(data: string) {
+  static parseTimestamp(data: string) {
     const poeTime = data.substring(0, 19);
     const year = poeTime.substring(0, 4);
     const month = poeTime.substring(5, 7);
@@ -59,3 +50,5 @@ export class Message implements IMessage {
     return new Date(`${year}-${month}-${day}T${hour}:${minute}:${milli}`);
   }
 }
+
+export default Message;

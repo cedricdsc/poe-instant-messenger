@@ -1,6 +1,6 @@
 import { Schema } from 'electron-store';
-import { Character } from '../Character/Character';
-import { Direction } from '../Message/Direction';
+import Character from '../Character/Character';
+import Direction from '../Message/Direction';
 
 export interface StoreSchema {
   settings: {

@@ -1,10 +1,10 @@
-import { Typography } from '@mui/material';
+import Typography from '@mui/material/Typography';
 import classNames from 'classnames';
 import { SyntheticEvent, useEffect, useRef, useState } from 'react';
 import { useStore } from 'renderer/background/store';
+import MainProcess from 'renderer/background/mainProcess';
 import ChatMessage from '../ChatMessage/ChatMessage';
 import classes from './Messenger.module.scss';
-import MainProcess from 'renderer/background/mainProcess';
 import BottomBar from '../BottomBar/BottomBar';
 import ChatInput from '../ChatInput/ChatInput';
 import ChatTabs from '../ChatTabs/ChatTabs';
@@ -28,7 +28,7 @@ export default function Messenger({ toggleMessenger }: MessengerProps) {
 
   const deleteChatHistory = () => {
     if (currentUser === store.state.messageStore.length - 1) {
-      setCurrentUser(currentUser - 1);
+      setCurrentUser(currentUser - 1 < 0 ? 0 : currentUser - 1);
     }
     MainProcess.sendEvent({
       name: 'OVERLAY->MAIN::deleteChatHistory',
@@ -45,11 +45,9 @@ export default function Messenger({ toggleMessenger }: MessengerProps) {
   const renderChatMessages = () => {
     return (
       <div className={classNames(classes.chatBox)}>
-        {store.state.messageStore[currentUser].messages.map(
-          (message, index) => (
-            <ChatMessage key={`message-${index}`} message={message} />
-          )
-        )}
+        {store.state.messageStore[currentUser].messages.map((message) => (
+          <ChatMessage key={message.text} message={message} />
+        ))}
         <AlwaysScrollToBottom />
       </div>
     );

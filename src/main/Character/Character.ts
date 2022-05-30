@@ -1,11 +1,7 @@
-import { Message } from 'main/Message/Message';
+import Message from 'main/Message/Message';
 import { ICharacter } from './ICharacter';
 
-export function instanceOfCharacter(object: any): object is Character {
-  return 'messages' in object && 'unread' in object;
-}
-
-export class Character implements ICharacter {
+class Character implements ICharacter {
   username: string;
 
   unread: number;
@@ -18,3 +14,5 @@ export class Character implements ICharacter {
     this.username = username;
   }
 }
+
+export default Character;

@@ -4,20 +4,20 @@ import { app } from 'electron';
 import Store from './Store/ElectronStore';
 import { initialState } from '../renderer/background/reducer';
 
-export let resolveHtmlPath: (htmlFileName: string) => string;
-
+let tempResolveHtmlPath: (htmlFileName: string) => string;
 if (process.env.NODE_ENV === 'development') {
   const port = process.env.PORT || 1212;
-  resolveHtmlPath = (htmlFileName: string) => {
+  tempResolveHtmlPath = (htmlFileName: string) => {
     const url = new URL(`http://localhost:${port}`);
     url.pathname = htmlFileName;
     return url.href;
   };
 } else {
-  resolveHtmlPath = (htmlFileName: string) => {
+  tempResolveHtmlPath = (htmlFileName: string) => {
     return `file://${path.resolve(__dirname, '../renderer/', htmlFileName)}`;
   };
 }
+export const resolveHtmlPath = tempResolveHtmlPath;
 
 const RESOURCES_PATH = app.isPackaged
   ? path.join(process.resourcesPath, 'assets')

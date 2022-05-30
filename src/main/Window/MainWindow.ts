@@ -7,7 +7,11 @@ import startLogWatcher from '../LogWatcher/watch';
 import Store, { addCallbackOnAnyChange } from '../Store/ElectronStore';
 
 let MainWindow: BrowserWindow | null = null;
-export let mainIsActive = false;
+let mainIsActive = false;
+
+export function isMainActive() {
+  return mainIsActive;
+}
 
 export function focusOverlay() {
   if (!MainWindow) return;
@@ -85,7 +89,7 @@ export function createMainWindow() {
     MainWindow = null;
   });
 
-  if (Store.get('settings.setUp')) startLogWatcher();
+  if (Store.get('settings.setUp')) startLogWatcher(overlaySendEvent);
 
   addCallbackOnAnyChange(() => {
     sendUpdateStoreEvent();

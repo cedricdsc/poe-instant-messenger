@@ -9,13 +9,13 @@ import Collapse from '@mui/material/Collapse';
 import Alert from '@mui/material/Alert';
 import Typography from '@mui/material/Typography';
 import classNames from 'classnames';
-import classes from './SetupStepper.module.scss';
 import SearchIcon from '@mui/icons-material/Search';
 import { onElementEnter, onElementLeave } from 'renderer/background/util';
 import MainProcess from 'renderer/background/mainProcess';
 import { useState, ChangeEvent } from 'react';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import classes from './SetupStepper.module.scss';
 
 const steps = [
   {
@@ -41,7 +41,6 @@ export default function SetupStepper() {
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    console.log(activeStep);
     if (activeStep === 2) {
       MainProcess.sendEvent({
         name: 'OVERLAY->MAIN::finishSetup',

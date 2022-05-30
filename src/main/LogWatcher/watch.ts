@@ -1,14 +1,24 @@
-import { Direction } from '../Message/Direction';
 import { Tail } from 'tail';
-import { Message } from '../Message/Message';
+import Direction from '../Message/Direction';
+import Message from '../Message/Message';
 import Store from '../Store/ElectronStore';
-import { Character } from '../Character/Character';
-import { overlaySendEvent } from '../Window/MainWindow';
+import Character from '../Character/Character';
+import { IpcEvent } from '../IpcEvent/IpcEvent';
 
 const DEFAULT_PATH =
   'C:/Program Files (x86)/Grinding Gear Games/Path of Exile/logs/Client.txt';
 
-export default function startLogWatcher() {
+function isWhisperFromUser(data: string) {
+  const startOfMessage = data.indexOf(': ');
+  const log = data.substring(0, startOfMessage);
+  const username = log.substring(log.lastIndexOf(' ') + 1);
+  if (log.includes('@From') || log.includes('@To')) {
+    return username;
+  }
+  return undefined;
+}
+
+export default function startLogWatcher(cb: (event: IpcEvent) => void) {
   const storedPath = Store.get('settings.logPath');
   const path = typeof storedPath === 'string' ? storedPath : DEFAULT_PATH;
   const tail = new Tail(path, { useWatchFile: true });
@@ -24,7 +34,7 @@ export default function startLogWatcher() {
         (character) => character.username === username
       );
 
-      if (characterIndex != -1) {
+      if (characterIndex !== -1) {
         currentCharacter = messageStore[characterIndex];
       } else {
         currentCharacter = new Character(username);
@@ -37,7 +47,7 @@ export default function startLogWatcher() {
         currentCharacter.unread += 1;
       }
 
-      if (characterIndex != -1) {
+      if (characterIndex !== -1) {
         messageStore[characterIndex] = currentCharacter;
       } else {
         messageStore.push(currentCharacter);
@@ -55,20 +65,11 @@ export default function startLogWatcher() {
 
       Store.set('messageStore', messageStore);
       if (message.direction === Direction.Incoming) {
-        overlaySendEvent({
+        cb({
           name: 'MAIN->OVERLAY::notify',
           payload: { from: message.username, message: message.text },
         });
       }
     }
   });
-}
-
-function isWhisperFromUser(data: string) {
-  const startOfMessage = data.indexOf(': ');
-  const log = data.substring(0, startOfMessage);
-  const username = log.substring(log.lastIndexOf(' ') + 1);
-  if (log.includes('@From') || log.includes('@To')) {
-    return username;
-  } else return undefined;
 }

@@ -3,13 +3,6 @@ import { getAssetPath } from '../util';
 
 let tray: Tray;
 
-export function createTray() {
-  tray = new Tray(getAssetPath('icon.png'));
-
-  tray.setToolTip('PoE Instant Messenger');
-  updateTray();
-}
-
 export function updateTray() {
   const contextMenu = Menu.buildFromTemplate([
     {
@@ -33,4 +26,11 @@ export function updateTray() {
   ]);
 
   tray.setContextMenu(contextMenu);
+}
+
+export function createTray() {
+  tray = new Tray(getAssetPath('icon.png'));
+
+  tray.setToolTip('PoE Instant Messenger');
+  updateTray();
 }

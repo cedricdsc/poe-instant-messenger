@@ -32,7 +32,7 @@ export default function setupIpcEventHandler() {
       const characterIndex = messageStore.findIndex(
         (character) => character.username === payload.username
       );
-      if (characterIndex != -1) {
+      if (characterIndex !== -1) {
         messageStore.splice(characterIndex, 1);
         Store.set('messageStore', messageStore);
       }
@@ -44,7 +44,7 @@ export default function setupIpcEventHandler() {
     const characterIndex = messageStore.findIndex(
       (character) => character.username === payload.username
     );
-    if (characterIndex != -1) {
+    if (characterIndex !== -1) {
       messageStore[characterIndex].unread = 0;
       Store.set('messageStore', messageStore);
     }
@@ -63,7 +63,8 @@ export default function setupIpcEventHandler() {
     async (ipcMainEvent, payload) => {
       clipboard.writeText(`@${payload.recipient} ${payload.text}`);
 
-      for (let i = 0; i < 10; i++) {
+      /* eslint-disable no-await-in-loop */
+      for (let i = 0; i < 10; i += 1) {
         focusPoE();
         await sleep(100);
         if (isPoeFocused()) break;

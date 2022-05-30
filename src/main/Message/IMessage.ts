@@ -1,4 +1,4 @@
-import { Direction } from '../Message/Direction';
+import Direction from './Direction';
 
 export interface IMessage {
   direction: Direction;

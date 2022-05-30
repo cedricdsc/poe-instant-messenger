@@ -1,7 +1,7 @@
 import { Paper, Typography } from '@mui/material';
 import classNames from 'classnames';
-import { Direction } from '../../../main/Message/Direction';
-import { Message } from '../../../main/Message/Message';
+import Direction from '../../../main/Message/Direction';
+import Message from '../../../main/Message/Message';
 import classes from './ChatMessage.module.scss';
 
 interface ChatMessageProps {

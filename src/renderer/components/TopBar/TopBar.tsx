@@ -8,8 +8,8 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import HouseIcon from '@mui/icons-material/House';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import classNames from 'classnames';
-import classes from './TopBar.module.scss';
 import { useStore } from 'renderer/background/store';
+import classes from './TopBar.module.scss';
 
 interface TopBarProps {
   currentUserIndex: number;

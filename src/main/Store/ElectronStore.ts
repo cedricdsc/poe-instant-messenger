@@ -1,7 +1,7 @@
 import ElectronStore from 'electron-store';
 import schema from './schema';
 
-const Store = new ElectronStore({ schema: schema, watch: true });
+const Store = new ElectronStore({ schema, watch: true });
 
 type CallBack = () => void;
 

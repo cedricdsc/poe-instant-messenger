@@ -9,6 +9,7 @@ module.exports = {
     '@typescript-eslint/ban-ts-comment': 'off',
     'react/require-default-props': 'off',
     'react/jsx-props-no-spreading': 'off',
+    'jsx-a11y/click-events-have-key-events': 'off',
   },
   parserOptions: {
     ecmaVersion: 2020,

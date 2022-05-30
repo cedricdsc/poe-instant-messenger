@@ -69,6 +69,8 @@ export default function ApplicationWrapper() {
           defaultPosition={getDefaultPosition()}
         >
           <div
+            role="button"
+            tabIndex={0}
             ref={nodeRef}
             onMouseEnter={onElementEnter}
             onMouseLeave={onElementLeave}
@@ -85,9 +87,7 @@ export default function ApplicationWrapper() {
         </Draggable>
       )}
 
-      {storeLoaded && !store.state.settings.setUp && (
-        <SetupStepper></SetupStepper>
-      )}
+      {storeLoaded && !store.state.settings.setUp && <SetupStepper />}
     </>
   );
 }

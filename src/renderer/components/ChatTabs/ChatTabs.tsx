@@ -2,9 +2,9 @@ import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import classNames from 'classnames';
 import { useStore } from 'renderer/background/store';
-import classes from './ChatTabs.module.scss';
 import { SyntheticEvent } from 'react';
-import { Typography } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import classes from './ChatTabs.module.scss';
 
 interface ChatTabsProps {
   currentUserIndex: number;

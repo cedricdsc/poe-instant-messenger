@@ -1,13 +1,13 @@
 import { Collapse, IconButton, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import classNames from 'classnames';
-import globals from '../../globals/_variables.module.scss';
-import classes from './Notifier.module.scss';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import Box from '@mui/system/Box';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import MainProcess from 'renderer/background/mainProcess';
 import { useStore } from 'renderer/background/store';
+import globals from '../../globals/_variables.module.scss';
+import classes from './Notifier.module.scss';
 
 const NotifierButton = styled(IconButton)({
   backgroundColor: globals.bgColorPrimary,
@@ -33,20 +33,17 @@ export default function Notifier() {
     return counter;
   };
 
-  useEffect(() => {
-    setUnread(getUnreadCount());
-  }, [notify]);
-
   MainProcess.onEvent('MAIN->OVERLAY::notify', (payload) => {
     setNotification({ from: payload.from, message: payload.message });
     setNotify(true);
     setTimeout(() => setNotify(false), 5000);
+    setUnread(getUnreadCount());
   });
 
   return (
     <div className={classNames(classes.expandableWrapper)}>
       <NotifierButton>
-        <ChatBubbleIcon></ChatBubbleIcon>
+        <ChatBubbleIcon />
         {unread > 0 && <div className={classNames(classes.dot)}>{unread}</div>}
       </NotifierButton>
       <div className={classNames(classes.collapseWrapper)}>
@@ -59,10 +56,10 @@ export default function Notifier() {
             }}
           >
             <div className={classNames(classes.notificationWrapper)}>
-              <Typography variant="subtitle2" color={'white'} noWrap>
+              <Typography variant="subtitle2" color="white" noWrap>
                 From: {notification.from}
               </Typography>
-              <Typography variant="caption" color={'white'} noWrap>
+              <Typography variant="caption" color="white" noWrap>
                 {notification.message}
               </Typography>
             </div>

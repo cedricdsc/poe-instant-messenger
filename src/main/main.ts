@@ -17,10 +17,10 @@ if (!Store.get('settings.hardwareAccelerationEnabled')) {
   Store.set('settings.hardwareAccelerationEnabled', true);
 }
 
-if (process.env.NODE_ENV === 'production') {
-  const sourceMapSupport = require('source-map-support');
-  sourceMapSupport.install();
-}
+// if (process.env.NODE_ENV === 'production') {
+//   const sourceMapSupport = require('source-map-support');
+//   sourceMapSupport.install();
+// }
 
 // const isDebug =
 //   process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
@@ -29,10 +29,14 @@ if (process.env.NODE_ENV === 'production') {
 //   require('electron-debug')();
 // }
 
-app.whenReady().then(() => {
-  checkForSettings();
-  createTray();
-  setupIpcEventHandler();
-  createMainWindow();
-  attachOverlayToPoeWindow();
-});
+app
+  .whenReady()
+  .then(() => {
+    checkForSettings();
+    createTray();
+    setupIpcEventHandler();
+    createMainWindow();
+    attachOverlayToPoeWindow();
+    return null;
+  })
+  .catch();

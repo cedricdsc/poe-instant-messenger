@@ -5,8 +5,8 @@ import Tooltip from '@mui/material/Tooltip';
 import SettingsIcon from '@mui/icons-material/Settings';
 import SearchIcon from '@mui/icons-material/Search';
 import InfoIcon from '@mui/icons-material/Info';
-import classes from './BottomBar.module.scss';
 import classNames from 'classnames';
+import classes from './BottomBar.module.scss';
 
 export default function BottomBar() {
   return (
