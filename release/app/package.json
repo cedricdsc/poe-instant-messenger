@@ -1,13 +1,28 @@
 {
-  "name": "electron-react-boilerplate",
-  "version": "4.6.0",
-  "description": "A foundation for scalable desktop apps",
+  "name": "PoE Instant Messenger",
+  "version": "0.1.0-alpha.0",
+  "description": "A third-party messenger application for Path of Exile",
+  "keywords": [
+    "electron",
+    "react",
+    "typescript",
+    "ts",
+    "sass",
+    "webpack",
+    "hot",
+    "reload",
+    "poe",
+    "pathofexile",
+    "thirdparty",
+    "overlay",
+    "chat"
+  ],
   "license": "MIT",
   "main": "./dist/main/main.js",
   "author": {
-    "name": "Electron React Boilerplate Maintainers",
-    "email": "electronreactboilerplate@gmail.com",
-    "url": "https://github.com/electron-react-boilerplate"
+    "name": "Cedric Oliveira da Silva Costa",
+    "email": "placeholder@gmail.com",
+    "url": "https://github.com/cedricdsc/poe-instant-messenger"
   },
   "scripts": {
     "electron-rebuild": "node -r ts-node/register ../../.erb/scripts/electron-rebuild.js",
