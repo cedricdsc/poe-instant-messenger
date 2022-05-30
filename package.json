@@ -257,8 +257,8 @@
     ],
     "publish": {
       "provider": "github",
-      "owner": "poe-community-messenger",
-      "repo": "poe-community-messenger"
+      "owner": "cedricdsc",
+      "repo": "poe-instant-messenger"
     }
   },
   "devEngines": {
