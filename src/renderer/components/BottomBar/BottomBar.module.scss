@@ -1,0 +1,20 @@
+.ctaBottom{
+    width: 200px;
+    max-width: 200px;
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+    svg{
+        color: #ffffff;
+    }
+
+    button {
+        flex: 1;
+    }
+
+    :disabled svg{
+        color: unset;
+    }
+}

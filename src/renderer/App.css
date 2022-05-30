@@ -1,0 +1,13 @@
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+  margin: 0;
+  pointer-events: none;
+  font-family: 'Inter';
+}
+
+#root{
+  pointer-events: all;
+  width: fit-content;
+}

@@ -1,0 +1,7 @@
+$primary-bg-color: #1976d2;
+$secondary-bg-color: #1769aa;
+
+:export {
+    bgColorPrimary: $primary-bg-color;
+    bgColorSecondary: $secondary-bg-color;
+}

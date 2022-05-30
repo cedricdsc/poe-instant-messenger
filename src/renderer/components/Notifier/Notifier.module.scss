@@ -1,0 +1,45 @@
+.expandableWrapper{
+    width: auto;
+    height: auto;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+}
+
+.dot{
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: #d32f2f;
+    border-radius: 50%;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20px;
+    width: 20px;
+}
+
+
+.collapseWrapper{
+    position: absolute;
+    left: 0;
+    z-index: -1;
+}
+.collapseContainer{
+    height: 48px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 256px;
+    pointer-events: none;
+
+    .notificationWrapper{
+        min-width: 200px;
+        padding-left: 56px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 100%;
+    }
+}
+
