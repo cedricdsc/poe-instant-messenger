@@ -7,27 +7,28 @@ import {
   focusPoE,
   isPoeFocused,
   overlayOnEvent,
+  overlaySendEvent,
 } from '../Window/MainWindow';
 
 export default function setupIpcEventHandler() {
-  overlayOnEvent('OVERLAY->MAIN::mouseEnter', (ipcMainEvent, payload) => {
+  overlayOnEvent('OVERLAY->MAIN::mouseEnter', (_ipcMainEvent, payload) => {
     if (payload.mouseEntered) focusOverlay();
   });
 
-  overlayOnEvent('OVERLAY->MAIN::mouseLeave', (ipcMainEvent, payload) => {
+  overlayOnEvent('OVERLAY->MAIN::mouseLeave', (_ipcMainEvent, payload) => {
     if (payload.mouseLeft) focusPoE();
   });
 
-  overlayOnEvent('OVERLAY->MAIN::finishSetup', (ipcMainEvent, payload) => {
+  overlayOnEvent('OVERLAY->MAIN::finishSetup', (_ipcMainEvent, payload) => {
     const path = payload.path.replace(/\\/g, '/');
     Store.set('settings.logPath', `${path}logs/Client.txt`);
     Store.set('settings.setUp', true);
-    startLogWatcher();
+    startLogWatcher(overlaySendEvent);
   });
 
   overlayOnEvent(
     'OVERLAY->MAIN::deleteChatHistory',
-    (ipcMainEvent, payload) => {
+    (_ipcMainEvent, payload) => {
       const messageStore = Store.get('messageStore');
       const characterIndex = messageStore.findIndex(
         (character) => character.username === payload.username
@@ -39,7 +40,7 @@ export default function setupIpcEventHandler() {
     }
   );
 
-  overlayOnEvent('OVERLAY->MAIN::readMessages', (ipcMainEvent, payload) => {
+  overlayOnEvent('OVERLAY->MAIN::readMessages', (_ipcMainEvent, payload) => {
     const messageStore = Store.get('messageStore');
     const characterIndex = messageStore.findIndex(
       (character) => character.username === payload.username
@@ -52,7 +53,7 @@ export default function setupIpcEventHandler() {
 
   overlayOnEvent(
     'OVERLAY->MAIN::window-pos-changed',
-    (ipcMainEvent, payload) => {
+    (_ipcMainEvent, payload) => {
       Store.set('settings.windowPosX', payload.x);
       Store.set('settings.windowPosY', payload.y);
     }
@@ -60,7 +61,7 @@ export default function setupIpcEventHandler() {
 
   overlayOnEvent(
     'OVERLAY->MAIN::sendMessage',
-    async (ipcMainEvent, payload) => {
+    async (_ipcMainEvent, payload) => {
       clipboard.writeText(`@${payload.recipient} ${payload.text}`);
 
       /* eslint-disable no-await-in-loop */
