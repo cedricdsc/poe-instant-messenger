@@ -1,8 +1,8 @@
 import Typography from '@mui/material/Typography';
 import classNames from 'classnames';
 import { SyntheticEvent, useEffect, useRef, useState } from 'react';
-import { useStore } from 'renderer/background/store';
-import MainProcess from 'renderer/background/mainProcess';
+import { useStore } from '../../background/store';
+import MainProcess from '../../background/mainProcess';
 import ChatMessage from '../ChatMessage/ChatMessage';
 import classes from './Messenger.module.scss';
 import BottomBar from '../BottomBar/BottomBar';

@@ -11,8 +11,8 @@ import {
   useRef,
   useState,
 } from 'react';
-import MainProcess from 'renderer/background/mainProcess';
-import { useStore } from 'renderer/background/store';
+import MainProcess from '../../background/mainProcess';
+import { useStore } from '../../background/store';
 import classes from './ChatInput.module.scss';
 
 interface ChatInputProps {

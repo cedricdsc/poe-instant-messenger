@@ -8,7 +8,7 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import HouseIcon from '@mui/icons-material/House';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import classNames from 'classnames';
-import { useStore } from 'renderer/background/store';
+import { useStore } from '../../background/store';
 import classes from './TopBar.module.scss';
 
 interface TopBarProps {

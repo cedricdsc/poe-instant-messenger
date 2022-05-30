@@ -4,8 +4,8 @@ import classNames from 'classnames';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import Box from '@mui/system/Box';
 import { useState } from 'react';
-import MainProcess from 'renderer/background/mainProcess';
-import { useStore } from 'renderer/background/store';
+import MainProcess from '../../background/mainProcess';
+import { useStore } from '../../background/store';
 import globals from '../../globals/_variables.module.scss';
 import classes from './Notifier.module.scss';
 
