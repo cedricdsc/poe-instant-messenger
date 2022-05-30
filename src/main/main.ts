@@ -1,7 +1,7 @@
 import { app } from 'electron';
 import Store from './Store/ElectronStore';
 import setupIpcEventHandler from './IpcEvent/handler';
-import { createTray } from './Tray/Tray';
+import { createTray } from './Tray/tray';
 import {
   attachOverlayToPoeWindow,
   createMainWindow,
