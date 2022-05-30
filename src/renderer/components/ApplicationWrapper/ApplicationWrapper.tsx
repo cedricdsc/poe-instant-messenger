@@ -27,7 +27,7 @@ export default function ApplicationWrapper() {
   });
 
   const onDragStop: DraggableEventHandler = (
-    e: DraggableEvent,
+    _e: DraggableEvent,
     d: DraggableData
   ) => {
     setTimeout(() => setIsDragging(false), 0);

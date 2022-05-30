@@ -18,7 +18,7 @@ export default function Messenger({ toggleMessenger }: MessengerProps) {
   const [currentUser, setCurrentUser] = useState(0);
   const { store } = useStore();
 
-  const handleChange = (event: SyntheticEvent, newCurrentUser: number) => {
+  const handleChange = (_event: SyntheticEvent, newCurrentUser: number) => {
     setCurrentUser(newCurrentUser);
     MainProcess.sendEvent({
       name: 'OVERLAY->MAIN::readMessages',
