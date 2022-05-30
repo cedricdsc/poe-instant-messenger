@@ -1,5 +1,6 @@
 {
   "description": "A third-party messenger application for Path of Exile",
+  "version": "0.1.0-alpha.0",
   "keywords": [
     "electron",
     "react",
@@ -15,19 +16,19 @@
     "overlay",
     "chat"
   ],
-  "homepage": "https://github.com/cedricdsc/poe-community-messenger#readme",
+  "homepage": "https://github.com/cedricdsc/poe-instant-messenger#readme",
   "bugs": {
-    "url": "https://github.com/cedricdsc/poe-community-messenger/issues"
+    "url": "https://github.com/cedricdsc/poe-instant-messenger/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cedricdsc/poe-community-messenger.git"
+    "url": "git+https://github.com/cedricdsc/poe-instant-messenger.git"
   },
   "license": "MIT",
   "author": {
     "name": "Cedric Oliveira da Silva Costa",
-    "email": "electronreactboilerplate@gmail.com",
-    "url": "https://github.com/cedricdsc/poe-community-messenger"
+    "email": "placeholder@gmail.com",
+    "url": "https://github.com/cedricdsc/poe-instant-messenger"
   },
   "main": "./src/main/main.ts",
   "scripts": {
@@ -197,8 +198,8 @@
     "webpack-merge": "^5.8.0"
   },
   "build": {
-    "productName": "PoE Community Messenger",
-    "appId": "org.pcm",
+    "productName": "PoE Instant Messenger",
+    "appId": "org.pim",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [
