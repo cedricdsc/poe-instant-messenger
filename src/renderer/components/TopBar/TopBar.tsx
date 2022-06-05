@@ -7,8 +7,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveIcon from '@mui/icons-material/Remove';
 import HouseIcon from '@mui/icons-material/House';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import classNames from 'classnames';
-import MainProcess from 'renderer/background/mainProcess';
+import MainProcess from '../../background/mainProcess';
 import { useStore } from '../../background/store';
 import classes from './TopBar.module.scss';
 import Command from '../../../main/Command/Command';
@@ -26,7 +27,7 @@ export default function TopBar({
 }: TopBarProps) {
   const { store } = useStore();
 
-  const tradeUser = () => {
+  const tradePlayer = () => {
     MainProcess.sendEvent({
       name: 'OVERLAY->MAIN::sendCommand',
       payload: {
@@ -46,6 +47,16 @@ export default function TopBar({
     });
   };
 
+  const invitePlayer = () => {
+    MainProcess.sendEvent({
+      name: 'OVERLAY->MAIN::sendCommand',
+      payload: {
+        command: Command.PartyInvite,
+        username: store.state.messageStore[currentUserIndex].username,
+      },
+    });
+  };
+
   const renderUsername = () => {
     return (
       <Typography className={classNames(classes.username)}>
@@ -57,13 +68,18 @@ export default function TopBar({
   const renderUserCTAs = () => {
     return (
       <div className={classNames(classes.ctaLeft)}>
+        <Tooltip title="Invite Player to Group">
+          <IconButton onClick={invitePlayer}>
+            <GroupAddIcon />
+          </IconButton>
+        </Tooltip>
         <Tooltip title="Enter Player Hideout">
           <IconButton onClick={joinHideout}>
             <HouseIcon />
           </IconButton>
         </Tooltip>
         <Tooltip title="Initiate Trade with Player">
-          <IconButton onClick={tradeUser}>
+          <IconButton onClick={tradePlayer}>
             <CurrencyExchangeIcon />
           </IconButton>
         </Tooltip>
