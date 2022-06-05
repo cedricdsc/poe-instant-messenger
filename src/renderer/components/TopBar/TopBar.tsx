@@ -36,6 +36,16 @@ export default function TopBar({
     });
   };
 
+  const joinHideout = () => {
+    MainProcess.sendEvent({
+      name: 'OVERLAY->MAIN::sendCommand',
+      payload: {
+        command: Command.JoinHideout,
+        username: store.state.messageStore[currentUserIndex].username,
+      },
+    });
+  };
+
   const renderUsername = () => {
     return (
       <Typography className={classNames(classes.username)}>
@@ -48,7 +58,7 @@ export default function TopBar({
     return (
       <div className={classNames(classes.ctaLeft)}>
         <Tooltip title="Enter Player Hideout">
-          <IconButton disabled>
+          <IconButton onClick={joinHideout}>
             <HouseIcon />
           </IconButton>
         </Tooltip>
