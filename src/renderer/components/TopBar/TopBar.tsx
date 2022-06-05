@@ -8,8 +8,10 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import HouseIcon from '@mui/icons-material/House';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import classNames from 'classnames';
+import MainProcess from 'renderer/background/mainProcess';
 import { useStore } from '../../background/store';
 import classes from './TopBar.module.scss';
+import Command from '../../../main/Command/Command';
 
 interface TopBarProps {
   currentUserIndex: number;
@@ -23,6 +25,16 @@ export default function TopBar({
   deleteChatHistory,
 }: TopBarProps) {
   const { store } = useStore();
+
+  const tradeUser = () => {
+    MainProcess.sendEvent({
+      name: 'OVERLAY->MAIN::sendCommand',
+      payload: {
+        command: Command.TradeInvite,
+        username: store.state.messageStore[currentUserIndex].username,
+      },
+    });
+  };
 
   const renderUsername = () => {
     return (
@@ -41,7 +53,7 @@ export default function TopBar({
           </IconButton>
         </Tooltip>
         <Tooltip title="Initiate Trade with Player">
-          <IconButton disabled>
+          <IconButton onClick={tradeUser}>
             <CurrencyExchangeIcon />
           </IconButton>
         </Tooltip>
