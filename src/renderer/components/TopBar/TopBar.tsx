@@ -5,7 +5,7 @@ import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveIcon from '@mui/icons-material/Remove';
-import HouseIcon from '@mui/icons-material/House';
+import OtherHousesIcon from '@mui/icons-material/OtherHouses';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import classNames from 'classnames';
@@ -75,7 +75,7 @@ export default function TopBar({
         </Tooltip>
         <Tooltip title="Enter Player Hideout">
           <IconButton onClick={joinHideout}>
-            <HouseIcon />
+            <OtherHousesIcon />
           </IconButton>
         </Tooltip>
         <Tooltip title="Initiate Trade with Player">
