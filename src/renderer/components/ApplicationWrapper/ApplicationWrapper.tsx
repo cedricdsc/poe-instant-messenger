@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { useRef, useState } from 'react';
 import Draggable, {
   DraggableData,
@@ -6,6 +7,7 @@ import Draggable, {
 } from 'react-draggable';
 import MainProcess from '../../background/mainProcess';
 import { useStore } from '../../background/store';
+import classes from './ApplicationWrapper.module.scss';
 import { onElementEnter, onElementLeave } from '../../background/util';
 import Messenger from '../Messenger/Messenger';
 import Notifier from '../Notifier/Notifier';
@@ -86,8 +88,9 @@ export default function ApplicationWrapper() {
           </div>
         </Draggable>
       )}
-
-      {storeLoaded && !store.state.settings.setUp && <SetupStepper />}
+      <div className={classNames(classes.fullWidth)}>
+        {storeLoaded && !store.state.settings.setUp && <SetupStepper />}
+      </div>
     </>
   );
 }

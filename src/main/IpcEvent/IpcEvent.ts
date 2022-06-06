@@ -1,3 +1,4 @@
+import { ICommand } from '../Command/ICommand';
 import { StoreSchema } from '../Store/schema';
 
 export type IpcMainStoreChanged = Event<
@@ -56,6 +57,8 @@ export type IpcFinishSetup = Event<
   { path: string }
 >;
 
+export type IpcSendCommand = Event<'OVERLAY->MAIN::sendCommand', ICommand>;
+
 export type IpcEvent =
   | IpcMouseEnter
   | IpcMouseLeave
@@ -65,6 +68,7 @@ export type IpcEvent =
   | IpcFinishSetup
   | IpcNotify
   | IpcReadMessages
+  | IpcSendCommand
   | IpcWindowPositionChanged;
 
 export type IpcEventPayload<

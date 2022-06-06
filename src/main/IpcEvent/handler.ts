@@ -1,11 +1,10 @@
-import { Key, keyboard, sleep } from '@nut-tree/nut-js';
 import { clipboard } from 'electron';
+import sendMessage from '../Message/sendMessage';
 import startLogWatcher from '../LogWatcher/watch';
 import Store from '../Store/ElectronStore';
 import {
   focusOverlay,
   focusPoE,
-  isPoeFocused,
   overlayOnEvent,
   overlaySendEvent,
 } from '../Window/MainWindow';
@@ -59,25 +58,22 @@ export default function setupIpcEventHandler() {
     }
   );
 
+  overlayOnEvent('OVERLAY->MAIN::sendCommand', (_ipcMainEvent, payload) => {
+    if (payload.username) {
+      clipboard.writeText(`${payload.command}${payload.username}`);
+    } else {
+      clipboard.writeText(`${payload.command}`);
+    }
+
+    sendMessage();
+  });
+
   overlayOnEvent(
     'OVERLAY->MAIN::sendMessage',
     async (_ipcMainEvent, payload) => {
       clipboard.writeText(`@${payload.recipient} ${payload.text}`);
 
-      /* eslint-disable no-await-in-loop */
-      for (let i = 0; i < 10; i += 1) {
-        focusPoE();
-        await sleep(100);
-        if (isPoeFocused()) break;
-      }
-
-      await keyboard.pressKey(Key.Enter);
-      await keyboard.releaseKey(Key.Enter);
-      await keyboard.pressKey(Key.LeftControl, Key.V);
-      await keyboard.releaseKey(Key.LeftControl, Key.V);
-      await keyboard.pressKey(Key.Enter);
-      await keyboard.releaseKey(Key.Enter);
-      focusOverlay();
+      sendMessage();
     }
   );
 }
