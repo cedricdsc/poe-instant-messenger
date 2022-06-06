@@ -60,7 +60,6 @@ const schema: Schema<StoreSchema> = {
                   TradeStatus.Idle,
                   TradeStatus.Initiated,
                   TradeStatus.Accepted,
-                  TradeStatus.Declined,
                 ],
               },
             },

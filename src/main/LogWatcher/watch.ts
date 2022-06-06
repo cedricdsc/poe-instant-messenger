@@ -26,7 +26,7 @@ function isTradeMessage(data: string) {
   const isTradeAccepted = message.match('] : Trade accepted.');
   if (isTradeCancelled || isTradeAccepted) {
     const tradeStatus = isTradeCancelled
-      ? TradeStatus.Declined
+      ? TradeStatus.Idle
       : TradeStatus.Accepted;
     return { isTrade: true, tradeStatus };
   }

@@ -9,6 +9,7 @@ import {
   overlaySendEvent,
 } from '../Window/MainWindow';
 import { TradeStatus } from '../Character/CharacterStatus';
+import Command from '../Command/Command';
 
 function getStoreData(username: string) {
   const messageStore = Store.get('messageStore');
@@ -63,23 +64,45 @@ export default function setupIpcEventHandler() {
     }
   );
 
-  overlayOnEvent('OVERLAY->MAIN::sendCommand', (_ipcMainEvent, payload) => {
-    if (payload.tradeStatus === TradeStatus.Initiated && payload.username) {
-      const { messageStore, characterIndex } = getStoreData(payload.username);
-      if (characterIndex !== -1) {
-        messageStore[characterIndex].tradeStatus = payload.tradeStatus;
-        Store.set('messageStore', messageStore);
+  overlayOnEvent(
+    'OVERLAY->MAIN::sendCommand',
+    async (_ipcMainEvent, payload) => {
+      if (payload.username) {
+        const { messageStore, characterIndex } = getStoreData(payload.username);
+
+        if (payload.command === Command.TradeInvite) {
+          if (
+            payload.tradeStatus === TradeStatus.Initiated &&
+            characterIndex !== -1
+          ) {
+            messageStore[characterIndex].tradeStatus = payload.tradeStatus;
+            Store.set('messageStore', messageStore);
+          }
+        }
+
+        if (payload.command === Command.PartyKick) {
+          if (
+            payload.tradeStatus === TradeStatus.Idle &&
+            payload.message &&
+            characterIndex !== -1
+          ) {
+            clipboard.writeText(`@${payload.username} ${payload.message}`);
+
+            messageStore[characterIndex].tradeStatus = payload.tradeStatus;
+            Store.set('messageStore', messageStore);
+
+            await sendMessage();
+          }
+        }
+
+        clipboard.writeText(`${payload.command}${payload.username}`);
+      } else {
+        clipboard.writeText(`${payload.command}`);
       }
-    }
 
-    if (payload.username) {
-      clipboard.writeText(`${payload.command}${payload.username}`);
-    } else {
-      clipboard.writeText(`${payload.command}`);
+      await sendMessage();
     }
-
-    sendMessage();
-  });
+  );
 
   overlayOnEvent(
     'OVERLAY->MAIN::sendMessage',

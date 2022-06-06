@@ -7,6 +7,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveIcon from '@mui/icons-material/Remove';
 import OtherHousesIcon from '@mui/icons-material/OtherHouses';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import classNames from 'classnames';
 import MainProcess from '../../background/mainProcess';
@@ -39,6 +40,18 @@ export default function TopBar({
     });
   };
 
+  const thankPlayer = () => {
+    MainProcess.sendEvent({
+      name: 'OVERLAY->MAIN::sendCommand',
+      payload: {
+        command: Command.PartyKick,
+        username: store.state.messageStore[currentUserIndex].username,
+        tradeStatus: TradeStatus.Idle,
+        message: 'Thank you Exile.',
+      },
+    });
+  };
+
   const joinHideout = () => {
     MainProcess.sendEvent({
       name: 'OVERLAY->MAIN::sendCommand',
@@ -67,6 +80,32 @@ export default function TopBar({
     );
   };
 
+  const renderTradeButton = () => {
+    return (
+      <Tooltip title="Initiate Trade with Player">
+        <IconButton
+          onClick={tradePlayer}
+          disabled={
+            store.state.messageStore[currentUserIndex].tradeStatus ===
+            TradeStatus.Initiated
+          }
+        >
+          <CurrencyExchangeIcon />
+        </IconButton>
+      </Tooltip>
+    );
+  };
+
+  const renderThankForTradeButton = () => {
+    return (
+      <Tooltip title="Thank the Player for the Trade">
+        <IconButton onClick={thankPlayer}>
+          <ThumbUpAltIcon />
+        </IconButton>
+      </Tooltip>
+    );
+  };
+
   const renderUserCTAs = () => {
     return (
       <div className={classNames(classes.ctaLeft)}>
@@ -80,17 +119,10 @@ export default function TopBar({
             <OtherHousesIcon />
           </IconButton>
         </Tooltip>
-        <Tooltip title="Initiate Trade with Player">
-          <IconButton
-            onClick={tradePlayer}
-            disabled={
-              store.state.messageStore[currentUserIndex].tradeStatus ===
-              TradeStatus.Initiated
-            }
-          >
-            <CurrencyExchangeIcon />
-          </IconButton>
-        </Tooltip>
+        {store.state.messageStore[currentUserIndex].tradeStatus ===
+        TradeStatus.Accepted
+          ? renderThankForTradeButton()
+          : renderTradeButton()}
       </div>
     );
   };
