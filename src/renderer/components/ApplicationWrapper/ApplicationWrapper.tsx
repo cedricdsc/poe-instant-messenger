@@ -88,7 +88,11 @@ export default function ApplicationWrapper() {
           </div>
         </Draggable>
       )}
-      <div className={classNames(classes.fullWidth)}>
+      <div
+        className={classNames({
+          [classes.fullWidth]: !store.state.settings.setUp,
+        })}
+      >
         {storeLoaded && !store.state.settings.setUp && <SetupStepper />}
       </div>
     </>
