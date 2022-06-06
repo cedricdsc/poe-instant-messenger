@@ -15,10 +15,18 @@ import SetupStepper from '../SetupStepper/SetupStepper';
 
 export default function ApplicationWrapper() {
   const [storeLoaded, setStoreLoaded] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
   const [messengerOpen, setMessengerOpen] = useState(false);
   const { store, setStore } = useStore();
   const nodeRef = useRef(null);
+
+  const getDefaultPosition = () => {
+    return {
+      x: store.state.settings.windowPosX,
+      y: store.state.settings.windowPosY,
+    };
+  };
+
+  const { x, y } = getDefaultPosition();
 
   MainProcess.onEvent('MAIN->OVERLAY::main-store-changed', (payload) => {
     setStore({
@@ -28,37 +36,25 @@ export default function ApplicationWrapper() {
     setStoreLoaded(true);
   });
 
+  const toggleMessenger = () => {
+    if (!messengerOpen) {
+      setMessengerOpen(true);
+    } else {
+      setMessengerOpen(false);
+      onElementLeave();
+    }
+  };
+
   const onDragStop: DraggableEventHandler = (
     _e: DraggableEvent,
     d: DraggableData
   ) => {
-    setTimeout(() => setIsDragging(false), 0);
-    MainProcess.sendEvent({
-      name: 'OVERLAY->MAIN::window-pos-changed',
-      payload: { x: d.x, y: d.y },
-    });
-  };
-
-  const onDragStart = () => {
-    setTimeout(() => setIsDragging(true), 0);
-  };
-
-  const getDefaultPosition = () => {
-    return {
-      x: store.state.settings.windowPosX,
-      y: store.state.settings.windowPosY,
-    };
-  };
-
-  const toggleMessenger = () => {
-    if (!isDragging) {
-      if (!messengerOpen) {
-        setMessengerOpen(true);
-      } else {
-        setMessengerOpen(false);
-        onElementLeave();
-      }
-    }
+    if (Math.abs(x - d.x) > 1 || Math.abs(y - d.y) > 1) {
+      MainProcess.sendEvent({
+        name: 'OVERLAY->MAIN::window-pos-changed',
+        payload: { x: d.x, y: d.y },
+      });
+    } else if (!messengerOpen) toggleMessenger();
   };
 
   return (
@@ -67,7 +63,6 @@ export default function ApplicationWrapper() {
         <Draggable
           nodeRef={nodeRef}
           onStop={onDragStop}
-          onDrag={onDragStart}
           defaultPosition={getDefaultPosition()}
         >
           <div
@@ -76,9 +71,6 @@ export default function ApplicationWrapper() {
             ref={nodeRef}
             onMouseEnter={onElementEnter}
             onMouseLeave={onElementLeave}
-            onClick={() => {
-              if (!messengerOpen) toggleMessenger();
-            }}
           >
             {messengerOpen ? (
               <Messenger toggleMessenger={toggleMessenger} />
