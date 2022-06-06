@@ -6,16 +6,17 @@ const sendMessage = async () => {
   for (let i = 0; i < 10; i += 1) {
     focusPoE();
     await sleep(100);
-    if (isPoeFocused()) break;
+    if (isPoeFocused()) {
+      await keyboard.pressKey(Key.Enter);
+      await keyboard.releaseKey(Key.Enter);
+      await keyboard.pressKey(Key.LeftControl, Key.V);
+      await keyboard.releaseKey(Key.LeftControl, Key.V);
+      await keyboard.pressKey(Key.Enter);
+      await keyboard.releaseKey(Key.Enter);
+      focusOverlay();
+      break;
+    }
   }
-
-  await keyboard.pressKey(Key.Enter);
-  await keyboard.releaseKey(Key.Enter);
-  await keyboard.pressKey(Key.LeftControl, Key.V);
-  await keyboard.releaseKey(Key.LeftControl, Key.V);
-  await keyboard.pressKey(Key.Enter);
-  await keyboard.releaseKey(Key.Enter);
-  focusOverlay();
 };
 
 export default sendMessage;
