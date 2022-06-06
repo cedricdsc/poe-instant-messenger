@@ -1,5 +1,6 @@
 import Typography from '@mui/material/Typography';
 import classNames from 'classnames';
+import { v4 as uuidv4 } from 'uuid';
 import { SyntheticEvent, useEffect, useRef, useState } from 'react';
 import { useStore } from '../../background/store';
 import MainProcess from '../../background/mainProcess';
@@ -46,7 +47,7 @@ export default function Messenger({ toggleMessenger }: MessengerProps) {
     return (
       <div className={classNames(classes.chatBox)}>
         {store.state.messageStore[currentUser].messages.map((message) => (
-          <ChatMessage key={message.text} message={message} />
+          <ChatMessage key={uuidv4()} message={message} />
         ))}
         <AlwaysScrollToBottom />
       </div>
