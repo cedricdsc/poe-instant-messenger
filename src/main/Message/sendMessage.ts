@@ -5,7 +5,7 @@ const sendMessage = async () => {
   /* eslint-disable no-await-in-loop */
   for (let i = 0; i < 10; i += 1) {
     focusPoE();
-    await sleep(100);
+    await sleep(150);
     if (isPoeFocused()) {
       await keyboard.pressKey(Key.Enter);
       await keyboard.releaseKey(Key.Enter);
