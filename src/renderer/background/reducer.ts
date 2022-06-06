@@ -1,4 +1,4 @@
-import { StoreSchema } from 'main/Store/schema';
+import { StoreSchema } from '../../main/Store/schema';
 
 export function storeReducer(state: StoreState, action: Actions): StoreState {
   switch (action.type) {

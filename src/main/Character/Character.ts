@@ -1,4 +1,4 @@
-import Message from 'main/Message/Message';
+import Message from '../Message/Message';
 import { ICharacter } from './ICharacter';
 
 class Character implements ICharacter {

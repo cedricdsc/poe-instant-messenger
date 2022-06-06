@@ -8,6 +8,15 @@ import {
   overlayOnEvent,
   overlaySendEvent,
 } from '../Window/MainWindow';
+import Command from '../Command/Command';
+
+function getStoreData(username: string) {
+  const messageStore = Store.get('messageStore');
+  const characterIndex = messageStore.findIndex(
+    (character) => character.username === username
+  );
+  return { messageStore, characterIndex };
+}
 
 export default function setupIpcEventHandler() {
   overlayOnEvent('OVERLAY->MAIN::mouseEnter', (_ipcMainEvent, payload) => {
@@ -28,10 +37,8 @@ export default function setupIpcEventHandler() {
   overlayOnEvent(
     'OVERLAY->MAIN::deleteChatHistory',
     (_ipcMainEvent, payload) => {
-      const messageStore = Store.get('messageStore');
-      const characterIndex = messageStore.findIndex(
-        (character) => character.username === payload.username
-      );
+      const { messageStore, characterIndex } = getStoreData(payload.username);
+
       if (characterIndex !== -1) {
         messageStore.splice(characterIndex, 1);
         Store.set('messageStore', messageStore);
@@ -40,10 +47,8 @@ export default function setupIpcEventHandler() {
   );
 
   overlayOnEvent('OVERLAY->MAIN::readMessages', (_ipcMainEvent, payload) => {
-    const messageStore = Store.get('messageStore');
-    const characterIndex = messageStore.findIndex(
-      (character) => character.username === payload.username
-    );
+    const { messageStore, characterIndex } = getStoreData(payload.username);
+
     if (characterIndex !== -1) {
       messageStore[characterIndex].unread = 0;
       Store.set('messageStore', messageStore);
@@ -58,15 +63,29 @@ export default function setupIpcEventHandler() {
     }
   );
 
-  overlayOnEvent('OVERLAY->MAIN::sendCommand', (_ipcMainEvent, payload) => {
-    if (payload.username) {
-      clipboard.writeText(`${payload.command}${payload.username}`);
-    } else {
-      clipboard.writeText(`${payload.command}`);
-    }
+  overlayOnEvent(
+    'OVERLAY->MAIN::sendCommand',
+    async (_ipcMainEvent, payload) => {
+      if (payload.username) {
+        if (
+          payload.command === Command.PartyKick ||
+          payload.command === Command.PartyInvite
+        ) {
+          if (payload.message) {
+            clipboard.writeText(`@${payload.username} ${payload.message}`);
 
-    sendMessage();
-  });
+            await sendMessage();
+          }
+        }
+
+        clipboard.writeText(`${payload.command}${payload.username}`);
+      } else {
+        clipboard.writeText(`${payload.command}`);
+      }
+
+      await sendMessage();
+    }
+  );
 
   overlayOnEvent(
     'OVERLAY->MAIN::sendMessage',

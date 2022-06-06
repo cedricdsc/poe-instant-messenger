@@ -7,6 +7,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveIcon from '@mui/icons-material/Remove';
 import OtherHousesIcon from '@mui/icons-material/OtherHouses';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import classNames from 'classnames';
 import MainProcess from '../../background/mainProcess';
@@ -37,6 +38,17 @@ export default function TopBar({
     });
   };
 
+  const thankPlayer = () => {
+    MainProcess.sendEvent({
+      name: 'OVERLAY->MAIN::sendCommand',
+      payload: {
+        command: Command.PartyKick,
+        username: store.state.messageStore[currentUserIndex].username,
+        message: 'Thank you Exile.',
+      },
+    });
+  };
+
   const joinHideout = () => {
     MainProcess.sendEvent({
       name: 'OVERLAY->MAIN::sendCommand',
@@ -53,6 +65,8 @@ export default function TopBar({
       payload: {
         command: Command.PartyInvite,
         username: store.state.messageStore[currentUserIndex].username,
+        message:
+          'Your item is ready to be picked-up. I sent you a party invite!',
       },
     });
   };
@@ -81,6 +95,11 @@ export default function TopBar({
         <Tooltip title="Initiate Trade with Player">
           <IconButton onClick={tradePlayer}>
             <CurrencyExchangeIcon />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Thank the Player for the Trade">
+          <IconButton onClick={thankPlayer}>
+            <ThumbUpAltIcon />
           </IconButton>
         </Tooltip>
       </div>

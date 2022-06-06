@@ -1,5 +1,6 @@
 import Typography from '@mui/material/Typography';
 import classNames from 'classnames';
+import { v4 as uuidv4 } from 'uuid';
 import { SyntheticEvent, useEffect, useRef, useState } from 'react';
 import { useStore } from '../../background/store';
 import MainProcess from '../../background/mainProcess';
@@ -15,24 +16,43 @@ interface MessengerProps {
 }
 
 export default function Messenger({ toggleMessenger }: MessengerProps) {
-  const [currentUser, setCurrentUser] = useState(0);
   const { store } = useStore();
+  const [currentUser, setCurrentUser] = useState({ index: 0, name: '' });
+
+  if (
+    store.state.messageStore.length > 0 &&
+    currentUser.name !== store.state.messageStore[currentUser.index].username
+  ) {
+    const newUserIndex = store.state.messageStore.findIndex(
+      (character) => character.username === currentUser.name
+    );
+    if (newUserIndex >= 0)
+      setCurrentUser({ ...currentUser, index: newUserIndex });
+  }
 
   const handleChange = (_event: SyntheticEvent, newCurrentUser: number) => {
-    setCurrentUser(newCurrentUser);
+    setCurrentUser({
+      index: newCurrentUser,
+      name: store.state.messageStore[newCurrentUser].username,
+    });
     MainProcess.sendEvent({
       name: 'OVERLAY->MAIN::readMessages',
-      payload: { username: store.state.messageStore[currentUser].username },
+      payload: {
+        username: store.state.messageStore[currentUser.index].username,
+      },
     });
   };
 
   const deleteChatHistory = () => {
-    if (currentUser === store.state.messageStore.length - 1) {
-      setCurrentUser(currentUser - 1 < 0 ? 0 : currentUser - 1);
+    if (currentUser.index === store.state.messageStore.length - 1) {
+      const index = currentUser.index - 1 < 0 ? 0 : currentUser.index - 1;
+      setCurrentUser({ index, name: store.state.messageStore[index].username });
     }
     MainProcess.sendEvent({
       name: 'OVERLAY->MAIN::deleteChatHistory',
-      payload: { username: store.state.messageStore[currentUser].username },
+      payload: {
+        username: store.state.messageStore[currentUser.index].username,
+      },
     });
   };
 
@@ -45,8 +65,8 @@ export default function Messenger({ toggleMessenger }: MessengerProps) {
   const renderChatMessages = () => {
     return (
       <div className={classNames(classes.chatBox)}>
-        {store.state.messageStore[currentUser].messages.map((message) => (
-          <ChatMessage key={message.text} message={message} />
+        {store.state.messageStore[currentUser.index].messages.map((message) => (
+          <ChatMessage key={uuidv4()} message={message} />
         ))}
         <AlwaysScrollToBottom />
       </div>
@@ -67,11 +87,11 @@ export default function Messenger({ toggleMessenger }: MessengerProps) {
         <div className={classNames(classes.topWrapper)}>
           <ChatTabs
             handleChange={handleChange}
-            currentUserIndex={currentUser}
+            currentUserIndex={currentUser.index}
           />
           <div className={classNames(classes.chatBoxWrapper)}>
             <TopBar
-              currentUserIndex={currentUser}
+              currentUserIndex={currentUser.index}
               toggleMessenger={toggleMessenger}
               deleteChatHistory={deleteChatHistory}
             />
@@ -84,7 +104,7 @@ export default function Messenger({ toggleMessenger }: MessengerProps) {
         <div className={classNames(classes.bottomWrapper)}>
           <BottomBar />
           {store.state.messageStore.length > 0 && (
-            <ChatInput currentUserIndex={currentUser} />
+            <ChatInput currentUserIndex={currentUser.index} />
           )}
         </div>
       </div>

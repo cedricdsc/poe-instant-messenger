@@ -1,4 +1,4 @@
-import Message from 'main/Message/Message';
+import Message from '../Message/Message';
 
 export interface ICharacter {
   username: string;

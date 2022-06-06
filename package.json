@@ -1,6 +1,6 @@
 {
   "description": "A third-party messenger application for Path of Exile",
-  "version": "0.2.0-alpha.0",
+  "version": "0.3.0-alpha.0",
   "keywords": [
     "electron",
     "react",
@@ -125,7 +125,8 @@
     "react-dom": "^18.1.0",
     "react-draggable": "^4.4.5",
     "react-router-dom": "^6.3.0",
-    "tail": "^2.2.4"
+    "tail": "^2.2.4",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@nut-tree/nut-js": "^2.0.1",
@@ -140,6 +141,7 @@
     "@types/react-test-renderer": "^18.0.0",
     "@types/tail": "^2.2.1",
     "@types/terser-webpack-plugin": "^5.0.4",
+    "@types/uuid": "^8.3.4",
     "@types/webpack-bundle-analyzer": "^4.4.1",
     "@typescript-eslint/eslint-plugin": "^5.23.0",
     "@typescript-eslint/parser": "^5.23.0",
