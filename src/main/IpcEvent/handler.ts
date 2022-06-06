@@ -8,7 +8,6 @@ import {
   overlayOnEvent,
   overlaySendEvent,
 } from '../Window/MainWindow';
-import { TradeStatus } from '../Character/CharacterStatus';
 import Command from '../Command/Command';
 
 function getStoreData(username: string) {
@@ -68,28 +67,12 @@ export default function setupIpcEventHandler() {
     'OVERLAY->MAIN::sendCommand',
     async (_ipcMainEvent, payload) => {
       if (payload.username) {
-        const { messageStore, characterIndex } = getStoreData(payload.username);
-
-        if (payload.command === Command.TradeInvite) {
-          if (
-            payload.tradeStatus === TradeStatus.Initiated &&
-            characterIndex !== -1
-          ) {
-            messageStore[characterIndex].tradeStatus = payload.tradeStatus;
-            Store.set('messageStore', messageStore);
-          }
-        }
-
-        if (payload.command === Command.PartyKick) {
-          if (
-            payload.tradeStatus === TradeStatus.Idle &&
-            payload.message &&
-            characterIndex !== -1
-          ) {
+        if (
+          payload.command === Command.PartyKick ||
+          payload.command === Command.PartyInvite
+        ) {
+          if (payload.message) {
             clipboard.writeText(`@${payload.username} ${payload.message}`);
-
-            messageStore[characterIndex].tradeStatus = payload.tradeStatus;
-            Store.set('messageStore', messageStore);
 
             await sendMessage();
           }

@@ -14,7 +14,6 @@ import MainProcess from '../../background/mainProcess';
 import { useStore } from '../../background/store';
 import classes from './TopBar.module.scss';
 import Command from '../../../main/Command/Command';
-import { TradeStatus } from '../../../main/Character/CharacterStatus';
 
 interface TopBarProps {
   currentUserIndex: number;
@@ -35,7 +34,6 @@ export default function TopBar({
       payload: {
         command: Command.TradeInvite,
         username: store.state.messageStore[currentUserIndex].username,
-        tradeStatus: TradeStatus.Initiated,
       },
     });
   };
@@ -46,7 +44,6 @@ export default function TopBar({
       payload: {
         command: Command.PartyKick,
         username: store.state.messageStore[currentUserIndex].username,
-        tradeStatus: TradeStatus.Idle,
         message: 'Thank you Exile.',
       },
     });
@@ -68,6 +65,8 @@ export default function TopBar({
       payload: {
         command: Command.PartyInvite,
         username: store.state.messageStore[currentUserIndex].username,
+        message:
+          'Your item is ready to be picked-up. I sent you a party invite!',
       },
     });
   };
@@ -77,32 +76,6 @@ export default function TopBar({
       <Typography className={classNames(classes.username)}>
         {store.state.messageStore[currentUserIndex].username}
       </Typography>
-    );
-  };
-
-  const renderTradeButton = () => {
-    return (
-      <Tooltip title="Initiate Trade with Player">
-        <IconButton
-          onClick={tradePlayer}
-          disabled={
-            store.state.messageStore[currentUserIndex].tradeStatus ===
-            TradeStatus.Initiated
-          }
-        >
-          <CurrencyExchangeIcon />
-        </IconButton>
-      </Tooltip>
-    );
-  };
-
-  const renderThankForTradeButton = () => {
-    return (
-      <Tooltip title="Thank the Player for the Trade">
-        <IconButton onClick={thankPlayer}>
-          <ThumbUpAltIcon />
-        </IconButton>
-      </Tooltip>
     );
   };
 
@@ -119,10 +92,16 @@ export default function TopBar({
             <OtherHousesIcon />
           </IconButton>
         </Tooltip>
-        {store.state.messageStore[currentUserIndex].tradeStatus ===
-        TradeStatus.Accepted
-          ? renderThankForTradeButton()
-          : renderTradeButton()}
+        <Tooltip title="Initiate Trade with Player">
+          <IconButton onClick={tradePlayer}>
+            <CurrencyExchangeIcon />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Thank the Player for the Trade">
+          <IconButton onClick={thankPlayer}>
+            <ThumbUpAltIcon />
+          </IconButton>
+        </Tooltip>
       </div>
     );
   };

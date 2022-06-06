@@ -1,5 +1,4 @@
 import { Schema } from 'electron-store';
-import { TradeStatus } from '../Character/CharacterStatus';
 import Character from '../Character/Character';
 import Direction from '../Message/Direction';
 
@@ -55,13 +54,6 @@ const schema: Schema<StoreSchema> = {
               timestamp: { format: 'date-time' },
               text: { type: 'string' },
               username: { type: 'string' },
-              initiatedTrade: {
-                enum: [
-                  TradeStatus.Idle,
-                  TradeStatus.Initiated,
-                  TradeStatus.Accepted,
-                ],
-              },
             },
           },
         },
