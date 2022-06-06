@@ -20,6 +20,7 @@ export default function Messenger({ toggleMessenger }: MessengerProps) {
   const [currentUser, setCurrentUser] = useState({ index: 0, name: '' });
 
   if (
+    store.state.messageStore.length > 0 &&
     currentUser.name !== store.state.messageStore[currentUser.index].username
   ) {
     const newUserIndex = store.state.messageStore.findIndex(
