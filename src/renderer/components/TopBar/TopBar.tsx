@@ -13,6 +13,7 @@ import MainProcess from '../../background/mainProcess';
 import { useStore } from '../../background/store';
 import classes from './TopBar.module.scss';
 import Command from '../../../main/Command/Command';
+import { TradeStatus } from '../../../main/Character/CharacterStatus';
 
 interface TopBarProps {
   currentUserIndex: number;
@@ -33,6 +34,7 @@ export default function TopBar({
       payload: {
         command: Command.TradeInvite,
         username: store.state.messageStore[currentUserIndex].username,
+        tradeStatus: TradeStatus.Initiated,
       },
     });
   };
@@ -79,7 +81,13 @@ export default function TopBar({
           </IconButton>
         </Tooltip>
         <Tooltip title="Initiate Trade with Player">
-          <IconButton onClick={tradePlayer}>
+          <IconButton
+            onClick={tradePlayer}
+            disabled={
+              store.state.messageStore[currentUserIndex].tradeStatus ===
+              TradeStatus.Initiated
+            }
+          >
             <CurrencyExchangeIcon />
           </IconButton>
         </Tooltip>
