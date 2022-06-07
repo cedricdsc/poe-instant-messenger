@@ -24,7 +24,7 @@ export default function startLogWatcher(cb: (event: IpcEvent) => void) {
   const tail = new Tail(path, {
     follow: false,
     useWatchFile: true,
-    fsWatchOptions: { interval: 100 },
+    fsWatchOptions: { interval: 200 },
   });
 
   tail.on('line', (data: string) => {
