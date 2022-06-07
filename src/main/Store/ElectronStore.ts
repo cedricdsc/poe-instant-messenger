@@ -12,8 +12,6 @@ const Store = new ElectronStore({
 const settings = Store.get('settings');
 const msgStore = Store.get('messageStore');
 
-console.log(settings);
-
 if (
   settings === undefined ||
   msgStore === undefined ||
