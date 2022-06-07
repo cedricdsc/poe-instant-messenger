@@ -8,6 +8,8 @@ import { IpcEvent } from '../IpcEvent/IpcEvent';
 const DEFAULT_PATH =
   'C:/Program Files (x86)/Grinding Gear Games/Path of Exile/logs/Client.txt';
 
+let tail: Tail;
+
 function isWhisperFromUser(data: string) {
   const startOfMessage = data.indexOf(': ');
   const log = data.substring(0, startOfMessage);
@@ -21,7 +23,8 @@ function isWhisperFromUser(data: string) {
 export default function startLogWatcher(cb: (event: IpcEvent) => void) {
   const storedPath = Store.get('settings.logPath');
   const path = typeof storedPath === 'string' ? storedPath : DEFAULT_PATH;
-  const tail = new Tail(path, {
+  if (tail !== undefined) tail.unwatch();
+  tail = new Tail(path, {
     follow: false,
     useWatchFile: true,
     fsWatchOptions: { interval: 200 },
