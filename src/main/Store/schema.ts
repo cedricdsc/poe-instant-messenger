@@ -16,6 +16,20 @@ export interface StoreSchema {
   messageStore: Array<Character>;
 }
 
+export function instaceOfSettings(
+  object: any
+): object is StoreSchema['settings'] {
+  return (
+    'setUp' in object &&
+    'logPath' in object &&
+    'windowTitle' in object &&
+    'hardwareAccelerationEnabled' in object &&
+    'windowPosX' in object &&
+    'windowPosY' in object &&
+    'commandMessages' in object
+  );
+}
+
 const schema: Schema<StoreSchema> = {
   settings: {
     type: 'object',
