@@ -13,9 +13,13 @@ import TopBar from '../TopBar/TopBar';
 
 interface MessengerProps {
   toggleMessenger: () => void;
+  toggleSettings: () => void;
 }
 
-export default function Messenger({ toggleMessenger }: MessengerProps) {
+export default function Messenger({
+  toggleMessenger,
+  toggleSettings,
+}: MessengerProps) {
   const { store } = useStore();
   const [currentUser, setCurrentUser] = useState({ index: 0, name: '' });
 
@@ -102,7 +106,7 @@ export default function Messenger({ toggleMessenger }: MessengerProps) {
           </div>
         </div>
         <div className={classNames(classes.bottomWrapper)}>
-          <BottomBar />
+          <BottomBar toggleSettings={toggleSettings} />
           {store.state.messageStore.length > 0 && (
             <ChatInput currentUserIndex={currentUser.index} />
           )}

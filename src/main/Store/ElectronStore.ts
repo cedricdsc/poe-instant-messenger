@@ -1,7 +1,29 @@
 import ElectronStore from 'electron-store';
-import schema from './schema';
+import Character from '../Character/Character';
+import { initialState } from '../../renderer/background/reducer';
+import schema, { instaceOfSettings } from './schema';
 
-const Store = new ElectronStore({ schema, watch: true });
+const Store = new ElectronStore({
+  schema,
+  watch: true,
+  clearInvalidConfig: true,
+});
+
+const settings = Store.get('settings');
+const msgStore = Store.get('messageStore');
+
+if (
+  settings === undefined ||
+  msgStore === undefined ||
+  !instaceOfSettings(settings) ||
+  (Array.isArray(msgStore) &&
+    msgStore.length > 0 &&
+    msgStore.every((item) => {
+      return item instanceof Character;
+    }))
+) {
+  Store.set(initialState);
+}
 
 type CallBack = () => void;
 

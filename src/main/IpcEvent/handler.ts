@@ -55,6 +55,14 @@ export default function setupIpcEventHandler() {
     }
   });
 
+  overlayOnEvent('OVERLAY->MAIN::saveSettings', (_ipcMainEvent, payload) => {
+    Store.set('settings', payload.settings);
+  });
+
+  overlayOnEvent('OVERLAY->MAIN::repeatSetup', (_ipcMainEvent) => {
+    Store.set('settings.setUp', false);
+  });
+
   overlayOnEvent(
     'OVERLAY->MAIN::window-pos-changed',
     (_ipcMainEvent, payload) => {
@@ -78,7 +86,7 @@ export default function setupIpcEventHandler() {
           }
         }
 
-        clipboard.writeText(`${payload.command}${payload.username}`);
+        clipboard.writeText(`${payload.command} ${payload.username}`);
       } else {
         clipboard.writeText(`${payload.command}`);
       }

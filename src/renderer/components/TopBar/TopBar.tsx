@@ -44,7 +44,7 @@ export default function TopBar({
       payload: {
         command: Command.PartyKick,
         username: store.state.messageStore[currentUserIndex].username,
-        message: 'Thank you Exile.',
+        message: store.state.settings.commandMessages[Command.PartyKick],
       },
     });
   };
@@ -65,8 +65,7 @@ export default function TopBar({
       payload: {
         command: Command.PartyInvite,
         username: store.state.messageStore[currentUserIndex].username,
-        message:
-          'Your item is ready to be picked-up. I sent you a party invite!',
+        message: store.state.settings.commandMessages[Command.PartyInvite],
       },
     });
   };

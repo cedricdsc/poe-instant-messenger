@@ -1,3 +1,4 @@
+import Command from '../../main/Command/Command';
 import { StoreSchema } from '../../main/Store/schema';
 
 export function storeReducer(state: StoreState, action: Actions): StoreState {
@@ -23,6 +24,11 @@ export const initialState: StoreSchema = {
     hardwareAccelerationEnabled: false,
     windowPosX: 0,
     windowPosY: 0,
+    commandMessages: {
+      [Command.PartyInvite]:
+        'Your item is ready to be picked-up Exile. I sent you a party invite!',
+      [Command.PartyKick]: 'Thank you for the trade, Exile.',
+    },
   },
   messageStore: [],
 };

@@ -1,7 +1,16 @@
-# PoE Intant Messenger
+# PoE Instant Messenger
 
-# Download (Windows) 
+## Download (Windows) 
 [The latest release can be downloaded here](https://github.com/cedricdsc/poe-instant-messenger/releases)
+
+## Tool showcase
+| Setup | Notifier | Messenger | Settings  |
+|-------|----------|-----------|-----------|
+|[<img src="https://i.imgur.com/KOZd05e.png">](https://i.imgur.com/KOZd05e.png)|[<img src="https://i.imgur.com/pFTgS0d.png">](https://i.imgur.com/pFTgS0d.png)|[<img src="https://i.imgur.com/nipZwIw.png">](https://i.imgur.com/nipZwIw.png)|[<img src="https://i.imgur.com/O58gmz4.png">](https://i.imgur.com/O58gmz4.png)|
+
+## Community
+
+Join our Discord: TBD
 
 ## Install
 
@@ -29,9 +38,11 @@ To package apps for the local platform:
 npm run package
 ```
 
-## Community
+## Special Thanks
 
-Join our Discord: placeholder
+* [SnosMe](https://github.com/SnosMe) for creating [electron-overlay-window](https://github.com/SnosMe/electron-overlay-window)
+* [All Awakened PoE Trade Contributers](https://github.com/SnosMe/awakened-poe-trade) for code base inspiration
+* [All Electron React Boilerplate Contributers](https://github.com/electron-react-boilerplate/electron-react-boilerplate) for their amazing work
 
 ## Donations
 
