@@ -21,7 +21,11 @@ function isWhisperFromUser(data: string) {
 export default function startLogWatcher(cb: (event: IpcEvent) => void) {
   const storedPath = Store.get('settings.logPath');
   const path = typeof storedPath === 'string' ? storedPath : DEFAULT_PATH;
-  const tail = new Tail(path, { follow: false });
+  const tail = new Tail(path, {
+    follow: false,
+    useWatchFile: true,
+    fsWatchOptions: { interval: 100 },
+  });
 
   tail.on('line', (data: string) => {
     let messageStore = Store.get('messageStore');
