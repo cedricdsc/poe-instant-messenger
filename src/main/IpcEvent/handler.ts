@@ -56,6 +56,18 @@ export default function setupIpcEventHandler() {
   });
 
   overlayOnEvent(
+    'OVERLAY->MAIN::changeCommandMessage',
+    (_ipcMainEvent, payload) => {
+      const commandMessages: Record<
+        Command.PartyInvite | Command.PartyKick,
+        string
+      > = Store.get('settings.commandMessages');
+      commandMessages[payload.command] = payload.text;
+      Store.set(`settings.commandMessages`, commandMessages);
+    }
+  );
+
+  overlayOnEvent(
     'OVERLAY->MAIN::window-pos-changed',
     (_ipcMainEvent, payload) => {
       Store.set('settings.windowPosX', payload.x);
@@ -78,7 +90,7 @@ export default function setupIpcEventHandler() {
           }
         }
 
-        clipboard.writeText(`${payload.command}${payload.username}`);
+        clipboard.writeText(`${payload.command} ${payload.username}`);
       } else {
         clipboard.writeText(`${payload.command}`);
       }

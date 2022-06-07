@@ -12,10 +12,12 @@ import { onElementEnter, onElementLeave } from '../../background/util';
 import Messenger from '../Messenger/Messenger';
 import Notifier from '../Notifier/Notifier';
 import SetupStepper from '../SetupStepper/SetupStepper';
+import Settings from '../Settings/Settings';
 
 export default function ApplicationWrapper() {
   const [storeLoaded, setStoreLoaded] = useState(false);
   const [messengerOpen, setMessengerOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
   const { store, setStore } = useStore();
   const nodeRef = useRef(null);
 
@@ -45,6 +47,10 @@ export default function ApplicationWrapper() {
     }
   };
 
+  const toggleSettings = () => {
+    setSettingsOpen(!settingsOpen);
+  };
+
   const onDragStop: DraggableEventHandler = (
     _e: DraggableEvent,
     d: DraggableData
@@ -61,6 +67,7 @@ export default function ApplicationWrapper() {
     <>
       {storeLoaded && store.state.settings.setUp && (
         <Draggable
+          disabled={settingsOpen}
           nodeRef={nodeRef}
           onStop={onDragStop}
           defaultPosition={getDefaultPosition()}
@@ -71,12 +78,18 @@ export default function ApplicationWrapper() {
             ref={nodeRef}
             onMouseEnter={onElementEnter}
             onMouseLeave={onElementLeave}
+            className={classNames(classes.appWrapper)}
           >
-            {messengerOpen ? (
-              <Messenger toggleMessenger={toggleMessenger} />
-            ) : (
-              <Notifier />
+            {messengerOpen && !settingsOpen && (
+              <Messenger
+                toggleMessenger={toggleMessenger}
+                toggleSettings={toggleSettings}
+              />
             )}
+            {messengerOpen && settingsOpen && (
+              <Settings toggleSettings={toggleSettings} />
+            )}
+            {!messengerOpen && <Notifier />}
           </div>
         </Draggable>
       )}

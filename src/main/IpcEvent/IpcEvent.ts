@@ -1,3 +1,4 @@
+import Command from '../Command/Command';
 import { ICommand } from '../Command/ICommand';
 import { StoreSchema } from '../Store/schema';
 
@@ -57,6 +58,11 @@ export type IpcFinishSetup = Event<
   { path: string }
 >;
 
+export type IpcChangeCommandMessage = Event<
+  'OVERLAY->MAIN::changeCommandMessage',
+  { command: Command.PartyInvite | Command.PartyKick; text: string }
+>;
+
 export type IpcSendCommand = Event<'OVERLAY->MAIN::sendCommand', ICommand>;
 
 export type IpcEvent =
@@ -69,6 +75,7 @@ export type IpcEvent =
   | IpcNotify
   | IpcReadMessages
   | IpcSendCommand
+  | IpcChangeCommandMessage
   | IpcWindowPositionChanged;
 
 export type IpcEventPayload<

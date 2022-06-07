@@ -11,7 +11,11 @@ import classes from './BottomBar.module.scss';
 import MainProcess from '../../background/mainProcess';
 import Command from '../../../main/Command/Command';
 
-export default function BottomBar() {
+interface BottomBarProps {
+  toggleSettings: () => void;
+}
+
+export default function BottomBar({ toggleSettings }: BottomBarProps) {
   const joinOwnHideout = () => {
     MainProcess.sendEvent({
       name: 'OVERLAY->MAIN::sendCommand',
@@ -38,7 +42,7 @@ export default function BottomBar() {
     <AppBar className={classNames(classes.ctaBottom)} position="static">
       <Toolbar variant="dense">
         <Tooltip title="Settings">
-          <IconButton disabled>
+          <IconButton onClick={toggleSettings}>
             <SettingsIcon />
           </IconButton>
         </Tooltip>

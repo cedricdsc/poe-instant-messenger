@@ -1,47 +1,47 @@
-.container{
+.container {
+  display: flex;
+  flex-direction: column;
+  max-width: 800px;
+  width: 800px;
+  height: 480px;
+  max-height: 480px;
+  background: #ffffff;
+
+  .topWrapper {
     display: flex;
-    flex-direction: column;
-    max-width: 800px;
-    width: 800px;
-    height: 480px;
-    max-height: 480px;
-    background: #ffffff;
+    flex-direction: row;
+    overflow: hidden;
+    flex: 1;
 
-    .topWrapper{
-        display: flex;
-        flex-direction: row;
-        overflow: hidden;
-        flex: 1;
-        
-        .chatBoxWrapper{
-            display: flex;
-            flex-direction: column;
-            flex: 1; 
-        }
-    
-        .chatBox{
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-    
-            padding: 16px;
-            overflow: scroll;
-            
-            &::-webkit-scrollbar{
-                display: none;
-            }
-        }
-
-        .emptyChat{
-            display: flex;
-            flex: 1;
-            justify-content: center;
-            align-items: center;
-        }
+    .chatBoxWrapper {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
     }
 
-    .bottomWrapper{
-        display: flex;
-        flex-direction: row;
+    .chatBox {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+
+      padding: 16px;
+      overflow: scroll;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
     }
+
+    .emptyChat {
+      display: flex;
+      flex: 1;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .bottomWrapper {
+    display: flex;
+    flex-direction: row;
+  }
 }

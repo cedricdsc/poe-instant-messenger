@@ -1,4 +1,5 @@
 import { Schema } from 'electron-store';
+import Command from '../Command/Command';
 import Character from '../Character/Character';
 import Direction from '../Message/Direction';
 
@@ -10,6 +11,7 @@ export interface StoreSchema {
     hardwareAccelerationEnabled: boolean;
     windowPosX: number;
     windowPosY: number;
+    commandMessages: Record<Command.PartyInvite | Command.PartyKick, string>;
   };
   messageStore: Array<Character>;
 }
@@ -35,6 +37,17 @@ const schema: Schema<StoreSchema> = {
       },
       windowPosY: {
         type: 'number',
+      },
+      commandMessages: {
+        type: 'object',
+        properties: {
+          [Command.PartyInvite]: {
+            type: 'string',
+          },
+          [Command.PartyKick]: {
+            type: 'string',
+          },
+        },
       },
     },
   },
