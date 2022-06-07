@@ -26,8 +26,8 @@ export const initialState: StoreSchema = {
     windowPosY: 0,
     commandMessages: {
       [Command.PartyInvite]:
-        'Your item is ready to be picked-up. I sent you a party invite!',
-      [Command.PartyKick]: 'Thank you Exile.',
+        'Your item is ready to be picked-up Exile. I sent you a party invite!',
+      [Command.PartyKick]: 'Thank you for the trade, Exile.',
     },
   },
   messageStore: [],

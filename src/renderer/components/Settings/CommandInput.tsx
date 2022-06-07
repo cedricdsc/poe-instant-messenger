@@ -1,39 +1,43 @@
-import { FormControl, Input, InputLabel } from '@mui/material';
-import { ChangeEvent, useState } from 'react';
-import MainProcess from '../../background/mainProcess';
-import { useStore } from '../../background/store';
+import { FormControl, FormHelperText, Input, InputLabel } from '@mui/material';
+import { ChangeEvent } from 'react';
 import Command from '../../../main/Command/Command';
+import { StoreSchema } from '../../../main/Store/schema';
 
 interface CommandInputProps {
   command: Command.PartyInvite | Command.PartyKick;
   name: string;
+  currentSettings: StoreSchema['settings'];
+  updateSettings: (arg0: StoreSchema['settings']) => void;
+  helperText?: string;
 }
 
-export default function CommandInput({ command, name }: CommandInputProps) {
-  const { store } = useStore();
-  const [text, setText] = useState(
-    store.state.settings.commandMessages[command]
-  );
-
+export default function CommandInput({
+  command,
+  name,
+  updateSettings,
+  currentSettings,
+  helperText,
+}: CommandInputProps) {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setText(event.target.value);
-    MainProcess.sendEvent({
-      name: 'OVERLAY->MAIN::changeCommandMessage',
-      payload: {
-        command,
-        text: event.target.value,
-      },
-    });
+    const newSettings = { ...currentSettings };
+    newSettings.commandMessages[command] = event.target.value;
+    updateSettings(newSettings);
   };
 
   return (
-    <FormControl variant="standard">
+    <FormControl fullWidth variant="standard">
       <InputLabel htmlFor="component-simple">{name}</InputLabel>
       <Input
-        id={command.substring(1, command.length - 1)}
-        value={text}
+        id={command.substring(1)}
+        value={currentSettings.commandMessages[command]}
         onChange={handleChange}
+        aria-describedby={`${command.substring(1)}-helper-text`}
       />
+      {helperText && (
+        <FormHelperText id={`${command.substring(1)}-helper-text`}>
+          {helperText}
+        </FormHelperText>
+      )}
     </FormControl>
   );
 }

@@ -55,17 +55,9 @@ export default function setupIpcEventHandler() {
     }
   });
 
-  overlayOnEvent(
-    'OVERLAY->MAIN::changeCommandMessage',
-    (_ipcMainEvent, payload) => {
-      const commandMessages: Record<
-        Command.PartyInvite | Command.PartyKick,
-        string
-      > = Store.get('settings.commandMessages');
-      commandMessages[payload.command] = payload.text;
-      Store.set(`settings.commandMessages`, commandMessages);
-    }
-  );
+  overlayOnEvent('OVERLAY->MAIN::saveSettings', (_ipcMainEvent, payload) => {
+    Store.set('settings', payload.settings);
+  });
 
   overlayOnEvent(
     'OVERLAY->MAIN::window-pos-changed',
