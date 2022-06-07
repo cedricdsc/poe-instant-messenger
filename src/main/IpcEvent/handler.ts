@@ -59,6 +59,10 @@ export default function setupIpcEventHandler() {
     Store.set('settings', payload.settings);
   });
 
+  overlayOnEvent('OVERLAY->MAIN::repeatSetup', (_ipcMainEvent) => {
+    Store.set('settings.setUp', false);
+  });
+
   overlayOnEvent(
     'OVERLAY->MAIN::window-pos-changed',
     (_ipcMainEvent, payload) => {

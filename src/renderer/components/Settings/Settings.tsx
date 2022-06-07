@@ -1,7 +1,15 @@
-import { Button, Divider, Grid, IconButton, Typography } from '@mui/material';
+import {
+  Button,
+  Divider,
+  Grid,
+  IconButton,
+  Tooltip,
+  Typography,
+} from '@mui/material';
 import classNames from 'classnames';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import { useState } from 'react';
+import WifiProtectedSetupIcon from '@mui/icons-material/WifiProtectedSetup';
 import SaveIcon from '@mui/icons-material/Save';
 import classes from './Settings.module.scss';
 import CommandInput from './CommandInput';
@@ -12,9 +20,13 @@ import MainProcess from '../../background/mainProcess';
 
 interface SettingsProps {
   toggleSettings: () => void;
+  repeatSetup: () => void;
 }
 
-export default function Settings({ toggleSettings }: SettingsProps) {
+export default function Settings({
+  toggleSettings,
+  repeatSetup,
+}: SettingsProps) {
   const { store } = useStore();
   const [settings, setSettings] = useState<StoreSchema['settings']>(
     store.state.settings
@@ -36,9 +48,11 @@ export default function Settings({ toggleSettings }: SettingsProps) {
     <div className={classNames(classes.settingsWrapper)}>
       <Grid container rowSpacing={1} columnSpacing={0.5}>
         <Grid item md={12}>
-          <IconButton sx={{ marginLeft: -1 }} onClick={toggleSettings}>
-            <KeyboardBackspaceIcon />
-          </IconButton>
+          <Tooltip title="Go back to Messenger">
+            <IconButton sx={{ marginLeft: -1 }} onClick={toggleSettings}>
+              <KeyboardBackspaceIcon />
+            </IconButton>
+          </Tooltip>
         </Grid>
         <Grid item md={12}>
           <Typography variant="h5">Settings</Typography>
@@ -63,14 +77,25 @@ export default function Settings({ toggleSettings }: SettingsProps) {
           />
         </Grid>
         <Grid item md={12}>
-          <div className={classNames(classes.saveButtonWrapper)}>
-            <Button
-              variant="contained"
-              endIcon={<SaveIcon />}
-              onClick={saveSettings}
-            >
-              Save
-            </Button>
+          <div className={classNames(classes.buttonsWrapper)}>
+            <Tooltip title="Repeat the Setup Dialog">
+              <Button
+                variant="contained"
+                startIcon={<WifiProtectedSetupIcon />}
+                onClick={repeatSetup}
+              >
+                Re-run Setup
+              </Button>
+            </Tooltip>
+            <Tooltip title="Save Settings">
+              <Button
+                variant="contained"
+                endIcon={<SaveIcon />}
+                onClick={saveSettings}
+              >
+                Save
+              </Button>
+            </Tooltip>
           </div>
         </Grid>
       </Grid>

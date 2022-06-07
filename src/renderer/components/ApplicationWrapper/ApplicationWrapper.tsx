@@ -51,6 +51,15 @@ export default function ApplicationWrapper() {
     setSettingsOpen(!settingsOpen);
   };
 
+  const repeatSetup = () => {
+    MainProcess.sendEvent({
+      name: 'OVERLAY->MAIN::repeatSetup',
+      payload: undefined,
+    });
+    onElementLeave();
+    setTimeout(() => setSettingsOpen(false), 100);
+  };
+
   const onDragStop: DraggableEventHandler = (
     _e: DraggableEvent,
     d: DraggableData
@@ -87,7 +96,10 @@ export default function ApplicationWrapper() {
               />
             )}
             {messengerOpen && settingsOpen && (
-              <Settings toggleSettings={toggleSettings} />
+              <Settings
+                toggleSettings={toggleSettings}
+                repeatSetup={repeatSetup}
+              />
             )}
             {!messengerOpen && <Notifier />}
           </div>

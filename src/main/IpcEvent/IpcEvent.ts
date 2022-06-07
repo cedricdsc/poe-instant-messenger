@@ -57,6 +57,8 @@ export type IpcFinishSetup = Event<
   { path: string }
 >;
 
+export type IpcRepeatSetup = Event<'OVERLAY->MAIN::repeatSetup'>;
+
 export type IpcSaveSettings = Event<
   'OVERLAY->MAIN::saveSettings',
   { settings: StoreSchema['settings'] }
@@ -75,6 +77,7 @@ export type IpcEvent =
   | IpcReadMessages
   | IpcSendCommand
   | IpcSaveSettings
+  | IpcRepeatSetup
   | IpcWindowPositionChanged;
 
 export type IpcEventPayload<

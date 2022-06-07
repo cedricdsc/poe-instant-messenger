@@ -5,8 +5,10 @@
   background-color: #ffffff;
 }
 
-.saveButtonWrapper {
+.buttonsWrapper {
+  padding-top: 32px;
   width: 100%;
   display: flex;
   justify-content: flex-end;
+  gap: 16px;
 }
