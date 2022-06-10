@@ -10,7 +10,7 @@
 
 ## Community
 
-Join our Discord: TBD
+Join the [Discord](https://discord.gg/RAxM4btu)
 
 ## Install
 
