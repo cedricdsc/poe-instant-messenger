@@ -1,5 +1,4 @@
 import { app } from 'electron';
-import Store from './Store/ElectronStore';
 import setupIpcEventHandler from './IpcEvent/handler';
 import { createTray } from './Tray/tray';
 import {
@@ -7,15 +6,14 @@ import {
   createMainWindow,
 } from './Window/MainWindow';
 import { checkForSettings } from './util';
+import AppUpdater from './AppUpdater/AppUpdater';
 
 if (!app.requestSingleInstanceLock()) {
   app.exit();
 }
 
-if (!Store.get('settings.hardwareAccelerationEnabled')) {
-  app.disableHardwareAcceleration();
-  Store.set('settings.hardwareAccelerationEnabled', true);
-}
+// eslint-disable-next-line
+new AppUpdater();
 
 // if (process.env.NODE_ENV === 'production') {
 //   const sourceMapSupport = require('source-map-support');
