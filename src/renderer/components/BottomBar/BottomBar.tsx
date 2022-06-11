@@ -6,7 +6,7 @@ import HouseIcon from '@mui/icons-material/House';
 import SettingsIcon from '@mui/icons-material/Settings';
 import InfoIcon from '@mui/icons-material/Info';
 import classNames from 'classnames';
-import pj from '../../../../package.json';
+import pj from '../../../../release/app/package.json';
 import classes from './BottomBar.module.scss';
 import MainProcess from '../../background/mainProcess';
 import Command from '../../../main/Command/Command';
