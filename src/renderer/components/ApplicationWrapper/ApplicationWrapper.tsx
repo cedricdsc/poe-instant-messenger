@@ -5,6 +5,7 @@ import Draggable, {
   DraggableEvent,
   DraggableEventHandler,
 } from 'react-draggable';
+import { ThemeProvider } from '@mui/material';
 import MainProcess from '../../background/mainProcess';
 import { useStore } from '../../background/store';
 import classes from './ApplicationWrapper.module.scss';
@@ -13,6 +14,7 @@ import Messenger from '../Messenger/Messenger';
 import Notifier from '../Notifier/Notifier';
 import SetupStepper from '../SetupStepper/SetupStepper';
 import Settings from '../Settings/Settings';
+import { darkTheme, lightTheme } from '../../globals/theme';
 
 export default function ApplicationWrapper() {
   const [storeLoaded, setStoreLoaded] = useState(false);
@@ -74,44 +76,48 @@ export default function ApplicationWrapper() {
 
   return (
     <>
-      {storeLoaded && store.state.settings.setUp && (
-        <Draggable
-          disabled={settingsOpen}
-          nodeRef={nodeRef}
-          onStop={onDragStop}
-          defaultPosition={getDefaultPosition()}
-        >
-          <div
-            role="button"
-            tabIndex={0}
-            ref={nodeRef}
-            onMouseEnter={onElementEnter}
-            onMouseLeave={onElementLeave}
-            className={classNames(classes.appWrapper)}
-          >
-            {messengerOpen && !settingsOpen && (
-              <Messenger
-                toggleMessenger={toggleMessenger}
-                toggleSettings={toggleSettings}
-              />
-            )}
-            {messengerOpen && settingsOpen && (
-              <Settings
-                toggleSettings={toggleSettings}
-                repeatSetup={repeatSetup}
-              />
-            )}
-            {!messengerOpen && <Notifier />}
-          </div>
-        </Draggable>
-      )}
-      <div
-        className={classNames({
-          [classes.fullWidth]: !store.state.settings.setUp,
-        })}
+      <ThemeProvider
+        theme={store.state.settings.darkTheme ? darkTheme : lightTheme}
       >
-        {storeLoaded && !store.state.settings.setUp && <SetupStepper />}
-      </div>
+        {storeLoaded && store.state.settings.setUp && (
+          <Draggable
+            disabled={settingsOpen}
+            nodeRef={nodeRef}
+            onStop={onDragStop}
+            defaultPosition={getDefaultPosition()}
+          >
+            <div
+              role="button"
+              tabIndex={0}
+              ref={nodeRef}
+              onMouseEnter={onElementEnter}
+              onMouseLeave={onElementLeave}
+              className={classNames(classes.appWrapper)}
+            >
+              {messengerOpen && !settingsOpen && (
+                <Messenger
+                  toggleMessenger={toggleMessenger}
+                  toggleSettings={toggleSettings}
+                />
+              )}
+              {messengerOpen && settingsOpen && (
+                <Settings
+                  toggleSettings={toggleSettings}
+                  repeatSetup={repeatSetup}
+                />
+              )}
+              {!messengerOpen && <Notifier />}
+            </div>
+          </Draggable>
+        )}
+        <div
+          className={classNames({
+            [classes.fullWidth]: !store.state.settings.setUp,
+          })}
+        >
+          {storeLoaded && !store.state.settings.setUp && <SetupStepper />}
+        </div>
+      </ThemeProvider>
     </>
   );
 }

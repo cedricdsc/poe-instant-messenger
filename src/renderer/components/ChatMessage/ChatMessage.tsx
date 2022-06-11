@@ -1,5 +1,7 @@
 import { Paper, Typography } from '@mui/material';
 import classNames from 'classnames';
+import { useStore } from '../../background/store';
+import { getTheme } from '../../background/util';
 import Direction from '../../../main/Message/Direction';
 import Message from '../../../main/Message/Message';
 import classes from './ChatMessage.module.scss';
@@ -9,12 +11,21 @@ interface ChatMessageProps {
 }
 
 export default function ChatMessage({ message }: ChatMessageProps) {
+  const { store } = useStore();
+  const theme = getTheme(store);
+
   return (
     <Paper
       className={classNames(classes.message, {
         [classes.incoming]: message.direction === Direction.Incoming,
         [classes.outgoing]: message.direction === Direction.Outgoing,
       })}
+      sx={{
+        backgroundColor:
+          message.direction === Direction.Incoming
+            ? theme.palette.background.paper
+            : theme.chatMessage.outgoing,
+      }}
       elevation={3}
     >
       <Typography variant="body1">{message.text}</Typography>

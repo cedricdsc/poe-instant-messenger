@@ -6,18 +6,18 @@ import Box from '@mui/system/Box';
 import { useState } from 'react';
 import MainProcess from '../../background/mainProcess';
 import { useStore } from '../../background/store';
-import globals from '../../globals/_variables.module.scss';
 import classes from './Notifier.module.scss';
+import { getTheme } from '../../background/util';
 
-const NotifierButton = styled(IconButton)({
-  backgroundColor: globals.bgColorPrimary,
-  color: '#ffffff',
+const NotifierButton = styled(IconButton)(({ theme }) => ({
+  backgroundColor: theme.palette.primary.main,
+  color: theme.svg.buttonColor,
   padding: '12px',
   borderRadius: '8px',
   '&:hover': {
-    backgroundColor: globals.bgColorPrimary,
+    backgroundColor: theme.palette.primary.dark,
   },
-});
+}));
 
 export default function Notifier() {
   const [notification, setNotification] = useState({ from: '', message: '' });
@@ -51,7 +51,7 @@ export default function Notifier() {
           <Box
             className={classNames(classes.collapseContainer)}
             sx={{
-              backgroundColor: globals.bgColorSecondary,
+              backgroundColor: getTheme(store).palette.primary.dark,
               borderRadius: '8px',
             }}
           >

@@ -15,6 +15,7 @@ import MainProcess from '../../background/mainProcess';
 import { useStore } from '../../background/store';
 import classes from './TopBar.module.scss';
 import Command from '../../../main/Command/Command';
+import { getTheme } from '../../background/util';
 
 interface TopBarProps {
   currentUserIndex: number;
@@ -28,6 +29,7 @@ export default function TopBar({
   deleteChatHistory,
 }: TopBarProps) {
   const { store } = useStore();
+  const theme = getTheme(store);
 
   const tradePlayer = () => {
     MainProcess.sendEvent({
@@ -93,27 +95,42 @@ export default function TopBar({
     return (
       <div className={classNames(classes.ctaLeft)}>
         <Tooltip title="Who is the Player?">
-          <IconButton onClick={whoIsPlayer}>
+          <IconButton
+            onClick={whoIsPlayer}
+            sx={{ color: theme.svg.buttonColor }}
+          >
             <HelpIcon />
           </IconButton>
         </Tooltip>
         <Tooltip title="Invite Player to Group">
-          <IconButton onClick={invitePlayer}>
+          <IconButton
+            onClick={invitePlayer}
+            sx={{ color: theme.svg.buttonColor }}
+          >
             <GroupAddIcon />
           </IconButton>
         </Tooltip>
         <Tooltip title="Enter Player Hideout">
-          <IconButton onClick={joinHideout}>
+          <IconButton
+            onClick={joinHideout}
+            sx={{ color: theme.svg.buttonColor }}
+          >
             <OtherHousesIcon />
           </IconButton>
         </Tooltip>
         <Tooltip title="Initiate Trade with Player">
-          <IconButton onClick={tradePlayer}>
+          <IconButton
+            onClick={tradePlayer}
+            sx={{ color: theme.svg.buttonColor }}
+          >
             <CurrencyExchangeIcon />
           </IconButton>
         </Tooltip>
         <Tooltip title="Thank the Player for the Trade">
-          <IconButton onClick={thankPlayer}>
+          <IconButton
+            onClick={thankPlayer}
+            sx={{ color: theme.svg.buttonColor }}
+          >
             <ThumbUpAltIcon />
           </IconButton>
         </Tooltip>
@@ -126,13 +143,19 @@ export default function TopBar({
       <div className={classNames(classes.ctaRight)}>
         {store.state.messageStore.length > 0 && (
           <Tooltip title="Delete Chat History">
-            <IconButton onClick={deleteChatHistory}>
+            <IconButton
+              onClick={deleteChatHistory}
+              sx={{ color: theme.svg.buttonColor }}
+            >
               <DeleteIcon />
             </IconButton>
           </Tooltip>
         )}
         <Tooltip title="Minimize Messenger">
-          <IconButton onClick={toggleMessenger}>
+          <IconButton
+            onClick={toggleMessenger}
+            sx={{ color: theme.svg.buttonColor }}
+          >
             <RemoveIcon />
           </IconButton>
         </Tooltip>
