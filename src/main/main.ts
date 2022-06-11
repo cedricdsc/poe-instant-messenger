@@ -7,9 +7,15 @@ import {
 } from './Window/MainWindow';
 import { checkForSettings } from './util';
 import AppUpdater from './AppUpdater/AppUpdater';
+import Store from './Store/ElectronStore';
 
 if (!app.requestSingleInstanceLock()) {
   app.exit();
+}
+
+if (!Store.get('settings.hardwareAccelerationEnabled')) {
+  app.disableHardwareAcceleration();
+  Store.set('settings.hardwareAccelerationEnabled', true);
 }
 
 // eslint-disable-next-line

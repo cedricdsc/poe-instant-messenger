@@ -17,6 +17,7 @@ export default function ChatTabs({
   handleChange,
 }: ChatTabsProps) {
   const { store } = useStore();
+  const theme = getTheme(store);
 
   const renderTabs = () => {
     return (
@@ -28,7 +29,7 @@ export default function ChatTabs({
         sx={{
           borderRight: 1,
           borderColor: 'divider',
-          color: getTheme(store).svg.tabButtonColor,
+          color: theme.svg.tabButtonColor,
           '& .Mui-disabled': { opacity: '0.25!important' },
         }}
         className={classNames(classes.sideBar)}
@@ -62,7 +63,9 @@ export default function ChatTabs({
   const renderEmptyTabs = () => {
     return (
       <div className={classNames(classes.emptySideBar)}>
-        <Typography variant="body2">No Chats available</Typography>
+        <Typography color={theme.palette.text.primary} variant="body2">
+          No Chats available
+        </Typography>
       </div>
     );
   };
