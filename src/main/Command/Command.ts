@@ -4,6 +4,7 @@ enum Command {
   TradeInvite = '/tradewith',
   JoinHideout = '/hideout',
   DoNotDisturb = '/dnd',
+  WhoIs = '/whois',
 }
 
 export default Command;
