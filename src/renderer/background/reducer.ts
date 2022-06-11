@@ -22,7 +22,7 @@ export const initialState: StoreSchema = {
     darkTheme: false,
     logPath: '',
     windowTitle: 'Path of Exile',
-    hardwareAccelerationEnabled: false,
+    hardwareAccelerationEnabled: true,
     windowPosX: 0,
     windowPosY: 0,
     commandMessages: {

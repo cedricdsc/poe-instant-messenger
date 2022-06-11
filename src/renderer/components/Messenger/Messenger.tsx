@@ -23,6 +23,7 @@ export default function Messenger({
 }: MessengerProps) {
   const { store } = useStore();
   const [currentUser, setCurrentUser] = useState({ index: 0, name: '' });
+  const theme = getTheme(store);
 
   if (
     store.state.messageStore.length > 0 &&
@@ -81,7 +82,9 @@ export default function Messenger({
   const renderEmptyChat = () => {
     return (
       <div className={classNames(classes.emptyChat)}>
-        <Typography variant="body1">No Messages available, Exile.</Typography>
+        <Typography color={theme.palette.text.primary} variant="body1">
+          No Messages available, Exile.
+        </Typography>
       </div>
     );
   };
