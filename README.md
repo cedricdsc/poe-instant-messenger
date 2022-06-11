@@ -4,9 +4,10 @@
 [The latest release can be downloaded here](https://github.com/cedricdsc/poe-instant-messenger/releases)
 
 ## Tool showcase
-| Setup | Notifier | Messenger | Settings  |
-|-------|----------|-----------|-----------|
-|[<img src="https://i.imgur.com/KOZd05e.png">](https://i.imgur.com/KOZd05e.png)|[<img src="https://i.imgur.com/pFTgS0d.png">](https://i.imgur.com/pFTgS0d.png)|[<img src="https://i.imgur.com/nipZwIw.png">](https://i.imgur.com/nipZwIw.png)|[<img src="https://i.imgur.com/O58gmz4.png">](https://i.imgur.com/O58gmz4.png)|
+| Theme | Setup | Notifier | Messenger | Settings  |
+|-------|-------|----------|-----------|-----------|
+|Light|[<img src="https://i.imgur.com/KOZd05e.png">](https://i.imgur.com/KOZd05e.png)|[<img src="https://i.imgur.com/pFTgS0d.png">](https://i.imgur.com/pFTgS0d.png)|[<img src="https://i.imgur.com/nipZwIw.png">](https://i.imgur.com/nipZwIw.png)|[<img src="https://i.imgur.com/O58gmz4.png">](https://i.imgur.com/O58gmz4.png)|
+|Dark|[<img src="https://i.imgur.com/4H4gIMx.png">](https://i.imgur.com/4H4gIMx.png)|[<img src="https://i.imgur.com/m29pFfR.png">](https://i.imgur.com/m29pFfR.png)|[<img src="https://i.imgur.com/KTDV31g.png">](https://i.imgur.com/KTDV31g.png)|[<img src="https://i.imgur.com/9RKIknH.png">](https://i.imgur.com/9RKIknH.png)|
 
 ## Community
 
