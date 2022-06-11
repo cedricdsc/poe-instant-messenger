@@ -4,24 +4,37 @@ import Toolbar from '@mui/material/Toolbar';
 import Tooltip from '@mui/material/Tooltip';
 import HouseIcon from '@mui/icons-material/House';
 import SettingsIcon from '@mui/icons-material/Settings';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 import InfoIcon from '@mui/icons-material/Info';
 import classNames from 'classnames';
 import pj from '../../../../release/app/package.json';
 import classes from './BottomBar.module.scss';
 import MainProcess from '../../background/mainProcess';
 import Command from '../../../main/Command/Command';
+import { getTheme } from '../../background/util';
+import { useStore } from '../../background/store';
 
 interface BottomBarProps {
   toggleSettings: () => void;
 }
 
 export default function BottomBar({ toggleSettings }: BottomBarProps) {
+  const { store } = useStore();
+  const theme = getTheme(store);
+
   const joinOwnHideout = () => {
     MainProcess.sendEvent({
       name: 'OVERLAY->MAIN::sendCommand',
       payload: {
         command: Command.JoinHideout,
       },
+    });
+  };
+
+  const toggleTheme = () => {
+    MainProcess.sendEvent({
+      name: 'OVERLAY->MAIN::toggleTheme',
+      payload: undefined,
     });
   };
 
@@ -42,17 +55,31 @@ export default function BottomBar({ toggleSettings }: BottomBarProps) {
     <AppBar className={classNames(classes.ctaBottom)} position="static">
       <Toolbar variant="dense">
         <Tooltip title="Settings">
-          <IconButton onClick={toggleSettings}>
+          <IconButton
+            onClick={toggleSettings}
+            sx={{ color: theme.svg.buttonColor }}
+          >
             <SettingsIcon />
           </IconButton>
         </Tooltip>
+        <Tooltip title="Toggle Theme">
+          <IconButton
+            onClick={toggleTheme}
+            sx={{ color: theme.svg.buttonColor }}
+          >
+            <DarkModeIcon />
+          </IconButton>
+        </Tooltip>
         <Tooltip title="Join own Hideout">
-          <IconButton onClick={joinOwnHideout}>
+          <IconButton
+            onClick={joinOwnHideout}
+            sx={{ color: theme.svg.buttonColor }}
+          >
             <HouseIcon />
           </IconButton>
         </Tooltip>
         <Tooltip title={loadVersionInformation()}>
-          <IconButton>
+          <IconButton sx={{ color: theme.svg.buttonColor }}>
             <InfoIcon />
           </IconButton>
         </Tooltip>

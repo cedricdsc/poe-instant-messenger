@@ -63,6 +63,10 @@ export default function setupIpcEventHandler() {
     Store.set('settings.setUp', false);
   });
 
+  overlayOnEvent('OVERLAY->MAIN::toggleTheme', (_ipcMainEvent) => {
+    Store.set('settings.darkTheme', !Store.get('settings.darkTheme'));
+  });
+
   overlayOnEvent(
     'OVERLAY->MAIN::window-pos-changed',
     (_ipcMainEvent, payload) => {

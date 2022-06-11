@@ -19,6 +19,7 @@ export function storeReducer(state: StoreState, action: Actions): StoreState {
 export const initialState: StoreSchema = {
   settings: {
     setUp: false,
+    darkTheme: false,
     logPath: '',
     windowTitle: 'Path of Exile',
     hardwareAccelerationEnabled: false,

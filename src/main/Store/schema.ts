@@ -6,6 +6,7 @@ import Direction from '../Message/Direction';
 export interface StoreSchema {
   settings: {
     setUp: boolean;
+    darkTheme: boolean;
     logPath: string;
     windowTitle: string;
     hardwareAccelerationEnabled: boolean;
@@ -26,7 +27,8 @@ export function instaceOfSettings(
     'hardwareAccelerationEnabled' in object &&
     'windowPosX' in object &&
     'windowPosY' in object &&
-    'commandMessages' in object
+    'commandMessages' in object &&
+    'darkTheme' in object
   );
 }
 
@@ -35,6 +37,9 @@ const schema: Schema<StoreSchema> = {
     type: 'object',
     properties: {
       setUp: {
+        type: 'boolean',
+      },
+      darkTheme: {
         type: 'boolean',
       },
       logPath: {

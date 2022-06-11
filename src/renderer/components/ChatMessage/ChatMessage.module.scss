@@ -1,19 +1,16 @@
-.message{
-    width: 300px;
-    padding: 8px;
-    margin-bottom: 16px;
+.message {
+  width: 300px;
+  padding: 8px;
+  margin-bottom: 16px;
 
-    .timestamp{
-        text-align: right;
-    }
+  .timestamp {
+    text-align: right;
+  }
 
-    &.incoming{
-        margin-right: auto;
-
-        
-    }
-    &.outgoing{
-        margin-left: auto;
-        background-color: #c2e0ff;
-    }
+  &.incoming {
+    margin-right: auto;
+  }
+  &.outgoing {
+    margin-left: auto;
+  }
 }

@@ -15,7 +15,12 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import classes from './SetupStepper.module.scss';
 import MainProcess from '../../background/mainProcess';
-import { onElementEnter, onElementLeave } from '../../background/util';
+import {
+  getTheme,
+  onElementEnter,
+  onElementLeave,
+} from '../../background/util';
+import { useStore } from '../../background/store';
 
 const steps = [
   {
@@ -38,6 +43,8 @@ export default function SetupStepper() {
   const [activeStep, setActiveStep] = useState(0);
   const [folderPath, setFolderPath] = useState('');
   const [alertOpen, setAlertOpen] = useState(false);
+  const { store } = useStore();
+  const theme = getTheme(store);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -82,12 +89,22 @@ export default function SetupStepper() {
       className={classNames(classes.fullHeight)}
     >
       <Box
-        sx={{ width: 400, backgroundColor: 'white', p: 4, borderRadius: 4 }}
+        sx={{
+          width: 400,
+          backgroundColor: theme.palette.background.paper,
+          p: 4,
+          borderRadius: 4,
+        }}
         className={classNames(classes.interactable)}
         onMouseEnter={onElementEnter}
         onMouseLeave={onElementLeave}
       >
-        <Typography variant="h4" component="h1" mb={2}>
+        <Typography
+          variant="h4"
+          component="h1"
+          mb={2}
+          color={theme.palette.text.primary}
+        >
           Setup
         </Typography>
         <Stepper activeStep={activeStep} orientation="vertical">
@@ -95,7 +112,9 @@ export default function SetupStepper() {
             <Step key={step.label}>
               <StepLabel>{step.label}</StepLabel>
               <StepContent>
-                <Typography>{step.description}</Typography>
+                <Typography color={theme.palette.text.primary}>
+                  {step.description}
+                </Typography>
                 <Box sx={{ mb: 2 }}>
                   <div>
                     {index === 1 ? (

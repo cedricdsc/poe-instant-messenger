@@ -17,6 +17,7 @@ import Command from '../../../main/Command/Command';
 import { useStore } from '../../background/store';
 import { StoreSchema } from '../../../main/Store/schema';
 import MainProcess from '../../background/mainProcess';
+import { getTheme } from '../../background/util';
 
 interface SettingsProps {
   toggleSettings: () => void;
@@ -45,7 +46,10 @@ export default function Settings({
   };
 
   return (
-    <div className={classNames(classes.settingsWrapper)}>
+    <div
+      className={classNames(classes.settingsWrapper)}
+      style={{ backgroundColor: getTheme(store).palette.background.default }}
+    >
       <Grid container rowSpacing={1} columnSpacing={0.5}>
         <Grid item md={12}>
           <Tooltip title="Go back to Messenger">
@@ -55,7 +59,12 @@ export default function Settings({
           </Tooltip>
         </Grid>
         <Grid item md={12}>
-          <Typography variant="h5">Settings</Typography>
+          <Typography
+            variant="h5"
+            sx={{ color: getTheme(store).palette.text.primary }}
+          >
+            Settings
+          </Typography>
           <Divider sx={{ marginBottom: 2 }} />
         </Grid>
         <Grid item md={6} sx={{ paddingRight: 2 }}>

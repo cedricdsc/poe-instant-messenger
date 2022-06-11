@@ -10,6 +10,7 @@ import BottomBar from '../BottomBar/BottomBar';
 import ChatInput from '../ChatInput/ChatInput';
 import ChatTabs from '../ChatTabs/ChatTabs';
 import TopBar from '../TopBar/TopBar';
+import { getTheme } from '../../background/util';
 
 interface MessengerProps {
   toggleMessenger: () => void;
@@ -87,7 +88,10 @@ export default function Messenger({
 
   return (
     <>
-      <div className={classNames(classes.container)}>
+      <div
+        className={classNames(classes.container)}
+        style={{ backgroundColor: getTheme(store).palette.background.default }}
+      >
         <div className={classNames(classes.topWrapper)}>
           <ChatTabs
             handleChange={handleChange}

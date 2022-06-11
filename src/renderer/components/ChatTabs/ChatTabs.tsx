@@ -5,6 +5,7 @@ import { SyntheticEvent } from 'react';
 import Typography from '@mui/material/Typography';
 import { useStore } from '../../background/store';
 import classes from './ChatTabs.module.scss';
+import { getTheme } from '../../background/util';
 
 interface ChatTabsProps {
   currentUserIndex: number;
@@ -27,6 +28,7 @@ export default function ChatTabs({
         sx={{
           borderRight: 1,
           borderColor: 'divider',
+          color: getTheme(store).svg.tabButtonColor,
           '& .Mui-disabled': { opacity: '0.25!important' },
         }}
         className={classNames(classes.sideBar)}
