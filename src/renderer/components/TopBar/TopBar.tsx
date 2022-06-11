@@ -9,6 +9,7 @@ import OtherHousesIcon from '@mui/icons-material/OtherHouses';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import HelpIcon from '@mui/icons-material/Help';
 import classNames from 'classnames';
 import MainProcess from '../../background/mainProcess';
 import { useStore } from '../../background/store';
@@ -59,6 +60,16 @@ export default function TopBar({
     });
   };
 
+  const whoIsPlayer = () => {
+    MainProcess.sendEvent({
+      name: 'OVERLAY->MAIN::sendCommand',
+      payload: {
+        command: Command.WhoIs,
+        username: store.state.messageStore[currentUserIndex].username,
+      },
+    });
+  };
+
   const invitePlayer = () => {
     MainProcess.sendEvent({
       name: 'OVERLAY->MAIN::sendCommand',
@@ -81,6 +92,11 @@ export default function TopBar({
   const renderUserCTAs = () => {
     return (
       <div className={classNames(classes.ctaLeft)}>
+        <Tooltip title="Who is the Player?">
+          <IconButton onClick={whoIsPlayer}>
+            <HelpIcon />
+          </IconButton>
+        </Tooltip>
         <Tooltip title="Invite Player to Group">
           <IconButton onClick={invitePlayer}>
             <GroupAddIcon />

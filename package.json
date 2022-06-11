@@ -1,6 +1,5 @@
 {
   "description": "A third-party messenger application for Path of Exile",
-  "version": "0.3.0-alpha.0",
   "keywords": [
     "electron",
     "react",
