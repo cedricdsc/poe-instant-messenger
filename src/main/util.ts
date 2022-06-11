@@ -35,4 +35,9 @@ export const checkForSettings = () => {
     Store.set('settings', initialState.settings);
     Store.set('messageStore', initialState.messageStore);
   }
+
+  if (!Store.get('settings.hardwareAccelerationEnabled')) {
+    app.disableHardwareAcceleration();
+    Store.set('settings.hardwareAccelerationEnabled', true);
+  }
 };
