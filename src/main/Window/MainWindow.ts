@@ -13,10 +13,23 @@ export function isMainActive() {
   return mainIsActive;
 }
 
+export function disableOverlayPointerEvents(forward?: boolean) {
+  if (MainWindow) {
+    if (!forward) MainWindow.setIgnoreMouseEvents(true);
+    else MainWindow.setIgnoreMouseEvents(true, { forward });
+  }
+}
+
+export function enableOverlayPointerEvents() {
+  if (MainWindow) {
+    MainWindow.setIgnoreMouseEvents(false);
+  }
+}
+
 export function focusOverlay() {
   if (!MainWindow) return;
 
-  MainWindow.setIgnoreMouseEvents(false);
+  enableOverlayPointerEvents();
   PoeWindow.activateOverlay();
   mainIsActive = true;
 }
@@ -24,7 +37,7 @@ export function focusOverlay() {
 export function focusPoE() {
   if (!MainWindow) return;
 
-  MainWindow.setIgnoreMouseEvents(true, { forward: true });
+  disableOverlayPointerEvents(true);
   PoeWindow.focusPoe();
   mainIsActive = false;
 }
