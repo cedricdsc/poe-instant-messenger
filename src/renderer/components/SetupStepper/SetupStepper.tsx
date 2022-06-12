@@ -10,7 +10,7 @@ import Alert from '@mui/material/Alert';
 import Typography from '@mui/material/Typography';
 import classNames from 'classnames';
 import SearchIcon from '@mui/icons-material/Search';
-import { useState, ChangeEvent } from 'react';
+import { useEffect, useState } from 'react';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import classes from './SetupStepper.module.scss';
@@ -29,9 +29,9 @@ const steps = [
     Please keep in mind that this project is not affiliated with Grinding Gear Games in any way and only possible because of their Third-Party Policy.`,
   },
   {
-    label: 'Select your Path of Exile log file.',
+    label: 'Select your Path of Exile directory.',
     description:
-      'In order for this application to work you have to navigate to your Path of Exile installation folder and select the log file.',
+      'In order for this application to work you have to navigate to your Path of Exile installation destination and select the folder on your system.',
   },
   {
     label: 'See you in Wraeclast, Exile.',
@@ -40,44 +40,60 @@ const steps = [
 ];
 
 export default function SetupStepper() {
-  const [activeStep, setActiveStep] = useState(0);
-  const [folderPath, setFolderPath] = useState('');
-  const [alertOpen, setAlertOpen] = useState(false);
+  const initalSetupState = { activeStep: 0, folderPath: '', alertOpen: false };
+  const [setupState, setSetupState] = useState(initalSetupState);
+
   const { store } = useStore();
   const theme = getTheme(store);
 
+  useEffect(() => {
+    MainProcess.onEvent('MAIN->OVERLAY::validDirectory', (payload) => {
+      setSetupState((prevState) => {
+        return {
+          ...prevState,
+          folderPath: payload.path,
+          activeStep: prevState.activeStep + 1,
+        };
+      });
+    });
+
+    MainProcess.onEvent('MAIN->OVERLAY::invalidDirectory', () => {
+      setSetupState((prevState) => {
+        return { ...prevState, alertOpen: true };
+      });
+      setTimeout(
+        () =>
+          setSetupState((prevState) => {
+            return { ...prevState, alertOpen: false };
+          }),
+        3000
+      );
+    });
+  }, []);
+
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    if (activeStep === 2) {
+    setSetupState((prevState) => {
+      return { ...prevState, activeStep: prevState.activeStep + 1 };
+    });
+    if (setupState.activeStep === 2) {
       MainProcess.sendEvent({
         name: 'OVERLAY->MAIN::finishSetup',
-        payload: { path: folderPath },
+        payload: { path: setupState.folderPath },
       });
     }
   };
 
   const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    setSetupState((prevState) => {
+      return { ...prevState, activeStep: prevState.activeStep - 1 };
+    });
   };
 
-  const handleFileSelection = (event: ChangeEvent<HTMLInputElement>) => {
-    const folderSearchTerm = '\\Path of Exile\\';
-    const pathList = event.currentTarget.files;
-    if (pathList) {
-      const selectedPath = pathList[0].path;
-      if (selectedPath.includes(folderSearchTerm)) {
-        setFolderPath(
-          selectedPath.substring(
-            0,
-            selectedPath.lastIndexOf(folderSearchTerm) + folderSearchTerm.length
-          )
-        );
-        handleNext();
-      } else {
-        setAlertOpen(true);
-        setTimeout(() => setAlertOpen(false), 3000);
-      }
-    }
+  const handleDirectorySelection = () => {
+    MainProcess.sendEvent({
+      name: 'OVERLAY->MAIN::openDialog',
+      payload: undefined,
+    });
   };
 
   return (
@@ -107,7 +123,7 @@ export default function SetupStepper() {
         >
           Setup
         </Typography>
-        <Stepper activeStep={activeStep} orientation="vertical">
+        <Stepper activeStep={setupState.activeStep} orientation="vertical">
           {steps.map((step, index) => (
             <Step key={step.label}>
               <StepLabel>{step.label}</StepLabel>
@@ -122,15 +138,10 @@ export default function SetupStepper() {
                         variant="contained"
                         component="label"
                         sx={{ mt: 1, mr: 1 }}
+                        onClick={handleDirectorySelection}
                         startIcon={<SearchIcon />}
                       >
-                        Select Log File
-                        <input
-                          type="file"
-                          hidden
-                          onChange={handleFileSelection}
-                          multiple={false}
-                        />
+                        Select Directory
                       </Button>
                     ) : (
                       <Button
@@ -161,10 +172,9 @@ export default function SetupStepper() {
             </Step>
           ))}
         </Stepper>
-        <Collapse in={alertOpen}>
+        <Collapse in={setupState.alertOpen}>
           <Alert severity="error">
-            The selected file seems not to be in the Path of Exile folder. Try
-            again!
+            The selected directory does not belong to Path of Exile. Try again!
           </Alert>
         </Collapse>
       </Box>

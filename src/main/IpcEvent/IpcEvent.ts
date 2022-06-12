@@ -13,6 +13,13 @@ export type IpcNotify = Event<
   { from: string; message: string }
 >;
 
+export type IpcValidDirectory = Event<
+  'MAIN->OVERLAY::validDirectory',
+  { path: string }
+>;
+
+export type IpcInvalidDirectory = Event<'MAIN->OVERLAY::invalidDirectory'>;
+
 export type IpcMouseEnter = Event<
   'OVERLAY->MAIN::mouseEnter',
   {
@@ -61,6 +68,8 @@ export type IpcRepeatSetup = Event<'OVERLAY->MAIN::repeatSetup'>;
 
 export type IpcToggleTheme = Event<'OVERLAY->MAIN::toggleTheme'>;
 
+export type IpcOpenDialog = Event<'OVERLAY->MAIN::openDialog'>;
+
 export type IpcSaveSettings = Event<
   'OVERLAY->MAIN::saveSettings',
   { settings: StoreSchema['settings'] }
@@ -79,7 +88,10 @@ export type IpcEvent =
   | IpcReadMessages
   | IpcSendCommand
   | IpcSaveSettings
+  | IpcOpenDialog
   | IpcToggleTheme
+  | IpcValidDirectory
+  | IpcInvalidDirectory
   | IpcRepeatSetup
   | IpcWindowPositionChanged;
 

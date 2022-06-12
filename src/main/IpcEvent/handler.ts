@@ -1,8 +1,11 @@
-import { clipboard } from 'electron';
+import fs from 'fs';
+import { clipboard, dialog } from 'electron';
 import sendMessage from '../Message/sendMessage';
 import startLogWatcher from '../LogWatcher/watch';
 import Store from '../Store/ElectronStore';
 import {
+  disableOverlayPointerEvents,
+  enableOverlayPointerEvents,
   focusOverlay,
   focusPoE,
   overlayOnEvent,
@@ -28,8 +31,7 @@ export default function setupIpcEventHandler() {
   });
 
   overlayOnEvent('OVERLAY->MAIN::finishSetup', (_ipcMainEvent, payload) => {
-    const path = payload.path.replace(/\\/g, '/');
-    Store.set('settings.logPath', `${path}logs/Client.txt`);
+    Store.set('settings.logPath', `${payload.path}`);
     Store.set('settings.setUp', true);
     startLogWatcher(overlaySendEvent);
   });
@@ -61,6 +63,31 @@ export default function setupIpcEventHandler() {
 
   overlayOnEvent('OVERLAY->MAIN::repeatSetup', (_ipcMainEvent) => {
     Store.set('settings.setUp', false);
+  });
+
+  overlayOnEvent('OVERLAY->MAIN::openDialog', (_ipcMainEvent) => {
+    disableOverlayPointerEvents();
+    dialog
+      .showOpenDialog({ properties: ['openDirectory'] })
+      .then((response) => {
+        enableOverlayPointerEvents();
+
+        const directoryPath = response.filePaths[0].replace(/\\/g, '/');
+        const logFilePath = `${directoryPath}/logs/Client.txt`;
+        if (fs.existsSync(logFilePath)) {
+          overlaySendEvent({
+            name: 'MAIN->OVERLAY::validDirectory',
+            payload: { path: logFilePath },
+          });
+        } else {
+          overlaySendEvent({
+            name: 'MAIN->OVERLAY::invalidDirectory',
+            payload: undefined,
+          });
+        }
+        return null;
+      })
+      .catch((err) => {});
   });
 
   overlayOnEvent('OVERLAY->MAIN::toggleTheme', (_ipcMainEvent) => {
