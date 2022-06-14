@@ -10,8 +10,8 @@ export default class AppUpdater {
     autoUpdater.on('update-downloaded', (_event, releaseNotes, releaseName) => {
       const dialogOpts = {
         type: 'info',
-        buttons: ['Restart', 'Later'],
-        title: 'New Update available',
+        buttons: ['Restart', 'Install Update on next Launch'],
+        title: 'New PoE Instant Messenger Update available',
         message: process.platform === 'win32' ? releaseNotes : releaseName,
         detail:
           'A new version has been downloaded. Restart the application to apply the updates.',
