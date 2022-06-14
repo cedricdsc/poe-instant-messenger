@@ -4,6 +4,7 @@ import Message from '../Message/Message';
 import Store from '../Store/ElectronStore';
 import Character from '../Character/Character';
 import { IpcEvent } from '../IpcEvent/IpcEvent';
+import playNotificationSound from './playNotificationSound';
 
 const DEFAULT_PATH =
   'C:/Program Files (x86)/Grinding Gear Games/Path of Exile/logs/Client.txt';
@@ -69,6 +70,8 @@ export default function startLogWatcher(cb: (event: IpcEvent) => void) {
         }
         return 0;
       });
+
+      playNotificationSound();
 
       Store.set('messageStore', messageStore);
       if (message.direction === Direction.Incoming) {
