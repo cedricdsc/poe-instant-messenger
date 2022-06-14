@@ -13,6 +13,11 @@ export function isMainActive() {
   return mainIsActive;
 }
 
+export function getMainWindow() {
+  if (MainWindow) return MainWindow;
+  return undefined;
+}
+
 export function disableOverlayPointerEvents(forward?: boolean) {
   if (MainWindow) {
     if (!forward) MainWindow.setIgnoreMouseEvents(true);

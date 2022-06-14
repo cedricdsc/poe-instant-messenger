@@ -71,10 +71,9 @@ export default function startLogWatcher(cb: (event: IpcEvent) => void) {
         return 0;
       });
 
-      playNotificationSound();
-
       Store.set('messageStore', messageStore);
       if (message.direction === Direction.Incoming) {
+        playNotificationSound();
         cb({
           name: 'MAIN->OVERLAY::notify',
           payload: { from: message.username, message: message.text },

@@ -1,7 +1,18 @@
 import { Key, keyboard, sleep } from '@nut-tree/nut-js';
-import { focusOverlay, focusPoE, isPoeFocused } from '../Window/MainWindow';
+import {
+  focusOverlay,
+  focusPoE,
+  isPoeFocused,
+  getMainWindow,
+} from '../Window/MainWindow';
 
-const sendMessage = async () => {
+const forceFocus = require('forcefocus');
+
+interface SendMessageProps {
+  skipOverlayFocus: boolean;
+}
+
+const sendMessage = async (options?: SendMessageProps) => {
   /* eslint-disable no-await-in-loop */
   for (let i = 0; i < 10; i += 1) {
     focusPoE();
@@ -13,9 +24,20 @@ const sendMessage = async () => {
       await keyboard.releaseKey(Key.LeftControl, Key.V);
       await keyboard.pressKey(Key.Enter);
       await keyboard.releaseKey(Key.Enter);
-      focusOverlay();
+
+      if (!options) focusOverlay();
+
       break;
     }
+  }
+};
+
+export const sendMessageFromTradeSite = async () => {
+  const mainWindow = getMainWindow();
+  if (mainWindow) {
+    forceFocus.focusWindow();
+    await sleep(150);
+    sendMessage({ skipOverlayFocus: true });
   }
 };
 
