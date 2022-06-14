@@ -1,6 +1,6 @@
 {
   "name": "poe-instant-messenger",
-  "version": "0.5.4-alpha.0",
+  "version": "0.5.5-alpha.0",
   "description": "A third-party messenger application for Path of Exile",
   "keywords": [
     "electron",
@@ -31,6 +31,7 @@
   },
   "dependencies": {
     "@nut-tree/nut-js": "^2.0.1",
-    "electron-overlay-window": "^2.0.1"
+    "electron-overlay-window": "^2.0.1",
+    "speaker": "^0.5.4"
   }
 }
