@@ -8,6 +8,7 @@ import {
 import { checkForSettings } from './util';
 import AppUpdater from './AppUpdater/AppUpdater';
 import Store from './Store/ElectronStore';
+import { initializeClipboard } from './Clipboard/cp';
 
 if (!app.requestSingleInstanceLock()) {
   app.exit();
@@ -37,6 +38,7 @@ app
   .whenReady()
   .then(() => {
     checkForSettings();
+    initializeClipboard();
     createTray();
     setupIpcEventHandler();
     createMainWindow();
