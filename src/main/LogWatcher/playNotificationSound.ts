@@ -14,7 +14,7 @@ export default function playNotificationSound() {
     });
 
     const file = fs.createReadStream(
-      getAssetPath('sounds/notification_sound_1.wav')
+      getAssetPath('sounds/notification_sound.wav')
     );
     file.pipe(reader);
     isSoundPlaying = true;
