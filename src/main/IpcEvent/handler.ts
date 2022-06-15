@@ -113,7 +113,7 @@ export default function setupIpcEventHandler() {
           if (payload.message) {
             clipboard.writeText(`@${payload.username} ${payload.message}`);
 
-            await sendMessage();
+            await sendMessage(0);
           }
         }
 
@@ -122,7 +122,7 @@ export default function setupIpcEventHandler() {
         clipboard.writeText(`${payload.command}`);
       }
 
-      await sendMessage();
+      await sendMessage(0);
     }
   );
 
@@ -131,7 +131,7 @@ export default function setupIpcEventHandler() {
     async (_ipcMainEvent, payload) => {
       clipboard.writeText(`@${payload.recipient} ${payload.text}`);
 
-      sendMessage();
+      sendMessage(0);
     }
   );
 }

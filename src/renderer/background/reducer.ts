@@ -25,6 +25,7 @@ export const initialState: StoreSchema = {
     hardwareAccelerationEnabled: true,
     windowPosX: 0,
     windowPosY: 0,
+    selectedLeague: 'Sentinel',
     commandMessages: {
       [Command.PartyInvite]:
         'Your item is ready to be picked-up Exile. I sent you a party invite!',

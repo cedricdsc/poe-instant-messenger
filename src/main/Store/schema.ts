@@ -12,6 +12,7 @@ export interface StoreSchema {
     hardwareAccelerationEnabled: boolean;
     windowPosX: number;
     windowPosY: number;
+    selectedLeague: string;
     commandMessages: Record<Command.PartyInvite | Command.PartyKick, string>;
   };
   messageStore: Array<Character>;
@@ -22,13 +23,14 @@ export function instaceOfSettings(
 ): object is StoreSchema['settings'] {
   return (
     'setUp' in object &&
+    'darkTheme' in object &&
     'logPath' in object &&
     'windowTitle' in object &&
     'hardwareAccelerationEnabled' in object &&
     'windowPosX' in object &&
     'windowPosY' in object &&
-    'commandMessages' in object &&
-    'darkTheme' in object
+    'selectedLeague' in object &&
+    'commandMessages' in object
   );
 }
 
@@ -56,6 +58,9 @@ const schema: Schema<StoreSchema> = {
       },
       windowPosY: {
         type: 'number',
+      },
+      selectedLeague: {
+        type: 'string',
       },
       commandMessages: {
         type: 'object',
