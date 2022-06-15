@@ -36,7 +36,7 @@ const sendMessage = async (count: number, options?: SendMessageProps) => {
 
 export const sendMessageFromTradeSite = async () => {
   const mainWindow = getMainWindow();
-  if (mainWindow && !mainWindow.isFocused() && !PoeWindow.isActive) {
+  if (mainWindow) {
     forceFocus.focusWindow(mainWindow);
     sendMessage(0, { skipOverlayFocus: true });
   }
