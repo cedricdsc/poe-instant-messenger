@@ -1,5 +1,8 @@
+import { UiohookKey } from 'uiohook-napi';
+import { HotkeyActionTypes } from '../../main/Hotkey/HotkeyAction';
 import Command from '../../main/Command/Command';
 import { StoreSchema } from '../../main/Store/schema';
+import Hotkey from '../../main/Hotkey/Hotkey';
 
 export function storeReducer(state: StoreState, action: Actions): StoreState {
   switch (action.type) {
@@ -30,6 +33,16 @@ export const initialState: StoreSchema = {
       [Command.PartyInvite]:
         'Your item is ready to be picked-up Exile. I sent you a party invite!',
       [Command.PartyKick]: 'Thank you for the trade, Exile.',
+    },
+    hotkeys: {
+      [HotkeyActionTypes.ToggleCbOberserver]: new Hotkey({
+        type: 4,
+        altKey: true,
+        ctrlKey: false,
+        metaKey: false,
+        shiftKey: false,
+        keycode: UiohookKey.F,
+      }),
     },
   },
   messageStore: [],

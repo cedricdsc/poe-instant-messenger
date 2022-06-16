@@ -8,7 +8,8 @@ import {
 import { checkForSettings } from './util';
 import AppUpdater from './AppUpdater/AppUpdater';
 import Store from './Store/ElectronStore';
-import { initializeClipboard } from './Clipboard/cp';
+import ClipboardObserver from './Clipboard/ClipboardObserver';
+import initializeHotkeyListener from './Hotkey/hotkeys';
 
 if (!app.requestSingleInstanceLock()) {
   app.exit();
@@ -38,11 +39,12 @@ app
   .whenReady()
   .then(() => {
     checkForSettings();
-    initializeClipboard();
     createTray();
     setupIpcEventHandler();
     createMainWindow();
     attachOverlayToPoeWindow();
+    ClipboardObserver.start();
+    initializeHotkeyListener();
     return null;
   })
   .catch();

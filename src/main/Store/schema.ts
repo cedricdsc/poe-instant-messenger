@@ -2,6 +2,8 @@ import { Schema } from 'electron-store';
 import Command from '../Command/Command';
 import Character from '../Character/Character';
 import Direction from '../Message/Direction';
+import { HotkeyActionTypes } from '../Hotkey/HotkeyAction';
+import Hotkey from '../Hotkey/Hotkey';
 
 export interface StoreSchema {
   settings: {
@@ -14,6 +16,7 @@ export interface StoreSchema {
     windowPosY: number;
     selectedLeague: string;
     commandMessages: Record<Command.PartyInvite | Command.PartyKick, string>;
+    hotkeys: Record<HotkeyActionTypes, Hotkey>;
   };
   messageStore: Array<Character>;
 }
@@ -30,7 +33,8 @@ export function instaceOfSettings(
     'windowPosX' in object &&
     'windowPosY' in object &&
     'selectedLeague' in object &&
-    'commandMessages' in object
+    'commandMessages' in object &&
+    'hotskeys' in object
   );
 }
 
@@ -70,6 +74,21 @@ const schema: Schema<StoreSchema> = {
           },
           [Command.PartyKick]: {
             type: 'string',
+          },
+        },
+      },
+      hotkeys: {
+        type: 'object',
+        properties: {
+          [HotkeyActionTypes.ToggleCbOberserver]: {
+            type: 'object',
+            properties: {
+              keycode: { type: 'number' },
+              ctrlKey: { type: 'boolean' },
+              altKey: { type: 'boolean' },
+              shiftKey: { type: 'boolean' },
+              keyName: { type: 'string' },
+            },
           },
         },
       },

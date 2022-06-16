@@ -1,12 +1,8 @@
 import { clipboard } from 'electron';
-import { uIOhook, UiohookKey } from 'uiohook-napi';
+import { sendMessageFromTradeSite } from '../Message/sendMessage';
+import Store from '../Store/ElectronStore';
 
-interface Options {
-  duration?: number;
-  textChange?: (text: string, beforeText: string) => void;
-}
-
-export default class ClipboardObserver {
+class ClipboardObserver {
   timer: NodeJS.Timeout | undefined;
 
   beforeText: string = '';
@@ -17,28 +13,8 @@ export default class ClipboardObserver {
 
   clipboardObservation: boolean = false;
 
-  constructor(options: Options) {
-    const { duration, textChange } = options;
-
-    if (duration) this.duration = duration;
-    if (textChange) this.textChange = textChange;
-
-    this.initializeCbListener();
-
-    if (this.textChange) {
-      this.start();
-    }
-  }
-
-  initializeCbListener() {
-    uIOhook.on('keydown', (event) => {
-      if (event.keycode === UiohookKey.F && event.altKey) {
-        this.clipboardObservation = !this.clipboardObservation;
-        console.log(`Clipboard observation: ${this.clipboardObservation}`);
-      }
-    });
-
-    uIOhook.start();
+  toggleObservation() {
+    this.clipboardObservation = !this.clipboardObservation;
   }
 
   start() {
@@ -55,20 +31,16 @@ export default class ClipboardObserver {
   }
 
   setClipboardDefaultValue() {
-    if (this.textChange) {
-      this.beforeText = clipboard.readText();
-    }
+    this.beforeText = clipboard.readText();
   }
 
   setTimer() {
     this.timer = setInterval(() => {
-      if (this.textChange) {
-        if (this.clipboardObservation) {
-          const text = clipboard.readText();
-          if (ClipboardObserver.isDiffText(this.beforeText, text)) {
-            this.textChange(text, this.beforeText);
-            this.beforeText = text;
-          }
+      if (this.clipboardObservation) {
+        const text = clipboard.readText();
+        if (ClipboardObserver.isDiffText(this.beforeText, text)) {
+          this.onTextChange(text);
+          this.beforeText = text;
         }
       }
     }, this.duration);
@@ -77,4 +49,15 @@ export default class ClipboardObserver {
   static isDiffText(beforeText: string, afterText: string): boolean {
     return beforeText !== afterText;
   }
+
+  onTextChange = (text: string) => {
+    const league = Store.get('settings.selectedLeague');
+    const searchListedItemRegExp = new RegExp(/@.*\s.*\(.*".*"(;|,).*:.*,.*\)/);
+    const bulkExchangeRegExp = new RegExp(`@.*\\s.*${league}.*`);
+    if (text.match(searchListedItemRegExp) || text.match(bulkExchangeRegExp)) {
+      sendMessageFromTradeSite();
+    }
+  };
 }
+
+export default new ClipboardObserver();
