@@ -21,7 +21,7 @@ class Hotkey implements IHotkey {
     this.ctrlKey = event.ctrlKey;
     this.altKey = event.altKey;
     this.shiftKey = event.shiftKey;
-    this.keyName = UiohookToName[this.keycode];
+    this.keyName = UiohookToName[event.keycode];
   }
 }
 

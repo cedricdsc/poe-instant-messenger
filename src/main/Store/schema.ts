@@ -2,7 +2,7 @@ import { Schema } from 'electron-store';
 import Command from '../Command/Command';
 import Character from '../Character/Character';
 import Direction from '../Message/Direction';
-import { HotkeyActionTypes } from '../Hotkey/HotkeyAction';
+import HotkeyActionTypes from '../Hotkey/HotkeyActionTypes';
 import Hotkey from '../Hotkey/Hotkey';
 
 export interface StoreSchema {
@@ -34,7 +34,7 @@ export function instaceOfSettings(
     'windowPosY' in object &&
     'selectedLeague' in object &&
     'commandMessages' in object &&
-    'hotskeys' in object
+    'hotkeys' in object
   );
 }
 

@@ -8,7 +8,7 @@ export default function initializeHotkeyListener() {
     const potentialHotkey = new Hotkey(event);
     const potentialAction = HotkeyManager.getActionFromHotkey(potentialHotkey);
     if (potentialAction) {
-      if (potentialAction.name === 'toggle-cb-observer') {
+      if (potentialAction === 'toggle-cb-observer') {
         ClipboardObserver.toggleObservation();
       }
     }
