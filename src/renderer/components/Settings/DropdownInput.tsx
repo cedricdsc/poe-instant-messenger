@@ -27,13 +27,6 @@ export const leagueItems: DropdownItem[] = [
   { label: 'Hardcore', value: 'Hardcore' },
 ];
 
-export const soundItems: DropdownItem[] = [
-  { label: 'Sentinel', value: 'Sentinel' },
-  { label: 'Hardcore Sentinel', value: 'Hardcore Sentinel' },
-  { label: 'Standard', value: 'Standard' },
-  { label: 'Hardcore', value: 'Hardcore' },
-];
-
 export default function DropdownInput({
   label,
   dropdownItems,

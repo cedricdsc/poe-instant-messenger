@@ -18,7 +18,7 @@ import { useStore } from '../../background/store';
 import { StoreSchema } from '../../../main/Store/schema';
 import MainProcess from '../../background/mainProcess';
 import { getTheme } from '../../background/util';
-import DropdownInput, { leagueItems, soundItems } from './DropdownInput';
+import DropdownInput, { leagueItems } from './DropdownInput';
 
 interface SettingsProps {
   toggleSettings: () => void;
