@@ -23,16 +23,10 @@ if (!Store.get('settings.hardwareAccelerationEnabled')) {
 // eslint-disable-next-line
 new AppUpdater();
 
-const isDebug =
-  process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
-
 app
   .whenReady()
   .then(() => {
-    if (isDebug) {
-      require('electron-debug')();
-      installExtensions();
-    }
+    installExtensions();
     checkForSettings();
     createTray();
     setupIpcEventHandler();

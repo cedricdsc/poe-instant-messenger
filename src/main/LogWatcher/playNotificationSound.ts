@@ -1,25 +1,9 @@
-import fs from 'fs';
-import wav from 'wav';
-import Speaker from 'speaker';
 import { getAssetPath } from '../util';
 
-let isSoundPlaying = false;
+const player = require('node-wav-player');
 
 export default function playNotificationSound() {
-  if (!isSoundPlaying) {
-    const reader = new wav.Reader();
-
-    reader.on('format', (format) => {
-      reader.pipe(new Speaker(format));
-    });
-
-    const file = fs.createReadStream(
-      getAssetPath('sounds/notification_sound.wav')
-    );
-    file.pipe(reader);
-    isSoundPlaying = true;
-    setTimeout(() => {
-      isSoundPlaying = false;
-    }, 2000);
-  }
+  player.play({
+    path: getAssetPath('sounds/notification_sound.wav'),
+  });
 }

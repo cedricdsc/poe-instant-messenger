@@ -33,7 +33,6 @@
     "@nut-tree/nut-js": "^2.0.1",
     "electron-overlay-window": "^2.0.1",
     "uiohook-napi": "^1.2.0",
-    "forcefocus": "https://github.com/cedricdsc/forcefocus.git",
-    "speaker": "^0.5.4"
+    "forcefocus": "https://github.com/cedricdsc/forcefocus.git"
   }
 }

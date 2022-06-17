@@ -38,14 +38,21 @@ export const checkForSettings = () => {
 };
 
 export const installExtensions = () => {
-  const installer = require('electron-devtools-installer');
-  const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
-  const extensions = ['REACT_DEVELOPER_TOOLS'];
+  const isDebug =
+    process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
 
-  return installer
-    .default(
-      extensions.map((name) => installer[name]),
-      forceDownload
-    )
-    .catch(console.log);
+  /* eslint-disable global-require */
+  if (isDebug) {
+    require('electron-debug')();
+    const installer = require('electron-devtools-installer');
+    const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
+    const extensions = ['REACT_DEVELOPER_TOOLS'];
+
+    installer
+      .default(
+        extensions.map((name) => installer[name]),
+        forceDownload
+      )
+      .catch(console.log);
+  }
 };
