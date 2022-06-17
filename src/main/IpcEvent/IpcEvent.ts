@@ -18,6 +18,11 @@ export type IpcValidDirectory = Event<
   { path: string }
 >;
 
+export type IpcTradeAssistant = Event<
+  'MAIN->OVERLAY::tradeAssistantToggle',
+  { isEnabled: boolean }
+>;
+
 export type IpcInvalidDirectory = Event<'MAIN->OVERLAY::invalidDirectory'>;
 
 export type IpcMouseEnter = Event<
@@ -90,6 +95,7 @@ export type IpcEvent =
   | IpcSaveSettings
   | IpcOpenDialog
   | IpcToggleTheme
+  | IpcTradeAssistant
   | IpcValidDirectory
   | IpcInvalidDirectory
   | IpcRepeatSetup

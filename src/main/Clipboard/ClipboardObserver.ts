@@ -1,4 +1,5 @@
 import { clipboard } from 'electron';
+import { overlaySendEvent } from '../Window/MainWindow';
 import { sendMessageFromTradeSite } from '../Message/sendMessage';
 import Store from '../Store/ElectronStore';
 
@@ -15,6 +16,10 @@ class ClipboardObserver {
 
   toggleObservation() {
     this.clipboardObservation = !this.clipboardObservation;
+    overlaySendEvent({
+      name: 'MAIN->OVERLAY::tradeAssistantToggle',
+      payload: { isEnabled: this.clipboardObservation },
+    });
   }
 
   start() {
