@@ -18,6 +18,7 @@ import { useStore } from '../../background/store';
 import { StoreSchema } from '../../../main/Store/schema';
 import MainProcess from '../../background/mainProcess';
 import { getTheme } from '../../background/util';
+import DropdownInput, { leagueItems, soundItems } from './DropdownInput';
 
 interface SettingsProps {
   toggleSettings: () => void;
@@ -50,7 +51,7 @@ export default function Settings({
       className={classNames(classes.settingsWrapper)}
       style={{ backgroundColor: getTheme(store).palette.background.default }}
     >
-      <Grid container rowSpacing={1} columnSpacing={0.5}>
+      <Grid container rowSpacing={4} columnSpacing={0.5}>
         <Grid item md={12}>
           <Tooltip title="Go back to Messenger">
             <IconButton sx={{ marginLeft: -1 }} onClick={toggleSettings}>
@@ -85,6 +86,16 @@ export default function Settings({
             helperText="Thank the Player for the trade."
           />
         </Grid>
+        <Grid item md={6} sx={{ paddingRight: 2 }}>
+          <DropdownInput
+            label="Select your current League"
+            dropdownItems={leagueItems}
+            updateSettings={updateSettings}
+            currentSettings={settings}
+            setting="selectedLeague"
+          />
+        </Grid>
+        <Grid item md={6} />
         <Grid item md={12}>
           <div className={classNames(classes.buttonsWrapper)}>
             <Tooltip title="Repeat the Setup Dialog">
