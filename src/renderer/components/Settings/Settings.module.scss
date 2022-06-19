@@ -4,6 +4,7 @@
   padding: 16px 32px;
   border-radius: 8px;
   overflow: hidden;
+  position: relative;
 }
 
 .buttonsWrapper {
@@ -12,4 +13,12 @@
   display: flex;
   justify-content: flex-end;
   gap: 16px;
+}
+
+.notificationWrapper {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }

@@ -12,6 +12,7 @@ import {
   overlaySendEvent,
 } from '../Window/MainWindow';
 import Command from '../Command/Command';
+import HotkeyManager from '../Hotkey/HotkeyManager';
 
 function getStoreData(username: string) {
   const messageStore = Store.get('messageStore');
@@ -34,6 +35,10 @@ export default function setupIpcEventHandler() {
     Store.set('settings.logPath', `${payload.path}`);
     Store.set('settings.setUp', true);
     startLogWatcher(overlaySendEvent);
+  });
+
+  overlayOnEvent('OVERLAY->MAIN::listenForHotkey', (_ipcMainEvent, payload) => {
+    HotkeyManager.assignMode = payload.isWaitingForInput;
   });
 
   overlayOnEvent(
@@ -59,6 +64,7 @@ export default function setupIpcEventHandler() {
 
   overlayOnEvent('OVERLAY->MAIN::saveSettings', (_ipcMainEvent, payload) => {
     Store.set('settings', payload.settings);
+    HotkeyManager.updateHotkeys();
   });
 
   overlayOnEvent('OVERLAY->MAIN::repeatSetup', (_ipcMainEvent) => {

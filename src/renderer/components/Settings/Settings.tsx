@@ -1,5 +1,7 @@
 import {
+  Alert,
   Button,
+  Collapse,
   Divider,
   Grid,
   IconButton,
@@ -19,6 +21,8 @@ import { StoreSchema } from '../../../main/Store/schema';
 import MainProcess from '../../background/mainProcess';
 import { getTheme } from '../../background/util';
 import DropdownInput, { leagueItems } from './DropdownInput';
+import HotkeyInput from './HotkeyInput';
+import HotkeyActionTypes from '../../../main/Hotkey/HotkeyActionTypes';
 
 interface SettingsProps {
   toggleSettings: () => void;
@@ -30,9 +34,15 @@ export default function Settings({
   repeatSetup,
 }: SettingsProps) {
   const { store } = useStore();
+  const [alert, setAlert] = useState({ state: false, text: '' });
   const [settings, setSettings] = useState<StoreSchema['settings']>(
     store.state.settings
   );
+
+  MainProcess.onEvent('MAIN->OVERLAY::hotkeyError', (payload) => {
+    setAlert({ state: true, text: payload.text });
+    setTimeout(() => setAlert({ state: false, text: payload.text }), 3000);
+  });
 
   const updateSettings = (newSettings: StoreSchema['settings']) => {
     setSettings(newSettings);
@@ -95,7 +105,14 @@ export default function Settings({
             setting="selectedLeague"
           />
         </Grid>
-        <Grid item md={6} />
+        <Grid item md={6}>
+          <HotkeyInput
+            label="Trade Assistant"
+            updateSettings={updateSettings}
+            currentSettings={settings}
+            hotkeyActionType={HotkeyActionTypes.ToggleCbOberserver}
+          />
+        </Grid>
         <Grid item md={12}>
           <div className={classNames(classes.buttonsWrapper)}>
             <Tooltip title="Repeat the Setup Dialog">
@@ -119,6 +136,11 @@ export default function Settings({
           </div>
         </Grid>
       </Grid>
+      <div className={classNames(classes.notificationWrapper)}>
+        <Collapse in={alert.state}>
+          <Alert severity="error">{alert.text}</Alert>
+        </Collapse>
+      </div>
     </div>
   );
 }

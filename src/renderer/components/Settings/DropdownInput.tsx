@@ -5,6 +5,7 @@ import {
   Select,
   SelectChangeEvent,
 } from '@mui/material';
+import { v4 as uuidv4 } from 'uuid';
 import { StoreSchema } from '../../../main/Store/schema';
 
 interface DropdownItem {
@@ -53,7 +54,9 @@ export default function DropdownInput({
         onChange={handleChange}
       >
         {dropdownItems.map((item) => (
-          <MenuItem value={item.value}>{item.label}</MenuItem>
+          <MenuItem key={uuidv4()} value={item.value}>
+            {item.label}
+          </MenuItem>
         ))}
       </Select>
     </FormControl>

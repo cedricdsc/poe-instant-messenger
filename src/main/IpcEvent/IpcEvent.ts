@@ -1,3 +1,4 @@
+import Hotkey from '../Hotkey/Hotkey';
 import { ICommand } from '../Command/ICommand';
 import { StoreSchema } from '../Store/schema';
 
@@ -21,6 +22,16 @@ export type IpcValidDirectory = Event<
 export type IpcTradeAssistant = Event<
   'MAIN->OVERLAY::tradeAssistantToggle',
   { isEnabled: boolean }
+>;
+
+export type IpcHotkeySet = Event<
+  'MAIN->OVERLAY::hotkeySet',
+  { hotkey: Hotkey }
+>;
+
+export type IpcHotkeyError = Event<
+  'MAIN->OVERLAY::hotkeyError',
+  { text: string }
 >;
 
 export type IpcInvalidDirectory = Event<'MAIN->OVERLAY::invalidDirectory'>;
@@ -69,6 +80,11 @@ export type IpcFinishSetup = Event<
   { path: string }
 >;
 
+export type IpcListenForHotkey = Event<
+  'OVERLAY->MAIN::listenForHotkey',
+  { isWaitingForInput: boolean }
+>;
+
 export type IpcRepeatSetup = Event<'OVERLAY->MAIN::repeatSetup'>;
 
 export type IpcToggleTheme = Event<'OVERLAY->MAIN::toggleTheme'>;
@@ -94,7 +110,10 @@ export type IpcEvent =
   | IpcSendCommand
   | IpcSaveSettings
   | IpcOpenDialog
+  | IpcHotkeyError
   | IpcToggleTheme
+  | IpcListenForHotkey
+  | IpcHotkeySet
   | IpcTradeAssistant
   | IpcValidDirectory
   | IpcInvalidDirectory

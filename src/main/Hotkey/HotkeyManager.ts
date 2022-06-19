@@ -5,10 +5,12 @@ import HotkeyActionTypes from './HotkeyActionTypes';
 class HotkeyManager {
   hotkeyMap: Map<HotkeyActionTypes, Hotkey>;
 
+  assignMode: boolean;
+
   constructor() {
     this.hotkeyMap = new Map<HotkeyActionTypes, Hotkey>();
-
-    this.loadHotskeyFromStore();
+    this.assignMode = false;
+    this.loadHotkeysFromStore();
   }
 
   register(hotkey: Hotkey, hotkeyAction: HotkeyActionTypes) {
@@ -24,7 +26,12 @@ class HotkeyManager {
     return undefined;
   }
 
-  loadHotskeyFromStore() {
+  updateHotkeys() {
+    this.hotkeyMap = new Map<HotkeyActionTypes, Hotkey>();
+    this.loadHotkeysFromStore();
+  }
+
+  loadHotkeysFromStore() {
     const settings = Store.get('settings');
     if (settings.hotkeys[HotkeyActionTypes.ToggleCbOberserver]) {
       this.hotkeyMap.set(
