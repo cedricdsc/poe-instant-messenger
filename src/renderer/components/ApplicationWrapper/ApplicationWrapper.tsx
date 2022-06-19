@@ -66,6 +66,12 @@ export default function ApplicationWrapper() {
   };
 
   const toggleSettings = () => {
+    if (settingsOpen) {
+      MainProcess.sendEvent({
+        name: 'OVERLAY->MAIN::getCurrentStore',
+        payload: undefined,
+      });
+    }
     setSettingsOpen(!settingsOpen);
   };
 

@@ -69,7 +69,7 @@ export function overlaySendEvent(event: IpcEvent) {
   if (MainWindow) MainWindow.webContents.send('named-event', event);
 }
 
-function sendUpdateStoreEvent() {
+export function sendUpdateStoreEvent() {
   overlaySendEvent({
     name: 'MAIN->OVERLAY::main-store-changed',
     payload: { Store: Store.store },

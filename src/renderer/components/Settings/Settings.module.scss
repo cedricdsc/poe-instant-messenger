@@ -15,10 +15,19 @@
   gap: 16px;
 }
 
-.notificationWrapper {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
+.tabsWrapper {
   display: flex;
-  justify-content: center;
+  flex-direction: row;
+}
+
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 140px);
+}
+
+.backBtnWrapper {
+  display: flex;
+  align-items: center;
+  padding-right: 8px;
 }

@@ -85,6 +85,8 @@ export type IpcListenForHotkey = Event<
   { isWaitingForInput: boolean }
 >;
 
+export type IpcGetStore = Event<'OVERLAY->MAIN::getCurrentStore'>;
+
 export type IpcRepeatSetup = Event<'OVERLAY->MAIN::repeatSetup'>;
 
 export type IpcToggleTheme = Event<'OVERLAY->MAIN::toggleTheme'>;
@@ -113,6 +115,7 @@ export type IpcEvent =
   | IpcHotkeyError
   | IpcToggleTheme
   | IpcListenForHotkey
+  | IpcGetStore
   | IpcHotkeySet
   | IpcTradeAssistant
   | IpcValidDirectory

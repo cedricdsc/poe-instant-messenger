@@ -10,6 +10,7 @@ import {
   focusPoE,
   overlayOnEvent,
   overlaySendEvent,
+  sendUpdateStoreEvent,
 } from '../Window/MainWindow';
 import Command from '../Command/Command';
 import HotkeyManager from '../Hotkey/HotkeyManager';
@@ -39,6 +40,10 @@ export default function setupIpcEventHandler() {
 
   overlayOnEvent('OVERLAY->MAIN::listenForHotkey', (_ipcMainEvent, payload) => {
     HotkeyManager.assignMode = payload.isWaitingForInput;
+  });
+
+  overlayOnEvent('OVERLAY->MAIN::getCurrentStore', () => {
+    sendUpdateStoreEvent();
   });
 
   overlayOnEvent(

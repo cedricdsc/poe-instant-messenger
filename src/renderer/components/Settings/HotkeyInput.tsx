@@ -114,7 +114,7 @@ export default function HotkeyInput({
   return (
     <div className={classNames(classes.wrapper)}>
       <Typography
-        variant="overline"
+        variant="caption"
         sx={{ color: getTheme(store).palette.text.primary }}
       >
         {label}
