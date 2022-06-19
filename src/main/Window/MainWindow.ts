@@ -13,6 +13,11 @@ export function isMainActive() {
   return mainIsActive;
 }
 
+export function getMainWindow() {
+  if (MainWindow) return MainWindow;
+  return undefined;
+}
+
 export function disableOverlayPointerEvents(forward?: boolean) {
   if (MainWindow) {
     if (!forward) MainWindow.setIgnoreMouseEvents(true);
@@ -64,7 +69,7 @@ export function overlaySendEvent(event: IpcEvent) {
   if (MainWindow) MainWindow.webContents.send('named-event', event);
 }
 
-function sendUpdateStoreEvent() {
+export function sendUpdateStoreEvent() {
   overlaySendEvent({
     name: 'MAIN->OVERLAY::main-store-changed',
     payload: { Store: Store.store },

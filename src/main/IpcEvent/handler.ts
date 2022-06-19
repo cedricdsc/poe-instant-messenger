@@ -10,8 +10,10 @@ import {
   focusPoE,
   overlayOnEvent,
   overlaySendEvent,
+  sendUpdateStoreEvent,
 } from '../Window/MainWindow';
 import Command from '../Command/Command';
+import HotkeyManager from '../Hotkey/HotkeyManager';
 
 function getStoreData(username: string) {
   const messageStore = Store.get('messageStore');
@@ -34,6 +36,14 @@ export default function setupIpcEventHandler() {
     Store.set('settings.logPath', `${payload.path}`);
     Store.set('settings.setUp', true);
     startLogWatcher(overlaySendEvent);
+  });
+
+  overlayOnEvent('OVERLAY->MAIN::listenForHotkey', (_ipcMainEvent, payload) => {
+    HotkeyManager.assignMode = payload.isWaitingForInput;
+  });
+
+  overlayOnEvent('OVERLAY->MAIN::getCurrentStore', () => {
+    sendUpdateStoreEvent();
   });
 
   overlayOnEvent(
@@ -59,6 +69,7 @@ export default function setupIpcEventHandler() {
 
   overlayOnEvent('OVERLAY->MAIN::saveSettings', (_ipcMainEvent, payload) => {
     Store.set('settings', payload.settings);
+    HotkeyManager.updateHotkeys();
   });
 
   overlayOnEvent('OVERLAY->MAIN::repeatSetup', (_ipcMainEvent) => {
@@ -113,7 +124,7 @@ export default function setupIpcEventHandler() {
           if (payload.message) {
             clipboard.writeText(`@${payload.username} ${payload.message}`);
 
-            await sendMessage();
+            await sendMessage(0);
           }
         }
 
@@ -122,7 +133,7 @@ export default function setupIpcEventHandler() {
         clipboard.writeText(`${payload.command}`);
       }
 
-      await sendMessage();
+      await sendMessage(0);
     }
   );
 
@@ -131,7 +142,7 @@ export default function setupIpcEventHandler() {
     async (_ipcMainEvent, payload) => {
       clipboard.writeText(`@${payload.recipient} ${payload.text}`);
 
-      sendMessage();
+      sendMessage(0);
     }
   );
 }

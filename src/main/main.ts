@@ -5,9 +5,11 @@ import {
   attachOverlayToPoeWindow,
   createMainWindow,
 } from './Window/MainWindow';
-import { checkForSettings } from './util';
+import { checkForSettings, installExtensions } from './util';
 import AppUpdater from './AppUpdater/AppUpdater';
 import Store from './Store/ElectronStore';
+import ClipboardObserver from './Clipboard/ClipboardObserver';
+import initializeHotkeyListener from './Hotkey/hotkeys';
 
 if (!app.requestSingleInstanceLock()) {
   app.exit();
@@ -21,26 +23,17 @@ if (!Store.get('settings.hardwareAccelerationEnabled')) {
 // eslint-disable-next-line
 new AppUpdater();
 
-// if (process.env.NODE_ENV === 'production') {
-//   const sourceMapSupport = require('source-map-support');
-//   sourceMapSupport.install();
-// }
-
-// const isDebug =
-//   process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
-
-// if (isDebug) {
-//   require('electron-debug')();
-// }
-
 app
   .whenReady()
   .then(() => {
+    installExtensions();
     checkForSettings();
     createTray();
     setupIpcEventHandler();
     createMainWindow();
     attachOverlayToPoeWindow();
+    ClipboardObserver.start();
+    initializeHotkeyListener();
     return null;
   })
   .catch();

@@ -4,6 +4,7 @@
   padding: 16px 32px;
   border-radius: 8px;
   overflow: hidden;
+  position: relative;
 }
 
 .buttonsWrapper {
@@ -12,4 +13,21 @@
   display: flex;
   justify-content: flex-end;
   gap: 16px;
+}
+
+.tabsWrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 140px);
+}
+
+.backBtnWrapper {
+  display: flex;
+  align-items: center;
+  padding-right: 8px;
 }

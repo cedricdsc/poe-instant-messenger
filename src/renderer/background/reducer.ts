@@ -1,3 +1,4 @@
+import HotkeyActionTypes from '../../main/Hotkey/HotkeyActionTypes';
 import Command from '../../main/Command/Command';
 import { StoreSchema } from '../../main/Store/schema';
 
@@ -25,10 +26,20 @@ export const initialState: StoreSchema = {
     hardwareAccelerationEnabled: true,
     windowPosX: 0,
     windowPosY: 0,
+    selectedLeague: 'Sentinel',
     commandMessages: {
       [Command.PartyInvite]:
         'Your item is ready to be picked-up Exile. I sent you a party invite!',
       [Command.PartyKick]: 'Thank you for the trade, Exile.',
+    },
+    hotkeys: {
+      [HotkeyActionTypes.ToggleCbOberserver]: {
+        altKey: true,
+        ctrlKey: false,
+        shiftKey: false,
+        keycode: 33,
+        keyName: 'F',
+      },
     },
   },
   messageStore: [],

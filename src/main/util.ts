@@ -36,3 +36,23 @@ export const checkForSettings = () => {
     Store.set('messageStore', initialState.messageStore);
   }
 };
+
+export const installExtensions = () => {
+  const isDebug =
+    process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
+
+  /* eslint-disable global-require */
+  if (isDebug) {
+    require('electron-debug')();
+    const installer = require('electron-devtools-installer');
+    const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
+    const extensions = ['REACT_DEVELOPER_TOOLS'];
+
+    installer
+      .default(
+        extensions.map((name) => installer[name]),
+        forceDownload
+      )
+      .catch(console.log);
+  }
+};

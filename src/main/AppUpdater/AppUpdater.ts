@@ -24,7 +24,7 @@ export default class AppUpdater {
 
           return null;
         })
-        .catch((err) => {});
+        .catch((_err) => {});
     });
 
     autoUpdater.checkForUpdates();

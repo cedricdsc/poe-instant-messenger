@@ -5,7 +5,7 @@ import Draggable, {
   DraggableEvent,
   DraggableEventHandler,
 } from 'react-draggable';
-import { ThemeProvider } from '@mui/material';
+import { Alert, Collapse, ThemeProvider } from '@mui/material';
 import MainProcess from '../../background/mainProcess';
 import { useStore } from '../../background/store';
 import classes from './ApplicationWrapper.module.scss';
@@ -20,8 +20,11 @@ export default function ApplicationWrapper() {
   const [storeLoaded, setStoreLoaded] = useState(false);
   const [messengerOpen, setMessengerOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [alertText, setAlertText] = useState('');
   const { store, setStore } = useStore();
   const nodeRef = useRef(null);
+  let alertTimeout: NodeJS.Timeout;
 
   const getDefaultPosition = () => {
     return {
@@ -40,6 +43,19 @@ export default function ApplicationWrapper() {
     setStoreLoaded(true);
   });
 
+  MainProcess.onEvent('MAIN->OVERLAY::tradeAssistantToggle', (payload) => {
+    if (payload.isEnabled) setAlertText('Trade Assistant is now enabled.');
+    else setAlertText('Trade Assistant is now disabled.');
+
+    if (alertTimeout) clearTimeout(alertTimeout);
+    setAlertOpen(true);
+
+    alertTimeout = setTimeout(() => {
+      setAlertOpen(false);
+      clearTimeout(alertTimeout);
+    }, 3000);
+  });
+
   const toggleMessenger = () => {
     if (!messengerOpen) {
       setMessengerOpen(true);
@@ -50,6 +66,12 @@ export default function ApplicationWrapper() {
   };
 
   const toggleSettings = () => {
+    if (settingsOpen) {
+      MainProcess.sendEvent({
+        name: 'OVERLAY->MAIN::getCurrentStore',
+        payload: undefined,
+      });
+    }
     setSettingsOpen(!settingsOpen);
   };
 
@@ -116,6 +138,11 @@ export default function ApplicationWrapper() {
           })}
         >
           {storeLoaded && !store.state.settings.setUp && <SetupStepper />}
+        </div>
+        <div className={classNames(classes.alertWrapper)}>
+          <Collapse in={alertOpen}>
+            <Alert severity="warning">{alertText}</Alert>
+          </Collapse>
         </div>
       </ThemeProvider>
     </>
