@@ -6,8 +6,8 @@
 ## Tool showcase
 | Theme | Setup | Notifier | Messenger | Settings  |
 |-------|-------|----------|-----------|-----------|
-|Light|[<img src="https://i.imgur.com/KOZd05e.png">](https://i.imgur.com/KOZd05e.png)|[<img src="https://i.imgur.com/pFTgS0d.png">](https://i.imgur.com/pFTgS0d.png)|[<img src="https://i.imgur.com/nipZwIw.png">](https://i.imgur.com/nipZwIw.png)|[<img src="https://i.imgur.com/O58gmz4.png">](https://i.imgur.com/O58gmz4.png)|
-|Dark|[<img src="https://i.imgur.com/4H4gIMx.png">](https://i.imgur.com/4H4gIMx.png)|[<img src="https://i.imgur.com/m29pFfR.png">](https://i.imgur.com/m29pFfR.png)|[<img src="https://i.imgur.com/KTDV31g.png">](https://i.imgur.com/KTDV31g.png)|[<img src="https://i.imgur.com/9RKIknH.png">](https://i.imgur.com/9RKIknH.png)|
+|Light|[<img target="_blank" src="https://i.imgur.com/iuXbHYz.jpg">](https://i.imgur.com/iuXbHYz.jpg)|[<img target="_blank" src="https://i.imgur.com/7WPplNC.jpg">](https://i.imgur.com/7WPplNC.jpg)|[<img target="_blank" src="https://i.imgur.com/K16jxqS.jpg">](https://i.imgur.com/K16jxqS.jpg)|[<img target="_blank" src="https://i.imgur.com/jfMigBm.jpg">](https://i.imgur.com/jfMigBm.jpg)|
+|Dark|[<img target="_blank" src="https://i.imgur.com/LmtbJyZ.jpg">](https://i.imgur.com/LmtbJyZ.jpg)|[<img target="_blank" src="https://i.imgur.com/QoBgKzz.jpg">](https://i.imgur.com/QoBgKzz.jpg)|[<img target="_blank" src="https://i.imgur.com/2k6CPbe.jpg">](https://i.imgur.com/2k6CPbe.jpg)|[<img target="_blank" src="https://i.imgur.com/R2QM97b.jpg">](https://i.imgur.com/R2QM97b.jpg)|
 
 ## Community
 
