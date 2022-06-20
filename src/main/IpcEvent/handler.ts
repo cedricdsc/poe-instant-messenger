@@ -12,8 +12,8 @@ import {
   overlaySendEvent,
   sendUpdateStoreEvent,
 } from '../Window/MainWindow';
-import Command from '../Command/Command';
 import HotkeyManager from '../Hotkey/HotkeyManager';
+import sendCommand from '../Command/sendCommand';
 
 function getStoreData(username: string) {
   const messageStore = Store.get('messageStore');
@@ -39,7 +39,10 @@ export default function setupIpcEventHandler() {
   });
 
   overlayOnEvent('OVERLAY->MAIN::listenForHotkey', (_ipcMainEvent, payload) => {
-    HotkeyManager.assignMode = payload.isWaitingForInput;
+    HotkeyManager.assignMode = {
+      assign: payload.isWaitingForInput,
+      actionType: payload.actionType,
+    };
   });
 
   overlayOnEvent('OVERLAY->MAIN::getCurrentStore', () => {
@@ -116,24 +119,7 @@ export default function setupIpcEventHandler() {
   overlayOnEvent(
     'OVERLAY->MAIN::sendCommand',
     async (_ipcMainEvent, payload) => {
-      if (payload.username) {
-        if (
-          payload.command === Command.PartyKick ||
-          payload.command === Command.PartyInvite
-        ) {
-          if (payload.message) {
-            clipboard.writeText(`@${payload.username} ${payload.message}`);
-
-            await sendMessage(0);
-          }
-        }
-
-        clipboard.writeText(`${payload.command} ${payload.username}`);
-      } else {
-        clipboard.writeText(`${payload.command}`);
-      }
-
-      await sendMessage(0);
+      await sendCommand(payload);
     }
   );
 

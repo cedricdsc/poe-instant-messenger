@@ -90,6 +90,16 @@ const schema: Schema<StoreSchema> = {
               keyName: { type: 'string' },
             },
           },
+          [HotkeyActionTypes.JoinOwnHideout]: {
+            type: 'object',
+            properties: {
+              keycode: { type: 'number' },
+              ctrlKey: { type: 'boolean' },
+              altKey: { type: 'boolean' },
+              shiftKey: { type: 'boolean' },
+              keyName: { type: 'string' },
+            },
+          },
         },
       },
     },

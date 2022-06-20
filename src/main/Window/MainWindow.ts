@@ -1,5 +1,11 @@
 import path from 'path';
-import { BrowserWindow, ipcMain, IpcMainEvent, app } from 'electron';
+import {
+  BrowserWindow,
+  ipcMain,
+  IpcMainEvent,
+  app,
+  globalShortcut,
+} from 'electron';
 import PoeWindow from './PoeWindow';
 import { IpcEvent, IpcEventPayload } from '../IpcEvent/IpcEvent';
 import { getAssetPath, resolveHtmlPath } from '../util';
@@ -76,6 +82,17 @@ export function sendUpdateStoreEvent() {
   });
 }
 
+function overrideGlobalShortcuts() {
+  globalShortcut.register('CommandOrControl+R', () => {
+    console.log('CommandOrControl+R is pressed: Shortcut Disabled');
+  });
+  globalShortcut.register('F5', () => {
+    console.log('F5 is pressed: Shortcut Disabled');
+  });
+  globalShortcut.unregister('CommandOrControl+R');
+  globalShortcut.unregister('F5');
+}
+
 export function createMainWindow() {
   MainWindow = new BrowserWindow({
     icon: getAssetPath('icon.png'),
@@ -101,6 +118,7 @@ export function createMainWindow() {
       throw new Error('"mainWindow" is not defined');
     }
     sendUpdateStoreEvent();
+    overrideGlobalShortcuts();
   });
 
   MainWindow.on('closed', () => {

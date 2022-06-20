@@ -2,14 +2,19 @@ import Store from '../Store/ElectronStore';
 import Hotkey from './Hotkey';
 import HotkeyActionTypes from './HotkeyActionTypes';
 
+interface HotkeyAssign {
+  assign: boolean;
+  actionType: HotkeyActionTypes | undefined;
+}
+
 class HotkeyManager {
   hotkeyMap: Map<HotkeyActionTypes, Hotkey>;
 
-  assignMode: boolean;
+  assignMode: HotkeyAssign;
 
   constructor() {
     this.hotkeyMap = new Map<HotkeyActionTypes, Hotkey>();
-    this.assignMode = false;
+    this.assignMode = { assign: false, actionType: undefined };
     this.loadHotkeysFromStore();
   }
 
@@ -33,12 +38,14 @@ class HotkeyManager {
 
   loadHotkeysFromStore() {
     const settings = Store.get('settings');
-    if (settings.hotkeys[HotkeyActionTypes.ToggleCbOberserver]) {
-      this.hotkeyMap.set(
-        HotkeyActionTypes.ToggleCbOberserver,
-        settings.hotkeys[HotkeyActionTypes.ToggleCbOberserver]
-      );
-    }
+    Object.keys(settings.hotkeys).forEach((key) => {
+      const hotkeyActionType = key as HotkeyActionTypes;
+      if (hotkeyActionType)
+        this.hotkeyMap.set(
+          hotkeyActionType,
+          settings.hotkeys[hotkeyActionType]
+        );
+    });
   }
 }
 

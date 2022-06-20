@@ -3,9 +3,9 @@ import { Alert, Collapse, Grid } from '@mui/material';
 import classNames from 'classnames';
 import MainProcess from '../../background/mainProcess';
 import { StoreSchema } from '../../../main/Store/schema';
-import classes from './HotkeySettings.module.scss';
 import HotkeyInput from './HotkeyInput';
 import HotkeyActionTypes from '../../../main/Hotkey/HotkeyActionTypes';
+import classes from './HotkeySettings.module.scss';
 
 interface HotkeySettingsProps {
   currentSettings: StoreSchema['settings'];
@@ -32,6 +32,14 @@ export default function HotkeySettings({
             updateSettings={updateSettings}
             currentSettings={currentSettings}
             hotkeyActionType={HotkeyActionTypes.ToggleCbOberserver}
+          />
+        </Grid>
+        <Grid item md={6}>
+          <HotkeyInput
+            label="Join own Hideout"
+            updateSettings={updateSettings}
+            currentSettings={currentSettings}
+            hotkeyActionType={HotkeyActionTypes.JoinOwnHideout}
           />
         </Grid>
       </Grid>

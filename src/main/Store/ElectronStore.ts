@@ -16,6 +16,8 @@ if (
   settings === undefined ||
   msgStore === undefined ||
   !instaceOfSettings(settings) ||
+  Object.values(settings.hotkeys).length !==
+    Object.values(initialState.settings.hotkeys).length ||
   (Array.isArray(msgStore) &&
     msgStore.length > 0 &&
     msgStore.every((item) => {

@@ -1,3 +1,4 @@
+import HotkeyActionTypes from 'main/Hotkey/HotkeyActionTypes';
 import Hotkey from '../Hotkey/Hotkey';
 import { ICommand } from '../Command/ICommand';
 import { StoreSchema } from '../Store/schema';
@@ -26,7 +27,7 @@ export type IpcTradeAssistant = Event<
 
 export type IpcHotkeySet = Event<
   'MAIN->OVERLAY::hotkeySet',
-  { hotkey: Hotkey }
+  { hotkey: Hotkey; actionType: HotkeyActionTypes }
 >;
 
 export type IpcHotkeyError = Event<
@@ -82,7 +83,7 @@ export type IpcFinishSetup = Event<
 
 export type IpcListenForHotkey = Event<
   'OVERLAY->MAIN::listenForHotkey',
-  { isWaitingForInput: boolean }
+  { isWaitingForInput: boolean; actionType: HotkeyActionTypes }
 >;
 
 export type IpcGetStore = Event<'OVERLAY->MAIN::getCurrentStore'>;
