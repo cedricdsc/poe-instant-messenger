@@ -53,6 +53,8 @@ npm run package
 - 🛣 Updates for every upcoming league
 - 🐛 Quick responses to bug reports and help requests
 
+Currently I have not set up a Patreon yet. This will follow when I feel like the project is polished enough to deserve being supported.
+
 ## Maintainers
 
 - [Cedric Oliveira da Silva Costa](https://github.com/cedricdsc)
