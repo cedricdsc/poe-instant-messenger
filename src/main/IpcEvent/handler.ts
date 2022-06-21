@@ -98,7 +98,7 @@ export default function setupIpcEventHandler() {
         }
         return null;
       })
-      .catch((err) => {});
+      .catch((_err) => {});
   });
 
   overlayOnEvent('OVERLAY->MAIN::toggleTheme', (_ipcMainEvent) => {
