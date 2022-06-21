@@ -126,7 +126,7 @@ export type IpcEvent =
 export type IpcEventPayload<
   Name extends IpcEvent['name'],
   T extends IpcEvent = IpcEvent
-> = T extends { name: Name } ? T['payload'] : never;
+> = T extends { name: Name; payload: infer P } ? P : never;
 
 interface Event<TName extends string, TPayload = undefined> {
   name: TName;

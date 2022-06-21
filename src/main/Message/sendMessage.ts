@@ -1,5 +1,4 @@
 import { Key, keyboard, sleep } from '@nut-tree/nut-js';
-import PoeWindow from '../Window/PoeWindow';
 import {
   focusOverlay,
   focusPoE,

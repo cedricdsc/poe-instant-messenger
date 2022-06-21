@@ -21,7 +21,7 @@ class HotkeyManager {
 
   getActionFromHotkey(hotkey: Hotkey) {
     for (const [key, value] of this.hotkeyMap.entries()) {
-      if (JSON.stringify(hotkey) === JSON.stringify(value)) return key;
+      if (hotkey.equals(value)) return key;
     }
     return undefined;
   }
