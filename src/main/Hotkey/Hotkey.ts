@@ -6,13 +6,13 @@ const UiohookToName = Object.fromEntries(
 );
 
 class Hotkey implements IHotkey {
-  keycode: number;
+  altKey: boolean;
 
   ctrlKey: boolean;
 
-  altKey: boolean;
-
   shiftKey: boolean;
+
+  keycode: number;
 
   keyName: string;
 
@@ -22,6 +22,12 @@ class Hotkey implements IHotkey {
     this.altKey = event.altKey;
     this.shiftKey = event.shiftKey;
     this.keyName = UiohookToName[event.keycode];
+  }
+
+  equals(hotkey: Hotkey) {
+    return (Object.keys(hotkey) as (keyof typeof hotkey)[]).every((key) => {
+      return hotkey[key] === this[key];
+    });
   }
 }
 
