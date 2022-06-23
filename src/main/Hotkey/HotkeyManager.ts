@@ -36,7 +36,17 @@ class HotkeyManager {
     if (settings.hotkeys[HotkeyActionTypes.ToggleCbOberserver]) {
       this.hotkeyMap.set(
         HotkeyActionTypes.ToggleCbOberserver,
-        settings.hotkeys[HotkeyActionTypes.ToggleCbOberserver]
+        new Hotkey({
+          type: 5,
+          metaKey: false,
+          ctrlKey:
+            settings.hotkeys[HotkeyActionTypes.ToggleCbOberserver].ctrlKey,
+          altKey: settings.hotkeys[HotkeyActionTypes.ToggleCbOberserver].altKey,
+          shiftKey:
+            settings.hotkeys[HotkeyActionTypes.ToggleCbOberserver].shiftKey,
+          keycode:
+            settings.hotkeys[HotkeyActionTypes.ToggleCbOberserver].keycode,
+        })
       );
     }
   }

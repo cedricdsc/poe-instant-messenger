@@ -1,4 +1,4 @@
-export default interface Hotkey {
+export default interface IHotkey {
   altKey: boolean;
   ctrlKey: boolean;
   shiftKey: boolean;

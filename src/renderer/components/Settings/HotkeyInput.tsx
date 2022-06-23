@@ -18,7 +18,6 @@ import MainProcess from '../../background/mainProcess';
 import { getTheme } from '../../background/util';
 import classes from './HotkeyInput.module.scss';
 import { useStore } from '../../background/store';
-import Hotkey from '../../../main/Hotkey/Hotkey';
 
 interface HotkeyInputProps {
   label: string;
@@ -74,12 +73,11 @@ export default function HotkeyInput({
   MainProcess.onEvent('MAIN->OVERLAY::hotkeySet', (payload) => {
     setWaitForInput(!waitForInput);
     const newSettings = { ...currentSettings };
-    newSettings.hotkeys[hotkeyActionType] = new Hotkey({
+    newSettings.hotkeys[hotkeyActionType] = {
       ...newSettings.hotkeys[hotkeyActionType],
       keycode: payload.hotkey.keycode,
-      type: 5,
-      metaKey: false,
-    });
+      keyName: payload.hotkey.keyName,
+    };
     updateSettings(newSettings);
   });
 
