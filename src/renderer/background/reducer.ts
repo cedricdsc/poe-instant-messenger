@@ -34,14 +34,13 @@ export const initialState: StoreSchema = {
       [Command.PartyKick]: 'Thank you for the trade, Exile.',
     },
     hotkeys: {
-      [HotkeyActionTypes.ToggleCbOberserver]: new Hotkey({
+      [HotkeyActionTypes.ToggleCbOberserver]: {
         altKey: true,
         ctrlKey: false,
         shiftKey: false,
         keycode: 33,
-        metaKey: false,
-        type: 5,
-      }),
+        keyName: 'F',
+      },
     },
   },
   messageStore: [],

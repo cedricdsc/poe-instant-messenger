@@ -74,12 +74,11 @@ export default function HotkeyInput({
   MainProcess.onEvent('MAIN->OVERLAY::hotkeySet', (payload) => {
     setWaitForInput(!waitForInput);
     const newSettings = { ...currentSettings };
-    newSettings.hotkeys[hotkeyActionType] = new Hotkey({
+    newSettings.hotkeys[hotkeyActionType] = {
       ...newSettings.hotkeys[hotkeyActionType],
       keycode: payload.hotkey.keycode,
-      type: 5,
-      metaKey: false,
-    });
+      keyName: payload.hotkey.keyName,
+    };
     updateSettings(newSettings);
   });
 
