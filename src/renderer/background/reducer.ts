@@ -1,7 +1,6 @@
 import HotkeyActionTypes from '../../main/Hotkey/HotkeyActionTypes';
 import Command from '../../main/Command/Command';
 import { StoreSchema } from '../../main/Store/schema';
-import Hotkey from '../../main/Hotkey/Hotkey';
 
 export function storeReducer(state: StoreState, action: Actions): StoreState {
   switch (action.type) {
@@ -34,14 +33,13 @@ export const initialState: StoreSchema = {
       [Command.PartyKick]: 'Thank you for the trade, Exile.',
     },
     hotkeys: {
-      [HotkeyActionTypes.ToggleCbOberserver]: new Hotkey({
+      [HotkeyActionTypes.ToggleCbOberserver]: {
         altKey: true,
         ctrlKey: false,
         shiftKey: false,
         keycode: 33,
-        metaKey: false,
-        type: 5,
-      }),
+        keyName: 'F',
+      },
     },
   },
   messageStore: [],
