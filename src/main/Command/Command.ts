@@ -7,4 +7,8 @@ enum Command {
   WhoIs = '/whois',
 }
 
+export function isCommand(object: any): object is Command {
+  return Object.values(Command).includes(object);
+}
+
 export default Command;

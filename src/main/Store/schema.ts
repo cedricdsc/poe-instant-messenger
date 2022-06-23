@@ -1,9 +1,11 @@
 import { Schema } from 'electron-store';
-import Command from '../Command/Command';
+import Command, { isCommand } from '../Command/Command';
 import Character from '../Character/Character';
 import Direction from '../Message/Direction';
-import HotkeyActionTypes from '../Hotkey/HotkeyActionTypes';
-import IHotkey from '../Hotkey/IHotkey';
+import HotkeyActionTypes, {
+  isHotkeyActionType,
+} from '../Hotkey/HotkeyActionTypes';
+import IHotkey, { instanceOfHotkey } from '../Hotkey/IHotkey';
 
 export interface StoreSchema {
   settings: {
@@ -21,20 +23,37 @@ export interface StoreSchema {
   messageStore: Array<Character>;
 }
 
-export function instaceOfSettings(
+export function instanceOfSettings(
   object: any
 ): object is StoreSchema['settings'] {
   return (
     'setUp' in object &&
+    typeof object.setUp === 'boolean' &&
     'darkTheme' in object &&
+    typeof object.darkTheme === 'boolean' &&
     'logPath' in object &&
+    typeof object.logPath === 'string' &&
     'windowTitle' in object &&
+    typeof object.windowTitle === 'string' &&
     'hardwareAccelerationEnabled' in object &&
+    typeof object.hardwareAccelerationEnabled === 'boolean' &&
     'windowPosX' in object &&
+    typeof object.windowPosX === 'number' &&
     'windowPosY' in object &&
+    typeof object.windowPosY === 'number' &&
     'selectedLeague' in object &&
+    typeof object.selectedLeague === 'string' &&
     'commandMessages' in object &&
-    'hotkeys' in object
+    Object.keys(object.commandMessages).every((command) =>
+      isCommand(command)
+    ) &&
+    'hotkeys' in object &&
+    Object.keys(object.hotkeys).every((hotkeyActionType) => {
+      if (isHotkeyActionType(hotkeyActionType)) {
+        return instanceOfHotkey(object.hotkeys[hotkeyActionType]);
+      }
+      return false;
+    })
   );
 }
 
