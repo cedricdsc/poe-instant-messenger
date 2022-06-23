@@ -26,7 +26,7 @@ class HotkeyManager {
 
   getActionFromHotkey(hotkey: Hotkey) {
     for (const [key, value] of this.hotkeyMap.entries()) {
-      if (JSON.stringify(hotkey) === JSON.stringify(value)) return key;
+      if (hotkey.equals(value)) return key;
     }
     return undefined;
   }
@@ -38,14 +38,22 @@ class HotkeyManager {
 
   loadHotkeysFromStore() {
     const settings = Store.get('settings');
-    Object.keys(settings.hotkeys).forEach((key) => {
-      const hotkeyActionType = key as HotkeyActionTypes;
-      if (hotkeyActionType)
-        this.hotkeyMap.set(
-          hotkeyActionType,
-          settings.hotkeys[hotkeyActionType]
-        );
-    });
+    if (settings.hotkeys[HotkeyActionTypes.ToggleCbOberserver]) {
+      this.hotkeyMap.set(
+        HotkeyActionTypes.ToggleCbOberserver,
+        new Hotkey({
+          type: 5,
+          metaKey: false,
+          ctrlKey:
+            settings.hotkeys[HotkeyActionTypes.ToggleCbOberserver].ctrlKey,
+          altKey: settings.hotkeys[HotkeyActionTypes.ToggleCbOberserver].altKey,
+          shiftKey:
+            settings.hotkeys[HotkeyActionTypes.ToggleCbOberserver].shiftKey,
+          keycode:
+            settings.hotkeys[HotkeyActionTypes.ToggleCbOberserver].keycode,
+        })
+      );
+    }
   }
 }
 

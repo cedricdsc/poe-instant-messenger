@@ -1,7 +1,7 @@
-export default interface Hotkey {
-  keycode: number;
-  ctrlKey: boolean;
+export default interface IHotkey {
   altKey: boolean;
+  ctrlKey: boolean;
   shiftKey: boolean;
+  keycode: number;
   keyName: string;
 }

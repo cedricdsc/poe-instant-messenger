@@ -3,7 +3,7 @@ import Command from '../Command/Command';
 import Character from '../Character/Character';
 import Direction from '../Message/Direction';
 import HotkeyActionTypes from '../Hotkey/HotkeyActionTypes';
-import Hotkey from '../Hotkey/Hotkey';
+import IHotkey from '../Hotkey/IHotkey';
 
 export interface StoreSchema {
   settings: {
@@ -16,7 +16,7 @@ export interface StoreSchema {
     windowPosY: number;
     selectedLeague: string;
     commandMessages: Record<Command.PartyInvite | Command.PartyKick, string>;
-    hotkeys: Record<HotkeyActionTypes, Hotkey>;
+    hotkeys: Record<HotkeyActionTypes, IHotkey>;
   };
   messageStore: Array<Character>;
 }
@@ -83,10 +83,10 @@ const schema: Schema<StoreSchema> = {
           [HotkeyActionTypes.ToggleCbOberserver]: {
             type: 'object',
             properties: {
-              keycode: { type: 'number' },
               ctrlKey: { type: 'boolean' },
               altKey: { type: 'boolean' },
               shiftKey: { type: 'boolean' },
+              keycode: { type: 'number' },
               keyName: { type: 'string' },
             },
           },
