@@ -136,7 +136,7 @@ const schema: Schema<StoreSchema> = {
             type: 'object',
             properties: {
               direction: { enum: [Direction.Incoming, Direction.Outgoing] },
-              timestamp: { format: 'date-time' },
+              timestamp: { format: 'date-time', type: 'string' },
               text: { type: 'string' },
               username: { type: 'string' },
             },

@@ -4,7 +4,7 @@ import { IMessage } from './IMessage';
 class Message implements IMessage {
   direction: Direction;
 
-  timestamp: Date;
+  timestamp: string;
 
   text: string;
 
@@ -47,7 +47,9 @@ class Message implements IMessage {
     const hour = poeTime.substring(11, 13);
     const minute = poeTime.substring(14, 16);
     const milli = poeTime.substring(17, 19);
-    return new Date(`${year}-${month}-${day}T${hour}:${minute}:${milli}`);
+    return new Date(
+      `${year}-${month}-${day}T${hour}:${minute}:${milli}`
+    ).toISOString();
   }
 }
 

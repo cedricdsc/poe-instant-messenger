@@ -62,10 +62,16 @@ export default function startLogWatcher(cb: (event: IpcEvent) => void) {
       }
 
       messageStore.sort((a, b) => {
-        if (a.unread > b.unread) {
+        if (
+          new Date(a.messages[a.messages.length - 1].timestamp).getTime() >
+          new Date(b.messages[b.messages.length - 1].timestamp).getTime()
+        ) {
           return -1;
         }
-        if (a.unread < b.unread) {
+        if (
+          new Date(a.messages[a.messages.length - 1].timestamp).getTime() <
+          new Date(b.messages[b.messages.length - 1].timestamp).getTime()
+        ) {
           return 1;
         }
         return 0;
