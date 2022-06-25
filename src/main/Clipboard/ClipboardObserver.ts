@@ -57,7 +57,9 @@ class ClipboardObserver {
 
   onTextChange = (text: string) => {
     const league = Store.get('settings.selectedLeague');
-    const searchListedItemRegExp = new RegExp(/@.*\s.*\(.*".*"(;|,).*:.*,.*\)/);
+    const searchListedItemRegExp = new RegExp(
+      /@.*\s.*\(.*".*".*(;|,).*:.*(,|、).*\)/
+    );
     const bulkExchangeRegExp = new RegExp(`@.*\\s.*${league}.*`);
     if (text.match(searchListedItemRegExp) || text.match(bulkExchangeRegExp)) {
       sendMessageFromTradeSite();
