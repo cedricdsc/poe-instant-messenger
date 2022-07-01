@@ -8,6 +8,8 @@ import {
   enableOverlayPointerEvents,
   focusOverlay,
   focusPoE,
+  isMainWindowFocused,
+  isPoeFocused,
   overlayOnEvent,
   overlaySendEvent,
   sendUpdateStoreEvent,
@@ -24,12 +26,12 @@ function getStoreData(username: string) {
 }
 
 export default function setupIpcEventHandler() {
-  overlayOnEvent('OVERLAY->MAIN::mouseEnter', (_ipcMainEvent, payload) => {
-    if (payload.mouseEntered) focusOverlay();
+  overlayOnEvent('OVERLAY->MAIN::mouseEnter', (_ipcMainEvent) => {
+    if (!!isMainWindowFocused() || isPoeFocused()) focusOverlay();
   });
 
-  overlayOnEvent('OVERLAY->MAIN::mouseLeave', (_ipcMainEvent, payload) => {
-    if (payload.mouseLeft) focusPoE();
+  overlayOnEvent('OVERLAY->MAIN::mouseLeave', (_ipcMainEvent) => {
+    if (!!isMainWindowFocused() || isPoeFocused()) focusPoE();
   });
 
   overlayOnEvent('OVERLAY->MAIN::finishSetup', (_ipcMainEvent, payload) => {

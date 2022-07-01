@@ -5,14 +5,14 @@ import { Store } from './reducer';
 export function onElementEnter() {
   MainProcess.sendEvent({
     name: 'OVERLAY->MAIN::mouseEnter',
-    payload: { mouseEntered: true },
+    payload: undefined,
   });
 }
 
 export function onElementLeave() {
   MainProcess.sendEvent({
     name: 'OVERLAY->MAIN::mouseLeave',
-    payload: { mouseLeft: true },
+    payload: undefined,
   });
 }
 

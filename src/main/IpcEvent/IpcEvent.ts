@@ -37,19 +37,9 @@ export type IpcHotkeyError = Event<
 
 export type IpcInvalidDirectory = Event<'MAIN->OVERLAY::invalidDirectory'>;
 
-export type IpcMouseEnter = Event<
-  'OVERLAY->MAIN::mouseEnter',
-  {
-    mouseEntered: boolean;
-  }
->;
+export type IpcMouseEnter = Event<'OVERLAY->MAIN::mouseEnter'>;
 
-export type IpcMouseLeave = Event<
-  'OVERLAY->MAIN::mouseLeave',
-  {
-    mouseLeft: boolean;
-  }
->;
+export type IpcMouseLeave = Event<'OVERLAY->MAIN::mouseLeave'>;
 
 export type IpcWindowPositionChanged = Event<
   'OVERLAY->MAIN::window-pos-changed',

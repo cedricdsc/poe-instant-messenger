@@ -24,6 +24,11 @@ export function getMainWindow() {
   return undefined;
 }
 
+export function isMainWindowFocused() {
+  if (MainWindow) return MainWindow.isFocused();
+  return undefined;
+}
+
 export function disableOverlayPointerEvents(forward?: boolean) {
   if (MainWindow) {
     if (!forward) MainWindow.setIgnoreMouseEvents(true);
