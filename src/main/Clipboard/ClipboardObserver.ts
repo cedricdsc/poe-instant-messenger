@@ -1,6 +1,6 @@
 import { clipboard } from 'electron';
 import { overlaySendEvent } from '../Window/MainWindow';
-import { sendMessageFromTradeSite } from '../Message/sendMessage';
+import { sendTradeMessage } from '../Message/sendMessage';
 import Store from '../Store/ElectronStore';
 
 class ClipboardObserver {
@@ -57,10 +57,12 @@ class ClipboardObserver {
 
   onTextChange = (text: string) => {
     const league = Store.get('settings.selectedLeague');
-    const searchListedItemRegExp = new RegExp(/@.*\s.*\(.*".*"(;|,).*:.*,.*\)/);
+    const searchListedItemRegExp = new RegExp(
+      /@.*\s.*\(.*".*".*(;|,).*:.*(,|、).*\)/
+    );
     const bulkExchangeRegExp = new RegExp(`@.*\\s.*${league}.*`);
     if (text.match(searchListedItemRegExp) || text.match(bulkExchangeRegExp)) {
-      sendMessageFromTradeSite();
+      sendTradeMessage();
     }
   };
 }

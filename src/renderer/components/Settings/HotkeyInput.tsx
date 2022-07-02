@@ -32,6 +32,7 @@ interface Combinator {
 }
 
 const validCombinators = [
+  { key: 'none', name: '-' },
   { key: 'ctrlKey', name: 'Ctrl' },
   { key: 'altKey', name: 'Alt' },
   { key: 'shiftKey', name: 'Shift' },
@@ -53,7 +54,7 @@ export default function HotkeyInput({
     if (hotkey.ctrlKey) return { key: 'ctrlKey', name: 'Ctrl' };
     if (hotkey.altKey) return { key: 'altKey', name: 'Alt' };
     if (hotkey.shiftKey) return { key: 'shiftKey', name: 'Shift' };
-    return undefined;
+    return { key: 'none', name: '-' };
   };
 
   const currentCombinator = getCurrentCombinator();
@@ -65,20 +66,25 @@ export default function HotkeyInput({
   const handleInputToggle = () => {
     MainProcess.sendEvent({
       name: 'OVERLAY->MAIN::listenForHotkey',
-      payload: { isWaitingForInput: !waitForInput },
+      payload: {
+        isWaitingForInput: !waitForInput,
+        actionType: hotkeyActionType,
+      },
     });
     setWaitForInput(!waitForInput);
   };
 
   MainProcess.onEvent('MAIN->OVERLAY::hotkeySet', (payload) => {
-    setWaitForInput(!waitForInput);
-    const newSettings = { ...currentSettings };
-    newSettings.hotkeys[hotkeyActionType] = {
-      ...newSettings.hotkeys[hotkeyActionType],
-      keycode: payload.hotkey.keycode,
-      keyName: payload.hotkey.keyName,
-    };
-    updateSettings(newSettings);
+    if (hotkeyActionType === payload.actionType) {
+      setWaitForInput(!waitForInput);
+      const newSettings = { ...currentSettings };
+      newSettings.hotkeys[hotkeyActionType] = {
+        ...newSettings.hotkeys[hotkeyActionType],
+        keycode: payload.hotkey.keycode,
+        keyName: payload.hotkey.keyName,
+      };
+      updateSettings(newSettings);
+    }
   });
 
   const handleMenuItemClick = (
@@ -122,7 +128,7 @@ export default function HotkeyInput({
       <ButtonGroup variant="contained" ref={anchorRef}>
         <Button
           onClick={handleToggle}
-          aria-controls={open ? 'split-button-menu' : undefined}
+          aria-controls={open ? `${hotkeyActionType}-menu` : undefined}
           aria-expanded={open ? 'true' : undefined}
           aria-haspopup="menu"
           sx={{
@@ -134,14 +140,18 @@ export default function HotkeyInput({
           {currentCombinator ? currentCombinator.name : 'None'}
           <ArrowDropDownIcon />
         </Button>
-        <Button variant="contained" onClick={handleInputToggle}>
+        <Button
+          variant="contained"
+          onClick={handleInputToggle}
+          sx={{ minWidth: '50px!important' }}
+        >
           {!waitForInput ? hotkey.keyName : '...'}
         </Button>
       </ButtonGroup>
       <Popper open={open} anchorEl={anchorRef.current} disablePortal>
         <Paper sx={{ width: '96px' }}>
           <ClickAwayListener onClickAway={handleClose}>
-            <MenuList id="split-button-menu">
+            <MenuList id={`${hotkeyActionType}-menu`}>
               {validCombinators.map((combinator, index) => (
                 <MenuItem
                   value={combinator.key}

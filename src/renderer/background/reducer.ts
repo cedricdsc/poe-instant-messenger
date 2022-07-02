@@ -40,6 +40,13 @@ export const initialState: StoreSchema = {
         keycode: 33,
         keyName: 'F',
       },
+      [HotkeyActionTypes.JoinOwnHideout]: {
+        altKey: false,
+        ctrlKey: false,
+        shiftKey: false,
+        keycode: 63,
+        keyName: 'F5',
+      },
     },
   },
   messageStore: [],

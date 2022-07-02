@@ -1,18 +1,22 @@
 import { uIOhook } from 'uiohook-napi';
-import { overlaySendEvent } from '../Window/MainWindow';
+import { isPoeFocused, overlaySendEvent } from '../Window/MainWindow';
 import ClipboardObserver from '../Clipboard/ClipboardObserver';
 import Hotkey from './Hotkey';
 import HotkeyManager from './HotkeyManager';
+import sendCommand from '../Command/sendCommand';
+import Command from '../Command/Command';
 
 const illegalKeycodes = [29, 42, 56];
 
 function assignHotkey(hotkey: Hotkey) {
   if (!illegalKeycodes.includes(hotkey.keycode)) {
-    overlaySendEvent({
-      name: 'MAIN->OVERLAY::hotkeySet',
-      payload: { hotkey },
-    });
-    HotkeyManager.assignMode = false;
+    if (HotkeyManager.assignMode.actionType) {
+      overlaySendEvent({
+        name: 'MAIN->OVERLAY::hotkeySet',
+        payload: { hotkey, actionType: HotkeyManager.assignMode.actionType },
+      });
+    }
+    HotkeyManager.assignMode = { assign: false, actionType: undefined };
   } else {
     overlaySendEvent({
       name: 'MAIN->OVERLAY::hotkeyError',
@@ -28,7 +32,7 @@ export default function initializeHotkeyListener() {
     const potentialHotkey = new Hotkey(event);
     const potentialAction = HotkeyManager.getActionFromHotkey(potentialHotkey);
 
-    if (HotkeyManager.assignMode) {
+    if (HotkeyManager.assignMode.assign) {
       if (!potentialAction) {
         assignHotkey(potentialHotkey);
       } else {
@@ -40,9 +44,11 @@ export default function initializeHotkeyListener() {
         });
       }
     }
-    // Hotkey actions
     if (potentialAction === 'toggle-cb-observer') {
       ClipboardObserver.toggleObservation();
+    }
+    if (potentialAction === 'join-own-hideout') {
+      if (isPoeFocused()) sendCommand({ command: Command.JoinHideout }, true);
     }
   });
 

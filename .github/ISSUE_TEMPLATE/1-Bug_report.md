@@ -41,5 +41,5 @@ labels: 'bug'
 
 - Poe Instant Messenger version :
 - Operating System:
-For (Devs)
+  For (Devs)
 - Node version:

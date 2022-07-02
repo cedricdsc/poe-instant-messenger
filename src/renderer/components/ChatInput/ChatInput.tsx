@@ -30,10 +30,12 @@ export default function ChatInput({ currentUserIndex }: ChatInputProps) {
 
   const sendMessage = () => {
     if (currentMessage.length > 0) {
+      const sanitizedMessage = currentMessage.replace(/\s+/g, ' ').trim();
+
       MainProcess.sendEvent({
         name: 'OVERLAY->MAIN::sendMessage',
         payload: {
-          text: currentMessage,
+          text: sanitizedMessage,
           recipient: store.state.messageStore[currentUserIndex].username,
         },
       });

@@ -5,6 +5,7 @@ import Tooltip from '@mui/material/Tooltip';
 import HouseIcon from '@mui/icons-material/House';
 import SettingsIcon from '@mui/icons-material/Settings';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
+import LightModeIcon from '@mui/icons-material/LightMode';
 import InfoIcon from '@mui/icons-material/Info';
 import classNames from 'classnames';
 import pj from '../../../../release/app/package.json';
@@ -67,10 +68,16 @@ export default function BottomBar({ toggleSettings }: BottomBarProps) {
             onClick={toggleTheme}
             sx={{ color: theme.svg.buttonColor }}
           >
-            <DarkModeIcon />
+            {store.state.settings.darkTheme ? (
+              <LightModeIcon />
+            ) : (
+              <DarkModeIcon />
+            )}
           </IconButton>
         </Tooltip>
-        <Tooltip title="Join own Hideout">
+        <Tooltip
+          title={`Join own Hideout (${store.state.settings.hotkeys['join-own-hideout'].keyName})`}
+        >
           <IconButton
             onClick={joinOwnHideout}
             sx={{ color: theme.svg.buttonColor }}

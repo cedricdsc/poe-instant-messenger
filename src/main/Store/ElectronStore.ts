@@ -1,7 +1,7 @@
 import ElectronStore from 'electron-store';
 import Character from '../Character/Character';
 import { initialState } from '../../renderer/background/reducer';
-import schema, { instaceOfSettings } from './schema';
+import schema, { instanceOfSettings } from './schema';
 
 const Store = new ElectronStore({
   schema,
@@ -12,17 +12,17 @@ const Store = new ElectronStore({
 const settings = Store.get('settings');
 const msgStore = Store.get('messageStore');
 
+if (settings === undefined || !instanceOfSettings(settings)) {
+  Store.set('settings', initialState.settings);
+}
+
 if (
-  settings === undefined ||
   msgStore === undefined ||
-  !instaceOfSettings(settings) ||
   (Array.isArray(msgStore) &&
     msgStore.length > 0 &&
-    msgStore.every((item) => {
-      return item instanceof Character;
-    }))
+    msgStore.every((item) => item instanceof Character))
 ) {
-  Store.set(initialState);
+  Store.set('messageStore', initialState.messageStore);
 }
 
 type CallBack = () => void;

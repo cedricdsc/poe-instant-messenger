@@ -1,24 +1,27 @@
-import { app, Menu, Tray } from 'electron';
+import { app, Menu, Tray, shell } from 'electron';
 import { getAssetPath } from '../util';
+import pj from '../../../release/app/package.json';
 
 let tray: Tray;
 
 export function updateTray() {
   const contextMenu = Menu.buildFromTemplate([
     {
-      label: 'Settings',
+      label: `Version: ${pj.version}`,
+      click: () => {
+        shell.openExternal(
+          'https://github.com/cedricdsc/poe-instant-messenger/releases'
+        );
+      },
     },
     {
-      label: 'Patreon',
+      label: 'Join Discord',
+      click: () => {
+        shell.openExternal('https://discord.gg/axtZCumM');
+      },
     },
     {
-      label: 'Discord',
-    },
-    {
-      label: 'Version',
-    },
-    {
-      label: 'Quit',
+      label: 'Close App',
       click: () => {
         app.quit();
       },

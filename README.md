@@ -1,13 +1,15 @@
 # PoE Instant Messenger
 
-## Download (Windows) 
+## Download (Windows)
+
 [The latest release can be downloaded here](https://github.com/cedricdsc/poe-instant-messenger/releases)
 
 ## Tool showcase
-| Theme | Setup | Notifier | Messenger | Settings  |
-|-------|-------|----------|-----------|-----------|
-|Light|[<img target="_blank" src="https://i.imgur.com/iuXbHYz.jpg">](https://i.imgur.com/iuXbHYz.jpg)|[<img target="_blank" src="https://i.imgur.com/7WPplNC.jpg">](https://i.imgur.com/7WPplNC.jpg)|[<img target="_blank" src="https://i.imgur.com/K16jxqS.jpg">](https://i.imgur.com/K16jxqS.jpg)|[<img target="_blank" src="https://i.imgur.com/jfMigBm.jpg">](https://i.imgur.com/jfMigBm.jpg)|
-|Dark|[<img target="_blank" src="https://i.imgur.com/LmtbJyZ.jpg">](https://i.imgur.com/LmtbJyZ.jpg)|[<img target="_blank" src="https://i.imgur.com/QoBgKzz.jpg">](https://i.imgur.com/QoBgKzz.jpg)|[<img target="_blank" src="https://i.imgur.com/2k6CPbe.jpg">](https://i.imgur.com/2k6CPbe.jpg)|[<img target="_blank" src="https://i.imgur.com/R2QM97b.jpg">](https://i.imgur.com/R2QM97b.jpg)|
+
+| Theme | Setup                                                                                          | Notifier                                                                                       | Messenger                                                                                      | Settings                                                                                       |
+| ----- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| Light | [<img target="_blank" src="https://i.imgur.com/iuXbHYz.jpg">](https://i.imgur.com/iuXbHYz.jpg) | [<img target="_blank" src="https://i.imgur.com/7WPplNC.jpg">](https://i.imgur.com/7WPplNC.jpg) | [<img target="_blank" src="https://i.imgur.com/K16jxqS.jpg">](https://i.imgur.com/K16jxqS.jpg) | [<img target="_blank" src="https://i.imgur.com/jfMigBm.jpg">](https://i.imgur.com/jfMigBm.jpg) |
+| Dark  | [<img target="_blank" src="https://i.imgur.com/LmtbJyZ.jpg">](https://i.imgur.com/LmtbJyZ.jpg) | [<img target="_blank" src="https://i.imgur.com/QoBgKzz.jpg">](https://i.imgur.com/QoBgKzz.jpg) | [<img target="_blank" src="https://i.imgur.com/2k6CPbe.jpg">](https://i.imgur.com/2k6CPbe.jpg) | [<img target="_blank" src="https://i.imgur.com/R2QM97b.jpg">](https://i.imgur.com/R2QM97b.jpg) |
 
 ## Community
 
@@ -41,9 +43,9 @@ npm run package
 
 ## Special Thanks
 
-* [SnosMe](https://github.com/SnosMe) for creating [electron-overlay-window](https://github.com/SnosMe/electron-overlay-window)
-* [All Awakened PoE Trade Contributers](https://github.com/SnosMe/awakened-poe-trade) for code base inspiration
-* [All Electron React Boilerplate Contributers](https://github.com/electron-react-boilerplate/electron-react-boilerplate) for their amazing work
+- [SnosMe](https://github.com/SnosMe) for creating [electron-overlay-window](https://github.com/SnosMe/electron-overlay-window)
+- [All Awakened PoE Trade Contributers](https://github.com/SnosMe/awakened-poe-trade) for code base inspiration
+- [All Electron React Boilerplate Contributers](https://github.com/electron-react-boilerplate/electron-react-boilerplate) for their amazing work
 
 ## Donations
 

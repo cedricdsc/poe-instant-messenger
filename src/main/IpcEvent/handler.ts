@@ -1,6 +1,6 @@
 import fs from 'fs';
-import { clipboard, dialog } from 'electron';
-import sendMessage from '../Message/sendMessage';
+import { dialog } from 'electron';
+import sendWhisperMessage from '../Message/sendMessage';
 import startLogWatcher from '../LogWatcher/watch';
 import Store from '../Store/ElectronStore';
 import {
@@ -8,12 +8,14 @@ import {
   enableOverlayPointerEvents,
   focusOverlay,
   focusPoE,
+  isMainWindowFocused,
+  isPoeFocused,
   overlayOnEvent,
   overlaySendEvent,
   sendUpdateStoreEvent,
 } from '../Window/MainWindow';
-import Command from '../Command/Command';
 import HotkeyManager from '../Hotkey/HotkeyManager';
+import sendCommand from '../Command/sendCommand';
 
 function getStoreData(username: string) {
   const messageStore = Store.get('messageStore');
@@ -24,12 +26,12 @@ function getStoreData(username: string) {
 }
 
 export default function setupIpcEventHandler() {
-  overlayOnEvent('OVERLAY->MAIN::mouseEnter', (_ipcMainEvent, payload) => {
-    if (payload.mouseEntered) focusOverlay();
+  overlayOnEvent('OVERLAY->MAIN::mouseEnter', (_ipcMainEvent) => {
+    if (!!isMainWindowFocused() || isPoeFocused()) focusOverlay();
   });
 
-  overlayOnEvent('OVERLAY->MAIN::mouseLeave', (_ipcMainEvent, payload) => {
-    if (payload.mouseLeft) focusPoE();
+  overlayOnEvent('OVERLAY->MAIN::mouseLeave', (_ipcMainEvent) => {
+    if (!!isMainWindowFocused() || isPoeFocused()) focusPoE();
   });
 
   overlayOnEvent('OVERLAY->MAIN::finishSetup', (_ipcMainEvent, payload) => {
@@ -39,7 +41,10 @@ export default function setupIpcEventHandler() {
   });
 
   overlayOnEvent('OVERLAY->MAIN::listenForHotkey', (_ipcMainEvent, payload) => {
-    HotkeyManager.assignMode = payload.isWaitingForInput;
+    HotkeyManager.assignMode = {
+      assign: payload.isWaitingForInput,
+      actionType: payload.actionType,
+    };
   });
 
   overlayOnEvent('OVERLAY->MAIN::getCurrentStore', () => {
@@ -116,33 +121,14 @@ export default function setupIpcEventHandler() {
   overlayOnEvent(
     'OVERLAY->MAIN::sendCommand',
     async (_ipcMainEvent, payload) => {
-      if (payload.username) {
-        if (
-          payload.command === Command.PartyKick ||
-          payload.command === Command.PartyInvite
-        ) {
-          if (payload.message) {
-            clipboard.writeText(`@${payload.username} ${payload.message}`);
-
-            await sendMessage(0);
-          }
-        }
-
-        clipboard.writeText(`${payload.command} ${payload.username}`);
-      } else {
-        clipboard.writeText(`${payload.command}`);
-      }
-
-      await sendMessage(0);
+      await sendCommand(payload);
     }
   );
 
   overlayOnEvent(
     'OVERLAY->MAIN::sendMessage',
     async (_ipcMainEvent, payload) => {
-      clipboard.writeText(`@${payload.recipient} ${payload.text}`);
-
-      sendMessage(0);
+      sendWhisperMessage(payload.recipient, payload.text);
     }
   );
 }

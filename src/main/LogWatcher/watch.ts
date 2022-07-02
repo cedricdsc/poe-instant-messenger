@@ -6,9 +6,6 @@ import Character from '../Character/Character';
 import { IpcEvent } from '../IpcEvent/IpcEvent';
 import playNotificationSound from './playNotificationSound';
 
-const DEFAULT_PATH =
-  'C:/Program Files (x86)/Grinding Gear Games/Path of Exile/logs/Client.txt';
-
 let tail: Tail;
 
 function isWhisperFromUser(data: string) {
@@ -22,10 +19,10 @@ function isWhisperFromUser(data: string) {
 }
 
 export default function startLogWatcher(cb: (event: IpcEvent) => void) {
-  const storedPath = Store.get('settings.logPath');
-  const path = typeof storedPath === 'string' ? storedPath : DEFAULT_PATH;
+  const settings = Store.get('settings');
+  const { logPath } = settings;
   if (tail !== undefined) tail.unwatch();
-  tail = new Tail(path, {
+  tail = new Tail(logPath, {
     follow: false,
     useWatchFile: true,
     fsWatchOptions: { interval: 200 },
@@ -62,10 +59,16 @@ export default function startLogWatcher(cb: (event: IpcEvent) => void) {
       }
 
       messageStore.sort((a, b) => {
-        if (a.unread > b.unread) {
+        if (
+          new Date(a.messages[a.messages.length - 1].timestamp).getTime() >
+          new Date(b.messages[b.messages.length - 1].timestamp).getTime()
+        ) {
           return -1;
         }
-        if (a.unread < b.unread) {
+        if (
+          new Date(a.messages[a.messages.length - 1].timestamp).getTime() <
+          new Date(b.messages[b.messages.length - 1].timestamp).getTime()
+        ) {
           return 1;
         }
         return 0;
