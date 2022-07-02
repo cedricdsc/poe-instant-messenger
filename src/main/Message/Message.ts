@@ -46,9 +46,9 @@ class Message implements IMessage {
     const day = poeTime.substring(8, 10);
     const hour = poeTime.substring(11, 13);
     const minute = poeTime.substring(14, 16);
-    const milli = poeTime.substring(17, 19);
+    const second = poeTime.substring(17, 19);
     return new Date(
-      `${year}-${month}-${day}T${hour}:${minute}:${milli}`
+      `${year}-${month}-${day}T${hour}:${minute}:${second}`
     ).toISOString();
   }
 }

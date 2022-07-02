@@ -1,6 +1,6 @@
 import fs from 'fs';
-import { clipboard, dialog } from 'electron';
-import sendMessage from '../Message/sendMessage';
+import { dialog } from 'electron';
+import sendWhisperMessage from '../Message/sendMessage';
 import startLogWatcher from '../LogWatcher/watch';
 import Store from '../Store/ElectronStore';
 import {
@@ -128,9 +128,7 @@ export default function setupIpcEventHandler() {
   overlayOnEvent(
     'OVERLAY->MAIN::sendMessage',
     async (_ipcMainEvent, payload) => {
-      clipboard.writeText(`@${payload.recipient} ${payload.text}`);
-
-      sendMessage(0);
+      sendWhisperMessage(payload.recipient, payload.text);
     }
   );
 }

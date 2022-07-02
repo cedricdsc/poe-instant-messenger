@@ -1,9 +1,12 @@
 import { clipboard } from 'electron';
-import sendMessage from '../Message/sendMessage';
+import { sendCommandMessage } from '../Message/sendMessage';
 import { ICommand } from './ICommand';
 import Command from './Command';
 
-export default async function sendCommand(payload: ICommand) {
+export default async function sendCommand(
+  payload: ICommand,
+  hotkeyAsTrigger = false
+) {
   if (payload.username) {
     if (
       payload.command === Command.PartyKick ||
@@ -12,7 +15,7 @@ export default async function sendCommand(payload: ICommand) {
       if (payload.message) {
         clipboard.writeText(`@${payload.username} ${payload.message}`);
 
-        await sendMessage(0);
+        await sendCommandMessage({ fromOverlay: !hotkeyAsTrigger });
       }
     }
 
@@ -21,5 +24,5 @@ export default async function sendCommand(payload: ICommand) {
     clipboard.writeText(`${payload.command}`);
   }
 
-  await sendMessage(0);
+  await sendCommandMessage({ fromOverlay: !hotkeyAsTrigger });
 }

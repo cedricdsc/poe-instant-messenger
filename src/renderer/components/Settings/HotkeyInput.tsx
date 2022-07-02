@@ -75,14 +75,16 @@ export default function HotkeyInput({
   };
 
   MainProcess.onEvent('MAIN->OVERLAY::hotkeySet', (payload) => {
-    setWaitForInput(!waitForInput);
-    const newSettings = { ...currentSettings };
-    newSettings.hotkeys[hotkeyActionType] = {
-      ...newSettings.hotkeys[hotkeyActionType],
-      keycode: payload.hotkey.keycode,
-      keyName: payload.hotkey.keyName,
-    };
-    updateSettings(newSettings);
+    if (hotkeyActionType === payload.actionType) {
+      setWaitForInput(!waitForInput);
+      const newSettings = { ...currentSettings };
+      newSettings.hotkeys[hotkeyActionType] = {
+        ...newSettings.hotkeys[hotkeyActionType],
+        keycode: payload.hotkey.keycode,
+        keyName: payload.hotkey.keyName,
+      };
+      updateSettings(newSettings);
+    }
   });
 
   const handleMenuItemClick = (

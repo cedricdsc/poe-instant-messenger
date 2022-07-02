@@ -1,6 +1,6 @@
 import Store from '../Store/ElectronStore';
 import Hotkey from './Hotkey';
-import HotkeyActionTypes from './HotkeyActionTypes';
+import HotkeyActionTypes, { isHotkeyActionType } from './HotkeyActionTypes';
 
 interface HotkeyAssign {
   assign: boolean;
@@ -38,21 +38,20 @@ class HotkeyManager {
 
   loadHotkeysFromStore() {
     const settings = Store.get('settings');
-    if (settings.hotkeys[HotkeyActionTypes.ToggleCbOberserver]) {
-      this.hotkeyMap.set(
-        HotkeyActionTypes.ToggleCbOberserver,
-        new Hotkey({
+
+    for (const hotkeyAction in settings.hotkeys) {
+      if (isHotkeyActionType(hotkeyAction)) {
+        const loadedHotkey = settings.hotkeys[hotkeyAction];
+        const newHotkey = new Hotkey({
           type: 5,
           metaKey: false,
-          ctrlKey:
-            settings.hotkeys[HotkeyActionTypes.ToggleCbOberserver].ctrlKey,
-          altKey: settings.hotkeys[HotkeyActionTypes.ToggleCbOberserver].altKey,
-          shiftKey:
-            settings.hotkeys[HotkeyActionTypes.ToggleCbOberserver].shiftKey,
-          keycode:
-            settings.hotkeys[HotkeyActionTypes.ToggleCbOberserver].keycode,
-        })
-      );
+          ctrlKey: loadedHotkey.ctrlKey,
+          altKey: loadedHotkey.altKey,
+          shiftKey: loadedHotkey.shiftKey,
+          keycode: loadedHotkey.keycode,
+        });
+        this.hotkeyMap.set(hotkeyAction, newHotkey);
+      }
     }
   }
 }

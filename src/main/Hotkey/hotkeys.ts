@@ -5,7 +5,6 @@ import Hotkey from './Hotkey';
 import HotkeyManager from './HotkeyManager';
 import sendCommand from '../Command/sendCommand';
 import Command from '../Command/Command';
-import HotkeyActionTypes from './HotkeyActionTypes';
 
 const illegalKeycodes = [29, 42, 56];
 
@@ -49,7 +48,7 @@ export default function initializeHotkeyListener() {
       ClipboardObserver.toggleObservation();
     }
     if (potentialAction === 'join-own-hideout') {
-      if (isPoeFocused()) sendCommand({ command: Command.JoinHideout });
+      if (isPoeFocused()) sendCommand({ command: Command.JoinHideout }, true);
     }
   });
 
